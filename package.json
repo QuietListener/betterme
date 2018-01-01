@@ -14,8 +14,11 @@
     "babel-plugin-react-transform": "^2.0.2",
     "extract-text-webpack-plugin": "^2.1.2",
     "json-loader": "^0.5.7",
+    "style-loader":"0.19.1",
+    "css-loader": "^0.28.7",
     "postcss-loader": "^2.0.6",
-    "react-transform-hmr": "^1.0.4"
+    "react-transform-hmr": "^1.0.4",
+    "lodash": "^4.17.4"
   },
   "dependencies": {
     "react": "^15.6.1",

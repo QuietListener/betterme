@@ -12,7 +12,7 @@ const PlanName = "plan_name";
 const Start = "start";
 const End = "end";
 
-export default class App extends Component{
+export default class Home extends Component{
 
   constructor(props)
   {

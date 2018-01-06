@@ -24,7 +24,7 @@ class App extends Component
     return (<Provider store={store}>
       <Router  history={hashHistory} >
           <Route path="/" component={Home}></Route>
-          <Route path="/plan_details" component={PlanDetails} />
+          <Route path="/plan_details/:id" component={PlanDetails} />
         </Router>
     </Provider>)
   }

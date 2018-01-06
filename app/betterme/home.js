@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import config from '../conf/config.json';
+import * as base from "./base.js"
 import _ from "lodash"
 import  '../css/app.css';
+import NewPlanFlow from "../components/new_plan_flow.js"
 
 
 const avatar = "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTInk6tZfjiaebxVTn2TkN0ImuRYGyg3p19uUPMSFyU1GD4vrj3yh2C2E7SLsC7rgibOu0sCAUZedK6g/0"
@@ -164,7 +166,7 @@ export default class Home extends Component{
 
       var plans_ = plans.map((item)=>{
           return <div>
-            <p>{item.plan_name}</p>
+            <p onClick={()=>base.goto(`/plan_details/${item.id}`)}>{item.plan_name}</p>
             <p>{item.start} --> {item.end}</p>
             <button onClick={()=>this.deletePlan(item.id)}>删除</button>
           </div>
@@ -188,7 +190,6 @@ export default class Home extends Component{
         <div style={{backgroundColor:"red",textAlign:"center",padding:"10px"}}>
           <img style={{margin:"auto",width:100,height:100,borderRadius:50,marginTop:30}} src={avatar}></img>
           {/*<div style={{margin:"auto",fontSize:"18px"}}>{user_name}</div>*/}
-
         </div>
 
         <div style={{textAlign:"center",marginTop:"20px"}}>

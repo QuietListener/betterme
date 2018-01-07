@@ -7,10 +7,12 @@ import NewPlanFlow from "../components/new_plan_flow.js"
 import axios from "axios"
 
 import CDaka from "../components/c_daka.js"
+import CProgress from "../components/c_progress.js"
 
 const PlanName = "plan_name";
 const Start = "start";
 const End = "end";
+import moment from "moment"
 
 export default class Home extends Component{
 
@@ -132,6 +134,7 @@ export default class Home extends Component{
     var plans = this.state.plans;
     var new_plan = null;
 
+    //plans = [];
     if(this.state.show_new_plan == true)
     {
        new_plan = <div style={{}}>
@@ -176,15 +179,18 @@ export default class Home extends Component{
       {
         add_btn = <div>
           <div style={{marginTop: "20px"}}>
-            <p style={{fontSize: "25px"}}> Hello~ <span>{user.nick_name}</span></p>
+            <p style={{fontSize: "20px"}}> 哈喽 <span style={{fontSize:"28px",marginRight:"10px",}}>{user.nick_name}</span>
+            </p>
+            <p  style={{fontSize: "20px"}}>  我们来指定第一个小目标吧~</p>
             <p style={{fontSize: "20px"}}>
-              做更好的自己,制定第一个小目标吧
+              做更好的自己
             </p>
           </div>
           <div style={{
                       position: "relative", margin: "auto",
                       width: 200, height: 200, borderRadius: 100,
-                      backgroundColor: "yellow", marginTop: "20px"
+                      backgroundColor: "yellow", marginTop: "20px",
+                      boxShadow:"2px 2px 2px #888888"
                     }}
                onClick={this.show_create_plan}
           >
@@ -213,22 +219,46 @@ export default class Home extends Component{
     {
 
       var plans_ = plans.map((item)=>{
-          return <div>
-            <p onClick={()=>base.goto(`/plan_details/${item.id}`)}>{item.name}</p>
-            <p>{item.start} --> {item.end}</p>
 
-            <CDaka plan={item} daka_success={this.componentDidMount} />
-            <button onClick={()=>this.deletePlan(item.id)}>删除</button>
+          var start = base.formatDate(item.start);
+          var end = base.formatDate(item.end);
+          let item_=item;
+
+          return <div style={{border:"1px solid #f2f2f2",padding:"6px",margin:"6px"}}
+
+          >
+            <div style={{display:"inline-block",width:"100%"}}
+                 onClick={()=>base.goto(`/plan_details/${item.id}`)}
+            >
+              <div>
+                <div style={{display:"inline-block",fontSize:"18px",width:"58%",textAlign:"left"}}>{item.name}</div>
+                <div style={{display:"inline-block",fontSize:"18px",width:"38%",textAlign:"right"}}>
+                 已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>5</span>/10天
+                </div>
+              </div>
+            </div>
+
+
+            <div style={{marginTop:"10px"}}>
+              <CProgress percent={0.5} />
+            </div>
+
+            {/*<p>{start} - {end}</p>*/}
+
+
+
+            <CDaka plan={item_} daka_success={this.componentDidMount} style={{marginTop:"12px"}} />
+            {/*<button onClick={()=>this.deletePlan(item.id)}>删除</button>*/}
           </div>
       })
 
       var new_plan_small_btn = null;
       if(this.state.show_new_plan == false)
-        new_plan_small_btn = <button  onClick={this.show_create_plan}>
+        new_plan_small_btn = <button  style={{fontSize:"16px"}} onClick={this.show_create_plan}>
         我还有一个小目标
       </button>
 
-      var show_view = <div>
+      var show_view = <div style={{marginTop:"10px"}}>
         {plans_}
         {new_plan}
         {new_plan_small_btn}

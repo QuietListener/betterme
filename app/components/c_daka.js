@@ -9,9 +9,8 @@ export default class CDaka extends Component{
   constructor(props)
   {
     super(props)
-    var plan = this.props.plan
 
-    this.state={plan:plan,
+    this.state={
       show_daka:false,
       thought:null};
 
@@ -36,7 +35,7 @@ export default class CDaka extends Component{
   create_record()
   {
       var desc = this.state.desc;
-      var plan_id = this.state.plan.id;
+      var plan_id = this.props.plan.id;
       var that = this;
       axios.post(`${base.BaseHost}/index/create_plan_record.json`,
         {
@@ -57,22 +56,40 @@ export default class CDaka extends Component{
   render(){
     var show_view = null;
 
-    if(this.state.show_daka == false)
+    var plan = this.props.plan;
+    if(plan.finished_daka_today == true)
     {
-      show_view = <div onClick={()=>this.show_daka()}>
-          打卡
+      show_view = <div
+        style={{padding:"8px",width:"100%",height:"40px",backgroundColor:"red",color:"white",borderRadius:4,marginTop:10}}
+      >
+          完成今天的打卡
+      </div>
+    }
+    else if(this.state.show_daka == false)
+    {
+      show_view = <div
+        style={{padding:"8px",width:"100%",height:"40px",backgroundColor:"green",color:"white",borderRadius:4,marginTop:10}}
+        onClick={()=>this.show_daka()}
+      >
+        打卡
       </div>
     }
     else
     {
-      show_view = <div>
-        <textarea value={this.state["desc"]} onChange={(event)=>this.valueChange(event,"desc")} />
-        <button onClick={this.create_record}>确定</button>
+      show_view = <div style={{padding:"8px",width:"100%",marginTop:10}}>
+        <textarea
+          style={{width:"100%",border:"1px solid #f2f2f2",fontSize:"16px"}}
+          placeholder={"我今天完成了...."}
+          value={this.state["desc"]}
+          onChange={(event)=>this.valueChange(event,"desc")} />
+
+        <div style={{width:"100%",textAlign:"right"}}>
+          <button style={{marginTop:"10px",backgroundColor:"red",color:"white",fontSize:"16px",}} onClick={this.create_record}>确定</button>
+        </div>
+
       </div>
     }
 
-    return (<div>
-      {show_view}
-    </div>)
+    return show_view;
   }
 }

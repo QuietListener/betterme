@@ -81,22 +81,37 @@ class PlanDetails extends Component{
       var images_view = images.map((img)=>{
         return <img style={{margin:"4px"}} width={100} src={img} />
       })
-      console.log("record",item)
-      return <div>
-        <div>
-          {item.desc} from {item.created_at}
-        </div>
 
-         <div>
-           {images_view}
-         </div>
+
+      return <div style={{width:"100%",padding:"8px",margin:"4px",border:"1px solid #f2f2f2"}}>
+
+          <div>
+
+            <div>{item.desc}</div>
+
+            <div>
+              {item.created_at}
+            </div>
+
+          </div>
+
+          <div>
+             {images_view}
+          </div>
       </div>
     })
 
+
+    var start = base.formatDate(plan_info.start);
+    var end = base.formatDate(plan_info.end);
+
     return <div>
-      <div>
-        {plan_info.name}
-        {plan_info.start}-{plan_info.end}
+
+      <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:"f2f2f2"}}>
+        
+        <p> {plan_info.name}</p>
+        <p> {start}-{end}</p>
+
       </div>
 
       <div>

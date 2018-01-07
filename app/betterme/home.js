@@ -4,10 +4,7 @@ import * as base from "./base.js"
 import _ from "lodash"
 import  '../css/app.css';
 import NewPlanFlow from "../components/new_plan_flow.js"
-
-
-const avatar = "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTInk6tZfjiaebxVTn2TkN0ImuRYGyg3p19uUPMSFyU1GD4vrj3yh2C2E7SLsC7rgibOu0sCAUZedK6g/0"
-const user_name = "君君"
+import axios from "axios"
 
 
 const PlanName = "plan_name";
@@ -29,11 +26,47 @@ export default class Home extends Component{
       plans:init_plans
     };
 
+    this.load = this.load.bind(this);
+    this.load_plans =this.load_plans.bind(this);
+
     this.canel_new_plan = this.canel_new_plan.bind(this);
     this.show_create_plan = this.show_create_plan.bind(this);
     this.valueChange = this.valueChange.bind(this);
     this.create_new_plan = this.create_new_plan.bind(this);
   }
+
+
+  componentDidMount()
+  {
+      this.load();
+      console.log("componentDidMount",this.state);
+  }
+
+
+  load_plans(user_id)
+  {
+    var that = this;
+    axios.get(`${base.BaseHost}/index/plans.json?user_id=${user_id}`).then((res)=>{
+      console.log("res",res);
+      var plans = res.data.data;
+      that.setState({plans:plans});
+      console.log(that.state);
+    })
+  }
+
+  load()
+  {
+    var that = this;
+    axios.get(`${base.BaseHost}/index/user.json`).then((res)=>{
+      console.log("res",res);
+      var user = res.data.data;
+      that.setState({user:user});
+      console.log(that.state);
+      that.load_plans(user.id)
+    })
+  }
+
+
 
   deletePlan(id)
   {
@@ -58,7 +91,16 @@ export default class Home extends Component{
       var plans = this.state.plans;
       plans.push(new_plan);
 
-      this.setState({plans:plans,show_new_plan:false});
+     var that = this;
+     axios.post(`${base.BaseHost}/index/create_plan.json`,
+             {
+               name:plan_name,
+               start_time:start,
+               end_time:end
+             }).then((res)=>{
+                that.load_plans(that.state.user.id)
+                that.canel_new_plan();
+                })
   }
 
   canel_new_plan()
@@ -80,6 +122,10 @@ export default class Home extends Component{
   }
 
   render(){
+
+    var user = this.state.user;
+    if(user == null)
+      return null;
 
     var plans = this.state.plans;
     var new_plan = null;
@@ -128,7 +174,7 @@ export default class Home extends Component{
       {
         add_btn = <div>
           <div style={{marginTop: "20px"}}>
-            <p style={{fontSize: "25px"}}> Hello~ <span>{user_name}</span></p>
+            <p style={{fontSize: "25px"}}> Hello~ <span>{user.nick_name}</span></p>
             <p style={{fontSize: "20px"}}>
               做更好的自己,制定第一个小目标吧
             </p>
@@ -166,7 +212,7 @@ export default class Home extends Component{
 
       var plans_ = plans.map((item)=>{
           return <div>
-            <p onClick={()=>base.goto(`/plan_details/${item.id}`)}>{item.plan_name}</p>
+            <p onClick={()=>base.goto(`/plan_details/${item.id}`)}>{item.name}</p>
             <p>{item.start} --> {item.end}</p>
             <button onClick={()=>this.deletePlan(item.id)}>删除</button>
           </div>
@@ -188,8 +234,8 @@ export default class Home extends Component{
     return (
       <div style={{width:"100%"}}>
         <div style={{backgroundColor:"red",textAlign:"center",padding:"10px"}}>
-          <img style={{margin:"auto",width:100,height:100,borderRadius:50,marginTop:30}} src={avatar}></img>
-          {/*<div style={{margin:"auto",fontSize:"18px"}}>{user_name}</div>*/}
+          <img style={{margin:"auto",width:100,height:100,borderRadius:50,marginTop:30}} src={user.avatar}></img>
+          <div style={{margin:"auto",fontSize:"18px"}}>{user.nick_name}</div>
         </div>
 
         <div style={{textAlign:"center",marginTop:"20px"}}>

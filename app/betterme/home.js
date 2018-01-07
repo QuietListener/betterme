@@ -6,6 +6,7 @@ import  '../css/app.css';
 import NewPlanFlow from "../components/new_plan_flow.js"
 import axios from "axios"
 
+import CDaka from "../components/c_daka.js"
 
 const PlanName = "plan_name";
 const Start = "start";
@@ -33,6 +34,7 @@ export default class Home extends Component{
     this.show_create_plan = this.show_create_plan.bind(this);
     this.valueChange = this.valueChange.bind(this);
     this.create_new_plan = this.create_new_plan.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
 
@@ -214,6 +216,8 @@ export default class Home extends Component{
           return <div>
             <p onClick={()=>base.goto(`/plan_details/${item.id}`)}>{item.name}</p>
             <p>{item.start} --> {item.end}</p>
+
+            <CDaka plan={item} daka_success={this.componentDidMount} />
             <button onClick={()=>this.deletePlan(item.id)}>删除</button>
           </div>
       })

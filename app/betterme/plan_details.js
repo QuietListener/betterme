@@ -3,6 +3,8 @@ import config from '../conf/config.json';
 import _ from "lodash"
 import axios from "axios"
 import * as base from "./base.js"
+import CCalendar from "../components/c_calendar.js"
+import moment from "moment"
 
 const img = "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTInk6tZfjiaebxVTn2TkN0ImuRYGyg3p19uUPMSFyU1GD4vrj3yh2C2E7SLsC7rgibOu0sCAUZedK6g/0"
 
@@ -108,10 +110,14 @@ class PlanDetails extends Component{
     return <div>
 
       <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:"f2f2f2"}}>
-        
+
         <p> {plan_info.name}</p>
         <p> {start}-{end}</p>
 
+      </div>
+
+      <div style={{textAlign:"center"}}>
+        <CCalendar today={moment.now()} events={["2018-01-7"]}></CCalendar>
       </div>
 
       <div>

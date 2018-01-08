@@ -228,15 +228,18 @@ export default class Home extends Component{
 
           >
             <div style={{display:"inline-block",width:"100%"}}
-                 onClick={()=>base.goto(`/plan_details/${item.id}`)}
             >
               <div>
-                <div style={{display:"inline-block",fontSize:"18px",width:"58%",textAlign:"left"}}>{item.name}</div>
+                <div style={{display:"inline-block",
+                  fontSize:"18px",width:"58%",textAlign:"left"}}
+                     onClick={()=>base.goto(`/plan_details/${item.id}`)}
+                >{item.name}</div>
                 <div style={{display:"inline-block",fontSize:"18px",width:"38%",textAlign:"right"}}>
-                 已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>5</span>/10天
+                 已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days}</span>/{item.total_days}天
                 </div>
               </div>
             </div>
+
 
 
             <div style={{marginTop:"10px"}}>

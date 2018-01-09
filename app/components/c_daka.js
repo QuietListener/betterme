@@ -45,13 +45,14 @@ export default class CDaka extends Component{
     });
 
     let files = e.target.files;
-    for(var i = 0; i < files.length; i++)
+    for(let i = 0; i < files.length; i++)
     {
       let reader = new FileReader();
       let file = e.target.files[i];
       reader.onloadend = () => {
+        let j = i;
         let images = this.state.images;
-        images.push(reader.result)
+        images.push([j,reader.result])
         this.setState({
           images:images
         });
@@ -66,11 +67,24 @@ export default class CDaka extends Component{
       var desc = this.state.desc;
       var plan_id = this.props.plan.id;
       var that = this;
+
+      var formData = new FormData();
+      formData.append("plan_id",plan_id);
+      formData.append("desc",desc);
+
+      for(let i = 0; i < this.state.images.length; i++ )
+      {
+        let item =  this.state.images[i];
+        let index=item[0];
+        console.log(item);
+        console.log(index);
+
+
+        formData.append(`images[]`,this.upload.files[index]);
+      }
+
       axios.post(`${base.BaseHost}/index/create_plan_record.json`,
-        {
-          plan_id:plan_id,
-          desc:desc
-        }).then((res)=>{
+        formData).then((res)=>{
         if(that.props.daka_success)
             that.props.daka_success();
       })
@@ -118,7 +132,7 @@ export default class CDaka extends Component{
     {
 
       var imgs_view = this.state.images.map((img)=>{
-        return <img style={{border:"1px solid #f2f2f2",height:"80px",display:"inline-block",verticalAlign:"top",marginLeft:"4px"}} src={img} />
+        return <img style={{border:"1px solid #f2f2f2",height:"80px",display:"inline-block",verticalAlign:"top",marginLeft:"4px"}} src={img[1]} />
       });
 
       show_view = <div style={{padding:"8px",width:"100%",marginTop:10,textAlign:"left"}}>

@@ -78,10 +78,14 @@ class PlanDetails extends Component{
 
       var images = [];
       if(item.images != null)
-          images = item.images;
+      {
+        let images_ = item.images;
+        images = JSON.parse(images_);
+      }
 
       var images_view = images.map((img)=>{
-        return <img style={{margin:"4px"}} width={100} src={img} />
+        let url = `${base.IMG_BASE}/${img}`;
+        return <img style={{margin:"4px"}} width={100}  height={100} src={url} />
       })
 
 

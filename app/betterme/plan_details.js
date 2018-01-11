@@ -6,25 +6,8 @@ import * as base from "./base.js"
 import CCalendar from "../components/c_calendar.js"
 import moment from "moment"
 
-const img = "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTInk6tZfjiaebxVTn2TkN0ImuRYGyg3p19uUPMSFyU1GD4vrj3yh2C2E7SLsC7rgibOu0sCAUZedK6g/0"
+import "../css/app.css"
 
-const plan_info = {
-  name:"背单词",
-  from:"2017-12-12",
-  to:"2019-11-12",
-  daka_records:[
-    {
-    daka_date:"2017-12-12",
-    text:"完成了8个单词",
-    images:[img,img]
-    },
-    {
-      daka_date:"2017-12-12",
-      text:"完成了12个单词",
-      images:[img,img,img]
-    }
-  ]
-}
 class PlanDetails extends Component{
 
   constructor(props)
@@ -72,6 +55,7 @@ class PlanDetails extends Component{
     if(plan_info == null )
       return null;
 
+
     daka_records =  daka_records == null ? [] :daka_records;
 
     var daka_views = daka_records.map((item)=>{
@@ -85,7 +69,7 @@ class PlanDetails extends Component{
 
       var images_view = images.map((img)=>{
         let url = `${base.IMG_BASE}/${img}`;
-        return <img style={{margin:"4px"}} width={100}  height={100} src={url} />
+        return <img style={{margin:"4px"}} width={150}  height={150} src={url} />
       })
 
 
@@ -95,14 +79,14 @@ class PlanDetails extends Component{
 
             <div>{item.desc}</div>
 
-            <div>
-              {item.created_at}
-            </div>
-
           </div>
 
           <div>
              {images_view}
+          </div>
+
+          <div>
+            {item.created_at}
           </div>
       </div>
     })
@@ -111,6 +95,10 @@ class PlanDetails extends Component{
     var start = base.formatDate(plan_info.start);
     var end = base.formatDate(plan_info.end);
 
+
+    var events =  daka_records.map((item)=>{
+      return base.formatDate(item.created_at);
+    })
     return <div>
 
       <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:"f2f2f2"}}>
@@ -121,7 +109,7 @@ class PlanDetails extends Component{
       </div>
 
       <div style={{textAlign:"center"}}>
-        <CCalendar today={moment.now()} events={["2018-01-7"]}></CCalendar>
+        <CCalendar start={start} end={end} today={moment.now()} events={events}></CCalendar>
       </div>
 
       <div>

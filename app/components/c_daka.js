@@ -100,8 +100,8 @@ export default class CDaka extends Component{
     var show_view = null;
 
     var plan = this.props.plan;
-    var finished_days = plan.finished_days
-    var total_days = plan.total_days
+    var finished_days = plan.finished_days_count
+    var total_days = plan.total_days_count
 
     if(total_days == finished_days)
     {

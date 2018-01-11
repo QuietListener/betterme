@@ -235,7 +235,7 @@ export default class Home extends Component{
                      onClick={()=>base.goto(`/plan_details/${item.id}`)}
                 >{item.name}</div>
                 <div style={{display:"inline-block",fontSize:"18px",width:"38%",textAlign:"right"}}>
-                 已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days}</span>/{item.total_days}天
+                 已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/{item.total_days_count}天
                 </div>
               </div>
             </div>

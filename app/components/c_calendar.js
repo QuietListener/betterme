@@ -19,6 +19,11 @@ export default class CCalendar extends Component
   render()
   {
 
+    var start = Moment(this.props.start);
+    var end = Moment(this.props.end);
+
+    console.log(start,end)
+
     var Width = this.props.width||20*16;
     var DayWidth = Width/16;
     var DayMargin = DayWidth/8;
@@ -69,10 +74,11 @@ export default class CCalendar extends Component
         else
         {
           let dates = i_.date();
+          console.log("---",i_.format("YYYYMMDD"),start.format("YYYYMMDD"),end.format("YYYYMMDD"));
           let  style_ = {};
           let   text_styles = {color:"rgb(153, 153, 153)",fontSize:12};
 
-          if(dates <= today.date())
+          if(i_ >= start && i_ <= end)
           {
             style_ = Object.assign({},styles.day,responsive_style,{border:"1px solid rgb(71, 175, 255)"});
 

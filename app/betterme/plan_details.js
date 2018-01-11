@@ -86,7 +86,7 @@ class PlanDetails extends Component{
           </div>
 
           <div>
-            {item.created_at}
+            {base.formatDateTime(item.created_at)}
           </div>
       </div>
     })

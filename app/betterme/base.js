@@ -17,3 +17,10 @@ export function formatDate(str)
   var f = m.format("YYYY-MM-DD")
   return f;
 }
+
+export function formatDateTime(str)
+{
+  var m = moment(str);
+  var f = m.format("YYYY-MM-DD h:mm:ss")
+  return f;
+}

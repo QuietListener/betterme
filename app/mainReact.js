@@ -9,6 +9,7 @@ import { Router, Route, hashHistory } from 'react-router';
 import { createStore,applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from "./betterme/redux/reducers/reducers.js"
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // Logger with default options
 import logger from 'redux-logger'
@@ -21,12 +22,16 @@ class App extends Component
 {
   render()
   {
-    return (<Provider store={store}>
-      <Router  history={hashHistory} >
-          <Route path="/" component={Home}></Route>
-          <Route path="/plan_details/:id" component={PlanDetails} />
-        </Router>
-    </Provider>)
+    return (
+      <MuiThemeProvider>
+        <Provider store={store}>
+
+        <Router  history={hashHistory} >
+            <Route path="/" component={Home}></Route>
+            <Route path="/plan_details/:id" component={PlanDetails} />
+          </Router>
+        </Provider>
+      </MuiThemeProvider>)
   }
 }
 

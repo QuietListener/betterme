@@ -9,10 +9,12 @@ import axios from "axios"
 import CDaka from "../components/c_daka.js"
 import CProgress from "../components/c_progress.js"
 
-const PlanName = "plan_name";
-const Start = "start";
 const End = "end";
 import moment from "moment"
+import DatePicker from 'material-ui/DatePicker';
+
+const PlanName = "plan_name";
+const Start = "start";
 
 export default class Home extends Component{
 
@@ -156,12 +158,11 @@ export default class Home extends Component{
                 placeholder={"结束日期"}
                 onChange={(event)=>this.valueChange(event,End)} />
 
-
            <div style={{fontSize:"18px",padding:"4px",width:"100px",
              border:"1px solid",margin:"auto",marginTop:"10px"}}
                 onClick={this.canel_new_plan}
            >取消</div>
-
+           <DatePicker hintText="Landscape Dialog" />
           <div style={{fontSize:"18px",padding:"4px",width:"100px",
                        border:"1px solid",margin:"auto",marginTop:"10px"}}
                onClick={this.create_new_plan}

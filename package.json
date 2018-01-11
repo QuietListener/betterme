@@ -26,6 +26,7 @@
     "babel-loader": "^6.4.1",
     "babel-preset-latest": "^6.0.0",
     "babel-preset-react": "^6.24.1",
+    "material-ui": "^0.20.0",
     "moment": "^2.20.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

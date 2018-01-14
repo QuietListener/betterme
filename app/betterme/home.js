@@ -14,6 +14,7 @@ import moment from "moment"
 import DatePicker  from 'material-ui/DatePicker';
 import TextField   from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+const ControlPoint = require('react-icons/lib/md/control-point');
 
 
 const PlanName = "plan_name";
@@ -294,8 +295,9 @@ export default class Home extends Component{
 
       var new_plan_small_btn = null;
       if(this.state.show_new_plan == false)
-        new_plan_small_btn = <button  style={{fontSize:"16px",backgroundColor:base.COLOR.blue,color:"white",borderRadius:"2px",marginTop:"10px"}} onClick={this.show_create_plan}>
-        我还有一个小目标
+        new_plan_small_btn = <button  style={{fontSize:"16px",backgroundColor:base.COLOR.red,color:"white",borderRadius:"4px",marginTop:"10px",padding:"8px"}} onClick={this.show_create_plan}>
+          <ControlPoint style={{fontSize:"18px",marginRight:"4px",marginBottom:"2px"}}/>
+        <span>我还有一个小目标</span>
       </button>
 
       var show_view = <div style={{marginTop:"10px"}}>

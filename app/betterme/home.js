@@ -258,40 +258,43 @@ export default class Home extends Component{
           var end = base.formatDate(item.end);
           let item_=item;
 
-          return <div style={{border:"1px solid #f2f2f2",padding:"6px",margin:"6px"}}
+          return <div style={{border:"1px solid #fff",
+                              backgroundColor:"white",
+                              padding:"20px",margin:"10px",borderRadius:"4px",
+                              boxShadow:"0 4px 8px hsla(0,0%,71%,.8)"
 
+          }}
           >
-            <div style={{display:"inline-block",width:"100%"}}
-            >
-              <div>
-                <div style={{display:"inline-block",
+            <div style={{display:"inline-block",width:"100%"}}>
+              <div style={{}}>
+
+                <div style={{display:"inline-block",color:base.COLOR.red,
                   fontSize:"18px",width:"58%",textAlign:"left"}}
                      onClick={()=>base.goto(`/plan_details/${item.id}`)}
                 >{item.name}</div>
-                <div style={{display:"inline-block",fontSize:"18px",width:"38%",textAlign:"right"}}>
+
+
+                <div style={{display:"inline-block",fontSize:"14px",width:"38%",textAlign:"right"}}>
                  已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/{item.total_days_count}天
                 </div>
+
+
               </div>
             </div>
 
-
-
-            <div style={{marginTop:"10px"}}>
+            <div style={{marginTop:"4px",marginBottom:"20px"}}>
               <CProgress percent={0.5} />
             </div>
 
             {/*<p>{start} - {end}</p>*/}
-
-
-
-            <CDaka plan={item_} daka_success={this.componentDidMount} style={{marginTop:"12px"}} />
+            <CDaka plan={item_} daka_success={this.componentDidMount} style={{}} />
             {/*<button onClick={()=>this.deletePlan(item.id)}>删除</button>*/}
           </div>
       })
 
       var new_plan_small_btn = null;
       if(this.state.show_new_plan == false)
-        new_plan_small_btn = <button  style={{fontSize:"16px"}} onClick={this.show_create_plan}>
+        new_plan_small_btn = <button  style={{fontSize:"16px",backgroundColor:base.COLOR.blue,color:"white",borderRadius:"2px",marginTop:"10px"}} onClick={this.show_create_plan}>
         我还有一个小目标
       </button>
 
@@ -306,10 +309,13 @@ export default class Home extends Component{
       <div style={{width:"100%"}}>
         <div style={{backgroundColor:base.COLOR.red,textAlign:"center",padding:"10px",
           linearGradient:"(90deg,#5dc5ff,#638fff)"}}>
-          <img style={{margin:"auto",width:100,height:100,borderRadius:50}} src={user.avatar}></img>
+          <img style={{margin:"auto",width:50,height:50,borderRadius:25}} src={user.avatar}></img>
           <div style={{margin:"auto",fontSize:"20px",color:"white"}}>{user.nick_name}</div>
         </div>
 
+        <div style={{textAlign:"center",marginTop:"20px"}}>
+          <p style={{color:base.COLOR.red,fontWeight:"bold",fontSize:"24px"}}>{base.slogon1}</p>
+        </div>
         {new_plan}
         <div style={{textAlign:"center",marginTop:"20px"}}>
           {show_view}

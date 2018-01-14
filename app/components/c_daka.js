@@ -3,6 +3,11 @@ import config from '../conf/config.json';
 import _ from "lodash"
 import axios from "axios"
 import * as base from "../betterme/base.js"
+const AlarmAdd = require('react-icons/lib/md/alarm-add');
+const AlarmOn = require('react-icons/lib/md/alarm-on');
+const Heart = require('react-icons/lib/fa/heart');
+
+
 
 export default class CDaka extends Component{
 
@@ -97,6 +102,8 @@ export default class CDaka extends Component{
   }
 
   render(){
+
+    var today = base.today();
     var show_view = null;
 
     var plan = this.props.plan;
@@ -106,26 +113,26 @@ export default class CDaka extends Component{
     if(total_days == finished_days)
     {
       show_view = <div
-        style={{padding:"8px",width:"100%",height:"40px",backgroundColor:"red",color:"white",borderRadius:4,marginTop:10}}
+        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.red})}
       >
-        完成了整个计划~
+        <Heart style={styles.icon}/>完成了整个计划~
       </div>
     }
     else if(plan.finished_daka_today == true)
     {
       show_view = <div
-        style={{padding:"8px",width:"100%",height:"40px",backgroundColor:"red",color:"white",borderRadius:4,marginTop:10}}
+        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.blue})}
       >
-          完成今天的打卡
+        <AlarmOn  style={styles.icon}/>完成今天的打卡
       </div>
     }
     else if(this.state.show_daka == false)
     {
       show_view = <div
-        style={{padding:"8px",width:"100%",height:"40px",backgroundColor:"green",color:"white",borderRadius:4,marginTop:10}}
+        style={Object.assign(styles.daka_box,{color:"black"})}
         onClick={()=>this.show_daka()}
       >
-        打卡
+        <AlarmAdd style={styles.icon}/>打卡
       </div>
     }
     else
@@ -135,14 +142,14 @@ export default class CDaka extends Component{
         return <img style={{border:"1px solid #f2f2f2",height:"80px",display:"inline-block",verticalAlign:"top",marginLeft:"4px"}} src={img[1]} />
       });
 
-      show_view = <div style={{padding:"8px",width:"100%",marginTop:10,textAlign:"left"}}>
+      show_view = <div style={{padding:"8px",width:"100%",marginTop:10,textAlign:"left",borderTop:"1px solid #f2f2f2"}}>
         <textarea
           style={{width:"100%",border:"1px solid #f2f2f2",fontSize:"16px"}}
-          placeholder={"我今天完成了...."}
+          placeholder={"说点什么吧...."}
           value={this.state["desc"]}
           onChange={(event)=>this.valueChange(event,"desc")} />
 
-        <div style={{marginTop:"4px"}}>
+        <div style={{marginTop:"4px",paddingBottom:"8px",borderBottom:"1px solid #f2f2f2"}}>
           <input ref={(ref) => this.upload = ref}
                  style={{display:"none"}}
                  onChange={(event)=> {
@@ -152,7 +159,7 @@ export default class CDaka extends Component{
 
           <div style={{textAlign:"center",border:"1px solid #f2f2f2",height:"80px",width:"80px",display:"inline-block",verticalAlign:"top"}}
                onClick={()=>{this.upload.click()}}>
-               <span style={{fontSize:"24px",marginTop:"30px"}}> + </span>
+            <p style={{fontSize:"24px",marginTop:"10px",color:base.COLOR.blue}}> <span style={{fontSize:"12px"}}>添加图片</span><br/> + </p>
           </div>
 
           {imgs_view}
@@ -160,12 +167,32 @@ export default class CDaka extends Component{
 
 
         <div style={{width:"100%",textAlign:"right"}}>
-          <button style={{marginTop:"10px",backgroundColor:"red",color:"white",fontSize:"16px",}} onClick={this.create_record}>确定</button>
+          <button style={{margin:"10px",padding:"4px",borderRadius:"4px",backgroundColor:base.COLOR.blue,color:"white",fontSize:"16px",}} onClick={()=>this.setState({show_daka:false})}>取消</button>
+
+          <button style={{margin:"10px",padding:"4px",borderRadius:"4px",backgroundColor:base.COLOR.red,color:"white",fontSize:"16px",}} onClick={this.create_record}>确定</button>
         </div>
 
       </div>
     }
 
     return show_view;
+  }
+}
+
+const styles={
+
+  daka_box:{padding:"8px",
+    width:"100%",height:"40px",
+    fontWeight:"bold",
+    backgroundColor:base.COLOR.gray,
+    padding:"10px",
+    marginBottom:"",
+    color:"white",
+    borderRadius:4,marginTop:10}
+   ,
+  icon:{
+    fontSize:"18px",
+    marginRight:"4px",
+    verticalAlign:"bottom"
   }
 }

@@ -17,10 +17,22 @@ export function formatDate(str)
   var f = m.format("YYYY-MM-DD")
   return f;
 }
-
+export function formatDate1(date)
+{
+  var m = moment(date)
+  return m.format("YYYY-MM-DD");
+}
 export function formatDateTime(str)
 {
   var m = moment(str);
   var f = m.format("YYYY-MM-DD h:mm:ss")
   return f;
 }
+
+
+export const COLOR={
+  blue:"rgb(0, 188, 212)",
+  red:"rgb(255, 64, 129)"
+}
+
+export const slogon1 = "小目标实现大梦想"

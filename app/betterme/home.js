@@ -9,12 +9,16 @@ import axios from "axios"
 import CDaka from "../components/c_daka.js"
 import CProgress from "../components/c_progress.js"
 
-const End = "end";
+
 import moment from "moment"
-import DatePicker from 'material-ui/DatePicker';
+import DatePicker  from 'material-ui/DatePicker';
+import TextField   from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 const PlanName = "plan_name";
 const Start = "start";
+const End = "end";
 
 export default class Home extends Component{
 
@@ -71,8 +75,6 @@ export default class Home extends Component{
       that.load_plans(user.id)
     })
   }
-
-
 
   deletePlan(id)
   {
@@ -139,40 +141,72 @@ export default class Home extends Component{
     //plans = [];
     if(this.state.show_new_plan == true)
     {
-       new_plan = <div style={{}}>
-         <div style={{textAlign:"center"}}>
-          <input style={inner_style.input}
-                 value={this.state.plan_name}
-                 placeholder={"输入我要制定的目标"}
-                 onChange={(event)=>this.valueChange(event,PlanName)} />
-         </div>
+       new_plan = <div style={{position:"absolute",top:0,left:0,
+         width:"100%",height:"100%",
+         backgroundColor:"rgba(0,0,0,0.5)"
+       }}
+       >
+           <div style={{position:"absolute", height:"200px",
+                        width:"100%",backgroundColor:"rgba(0,0,0,0.1)"
+           }}
+                onClick={()=>{this.setState({show_new_plan:false})}}
+           />
 
-         <div>
-         <input style={inner_style.input}
-                value={this.state.start}
-                placeholder={"开始日期"}
-                onChange={(event)=>this.valueChange(event,Start)} />
+            <div style={{margin:"auto",backgroundColor:"white",marginTop:"200px",margin:"8px",borderRadius:"4px"}}>
 
-         <input style={inner_style.input}
-                value={this.state.end}
-                placeholder={"结束日期"}
-                onChange={(event)=>this.valueChange(event,End)} />
+              <div style={{textAlign:"center",marginBottom:"1px",marginTop:"20px",marginTop:"20px"}}>
+                  <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{base.slogon1}</p>
+              </div>
 
-           <div style={{fontSize:"18px",padding:"4px",width:"100px",
-             border:"1px solid",margin:"auto",marginTop:"10px"}}
-                onClick={this.canel_new_plan}
-           >取消</div>
-           <DatePicker hintText="Landscape Dialog" />
-          <div style={{fontSize:"18px",padding:"4px",width:"100px",
-                       border:"1px solid",margin:"auto",marginTop:"10px"}}
-               onClick={this.create_new_plan}
-          >创建新计划</div>
-         </div>
+                 <div style={{textAlign:"center",marginBottom:"1px"}}>
+                  {/*<input style={inner_style.input}*/}
+                         {/*value={this.state.plan_name}*/}
+                         {/*placeholder={"输入我要制定的目标"}*/}
+                         {/*onChange={(event)=>this.valueChange(event,PlanName)} />*/}
+
+                   <TextField
+                     hintText={"我的目标名字"}
+                     value={this.state.plan_name}
+                     onChange={(event,new_value)=>this.setState({plan_name:new_value})}
+                   />
+                 </div>
+
+
+                 <div style={{textAlign:"center"}}>
+
+                   <DatePicker value={this.state.start} hintText="开始日期" autoOk={true}
+                               formatDate={(date)=>{return base.formatDate1(date)}}
+                               onChange={(event,newValue)=>{console.log(newValue);this.setState({start:newValue})}}/>
+
+                   <DatePicker value={this.state.end} hintText="结束日期" autoOk={true}
+                               formatDate={(date)=>{return base.formatDate1(date)}}
+                               onChange={(event,newValue)=>{this.setState({end:newValue})}}/>
+                 {/*<input style={inner_style.input}*/}
+                        {/*value={this.state.start}*/}
+                        {/*placeholder={"开始日期"}*/}
+                        {/*onChange={(event)=>this.valueChange(event,Start)} />*/}
+
+                 {/*<input style={inner_style.input}*/}
+                        {/*value={this.state.end}*/}
+                        {/*placeholder={"结束日期"}*/}
+                        {/*onChange={(event)=>this.valueChange(event,End)} />*/}
+
+
+                   <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={this.canel_new_plan}  ></RaisedButton>
+
+                  <RaisedButton label={"制定小目标"} secondary={true} style={{margin:"10px"}} onClick={this.create_new_plan} ></RaisedButton>
+                 </div>
+            </div>
+
+             <div style={{position:"absolute",height:"150px",
+                          width:"100%", backgroundColor:"rgba(0,0,0,0.5)"}}
+                  onClick={()=>{this.setState({show_new_plan:false})}}
+             />
        </div>
     }
 
     var show_view = null;
-    if(plans.length == 0)
+    if(plans.length == 0 )
     {
       var add_btn = null;
 
@@ -180,20 +214,19 @@ export default class Home extends Component{
       {
         add_btn = <div>
           <div style={{marginTop: "20px"}}>
-            <p style={{fontSize: "20px"}}> 哈喽 <span style={{fontSize:"28px",marginRight:"10px",}}>{user.nick_name}</span>
+            <p style={{fontSize: "18px",color:"black"}}>
+              <span style={{fontSize:"28px",padding:"8px",color:base.COLOR.red}}>@{user.nick_name}</span>
             </p>
-            <p  style={{fontSize: "20px"}}>  我们来指定第一个小目标吧~</p>
-            <p style={{fontSize: "20px"}}>
-              做更好的自己
-            </p>
+            <p  style={{fontSize: "20px",color:"black",fontSize: "18px"}}> 我们来制定你第一个小目标吧~</p>
           </div>
           <div style={{
                       position: "relative", margin: "auto",
                       width: 200, height: 200, borderRadius: 100,
-                      backgroundColor: "yellow", marginTop: "20px",
-                      boxShadow:"2px 2px 2px #888888"
+                      backgroundColor: base.COLOR.red, marginTop: "20px",
+                      boxShadow:"0 4px 8px hsla(0,0%,71%,.8)"
                     }}
-               onClick={this.show_create_plan}
+               onClick={this.show_create_plan
+               }
           >
             <div
               style={{
@@ -205,7 +238,7 @@ export default class Home extends Component{
                 marginLeft: "-50px", marginTop: "-20px"
               }}
             >
-              <span style={{fontSize: "30px"}}>GO</span>
+              <span style={{fontSize: "30px",color:"white",fontWeight:"bold"}}>GO</span>
             </div>
           </div>
         </div>
@@ -264,18 +297,20 @@ export default class Home extends Component{
 
       var show_view = <div style={{marginTop:"10px"}}>
         {plans_}
-        {new_plan}
+
         {new_plan_small_btn}
       </div>
     }
 
     return (
       <div style={{width:"100%"}}>
-        <div style={{backgroundColor:"red",textAlign:"center",padding:"10px"}}>
-          <img style={{margin:"auto",width:100,height:100,borderRadius:50,marginTop:30}} src={user.avatar}></img>
-          <div style={{margin:"auto",fontSize:"18px"}}>{user.nick_name}</div>
+        <div style={{backgroundColor:base.COLOR.red,textAlign:"center",padding:"10px",
+          linearGradient:"(90deg,#5dc5ff,#638fff)"}}>
+          <img style={{margin:"auto",width:100,height:100,borderRadius:50}} src={user.avatar}></img>
+          <div style={{margin:"auto",fontSize:"20px",color:"white"}}>{user.nick_name}</div>
         </div>
 
+        {new_plan}
         <div style={{textAlign:"center",marginTop:"20px"}}>
           {show_view}
         </div>
@@ -286,5 +321,5 @@ export default class Home extends Component{
 }
 
 const inner_style = {
-  input:{fontSize:"22px",minWidth:"100px",border:"1px solid",marginTop:"10px",padding:"5px"}
+  input:{fontSize:"22px",minWidth:"120px",border:"0px",borderBottom:"1px solid #f2f2f2",marginTop:"10px"}
 }

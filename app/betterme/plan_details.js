@@ -103,7 +103,7 @@ class PlanDetails extends Component{
     })
     return <div style={{backgroundColor:"white"}}>
 
-      <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:base.COLOR.blue}}>
+      <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:base.COLOR.red}}>
 
         <p style={{color:"white"}}> {plan_info.name}</p>
         <p style={{color:"white",fontSize:"12px"}}> 从{start} 到  {end}</p>
@@ -114,8 +114,8 @@ class PlanDetails extends Component{
         <CCalendar start={start} end={end} today={moment.now()} events={events}></CCalendar>
       </div>
 
-      <div style={{backgroundColor:"white",padding:"6px",minHeight:400}}>
-            <div style={{padding:"8px",textAlign:"center",fontSize:"14px",color:"#808080"}}>--- 我的打卡记录 ---</div>
+      <div style={{backgroundColor:"white",padding:"18px",minHeight:400}}>
+            <div style={{paddingBottom:"8px",textAlign:"center",fontSize:"14px",color:"#808080"}}>--- 我的打卡记录 ---</div>
         {daka_views}
       </div>
 

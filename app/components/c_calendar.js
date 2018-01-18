@@ -58,7 +58,10 @@ export default class CCalendar extends Component
 
     var responsive_style = {width:DayWidth,height:DayWidth, borderRadius:DayWidth/2,margin:DayMargin}
 
-    var daymaps = [[0,"SUN"], [1,"MON"] ,[2,"TUE"] ,[3,"WED"] ,[4,"THU"] ,[5,"FRI"] ,[6,"SAT"]]
+    //var daymaps = [[0,"SUN"], [1,"MON"] ,[2,"TUE"] ,[3,"WED"] ,[4,"THU"] ,[5,"FRI"] ,[6,"SAT"]]
+    var daymaps = [[0,"日"], [1,"一"] ,[2,"二"] ,[3,"三"] ,[4,"四"] ,[5,"五"] ,[6,"六"]]
+
+
     var today = Moment();
     var views = daymaps.map((item,index)=>{
 
@@ -76,7 +79,7 @@ export default class CCalendar extends Component
           let dates = i_.date();
           console.log("---",i_.format("YYYYMMDD"),start.format("YYYYMMDD"),end.format("YYYYMMDD"));
           let  style_ = {};
-          let   text_styles = {color:"rgb(153, 153, 153)",fontSize:12};
+          let   text_styles = {color:"rgb(153, 153, 153)",fontSize:12,textAlign:"center",margin:"auto"};
 
           if(i_ >= start && i_ <= end)
           {
@@ -96,8 +99,11 @@ export default class CCalendar extends Component
           }
 
 
+          style_["margin"]="auto";
+          style_["marginBottom"]="4px";
+          style_["textAlign"]="center";
           dayView = <div style={style_}>
-            <div style={text_styles}>{dates}</div>
+            <span style={text_styles}>{dates}</span>
           </div>
           style_ = {};
         }
@@ -106,17 +112,17 @@ export default class CCalendar extends Component
       })
 
       //添加标题
-      var head = <span  style={{color:"#999"}}>{item[1]}</span>
+      var head = <div  style={{color:"#999",textAlign:"center",margin:"auto"}}>{item[1]}</div>
       column.splice(0,0,head);
 
-      return <div style={{display:"inline-block",width:"14%",verticalAlign:"top"}}>{column}</div>;
+      return <div style={{display:"inline-block",width:"14%",textAlign:"center", verticalAlign:"top"}}>{column}</div>;
     })
 
 
     //console.log("views",views);
 
     return (
-      <div style={{width:"100%",marginTop:"0px"}}>
+      <div style={{width:"100%",marginTop:"0px",textAlign:"center"}}>
         {views}
       </div>
     );
@@ -127,16 +133,17 @@ export default class CCalendar extends Component
 const styles ={
   day:{
     textAlign:"center",
-    padding:2,
-    margin:2,
-    width:20,
-    height:20,
-    borderRadius:10,
+    fontSize:"12px",
+    paddingTop:"2px",
+    margin:"2px",
+    width:"18px",
+    height:"18px",
+    borderRadius:"9px",
     borderWidth:1,
     borderColor:"rgb(71, 175, 255)"
   },
   hilight_day:{
-    backgroundColor:"rgb(71, 175, 255)",
+    backgroundColor:base.COLOR.blue,
   },
 
   empty_day:{

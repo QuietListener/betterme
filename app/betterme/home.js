@@ -261,7 +261,7 @@ export default class Home extends Component{
 
           return <div style={{border:"1px solid #fff",
                               backgroundColor:"white",
-                              padding:"20px",margin:"10px",borderRadius:"4px",
+                              padding:"20px",paddingTop:"2px",margin:"10px",borderRadius:"4px",
                               boxShadow:"0 4px 8px hsla(0,0%,71%,.8)"
 
           }}
@@ -269,13 +269,13 @@ export default class Home extends Component{
             <div style={{display:"inline-block",width:"100%"}}>
               <div style={{}}>
 
-                <div style={{display:"inline-block",color:base.COLOR.red,
-                  fontSize:"18px",width:"58%",textAlign:"left"}}
+                <div style={{padding:"4px",display:"inline-block",color:base.COLOR.red, fontSize:"18px",width:"100%",textAlign:"center"}}
                      onClick={()=>base.goto(`/plan_details/${item.id}`)}
                 >{item.name}</div>
 
+                <div style={{borderBottom:"1px solid #f2f2f2"}}/>
 
-                <div style={{display:"inline-block",fontSize:"14px",width:"38%",textAlign:"right"}}>
+                <div style={{display:"inline-block",fontSize:"14px",width:"100%",textAlign:"left"}}>
                  已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/{item.total_days_count}天
                 </div>
 

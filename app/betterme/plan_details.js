@@ -5,6 +5,7 @@ import axios from "axios"
 import * as base from "./base.js"
 import CCalendar from "../components/c_calendar.js"
 import moment from "moment"
+const ThumbsUp = require('react-icons/lib/fa/thumbs-up')
 
 import "../css/app.css"
 
@@ -69,25 +70,26 @@ class PlanDetails extends Component{
 
       var images_view = images.map((img)=>{
         let url = `${base.IMG_BASE}/${img}`;
-        return <img style={{margin:"4px"}} width={150}  height={150} src={url} />
+        return <img style={{margin:"4px",border:"1px solid #f2f2f2",borderRadius:"2px"}} width={80}  height={80} src={url} />
       })
 
 
-      return <div style={{width:"100%",padding:"8px",margin:"4px",border:"1px solid #f2f2f2"}}>
 
-          <div>
+      return <div style={{position:"relative",width:"100%",padding:"8px",borderRadius:"2px",border:"1px solid #f2f2f2",padding:"4px",marginBottom:"10px",backgroundColor:"#f2f2f2"}}>
 
-            <div>{item.desc}</div>
+         <div style={{fontSize:"14px",margin:"4px",borderBottom:"1px solid #f2f2f2",paddingBottom:"4px"}}>
+           <div style={{color:"#808080",fontSize:"12px",textAlign:"left"}}>
+             {base.formatDateTime(item.created_at)}
+           </div>
+           <p style={{color:base.COLOR.red}}>{item.desc}</p>
+           </div>
 
-          </div>
-
-          <div>
+         <div>
              {images_view}
           </div>
 
-          <div>
-            {base.formatDateTime(item.created_at)}
-          </div>
+        {<ThumbsUp style={{position:"absolute",top:2,right:2,fontSize:20,color:base.COLOR.red}}/>}
+
       </div>
     })
 
@@ -99,20 +101,21 @@ class PlanDetails extends Component{
     var events =  daka_records.map((item)=>{
       return base.formatDate(item.created_at);
     })
-    return <div>
+    return <div style={{backgroundColor:"white"}}>
 
-      <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:"f2f2f2"}}>
+      <div style={{textAlign:"left",borderBottom:"1px solid #f2f2f2",marginBottom:"6px",padding:"8px",backgroundColor:base.COLOR.blue}}>
 
-        <p> {plan_info.name}</p>
-        <p> {start}-{end}</p>
+        <p style={{color:"white"}}> {plan_info.name}</p>
+        <p style={{color:"white",fontSize:"12px"}}> 从{start} 到  {end}</p>
 
       </div>
 
-      <div style={{textAlign:"center"}}>
+      <div style={{textAlign:"center",borderBottom:"1px solid #f2f2f2"}}>
         <CCalendar start={start} end={end} today={moment.now()} events={events}></CCalendar>
       </div>
 
-      <div>
+      <div style={{backgroundColor:"white",padding:"6px",minHeight:400}}>
+            <div style={{padding:"8px",textAlign:"center",fontSize:"14px",color:"#808080"}}>--- 我的打卡记录 ---</div>
         {daka_views}
       </div>
 

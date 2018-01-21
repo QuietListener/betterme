@@ -17,7 +17,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 const ControlPoint = require('react-icons/lib/md/control-point');
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-
 const PlanName = "plan_name";
 const Start = "start";
 const End = "end";
@@ -94,13 +93,28 @@ export default class Home extends Component{
 
   check_date(from,to,span)
   {
+    console.log("check_date",from,to)
+    if(from != null)
+    {
+      var today =moment().startOf("day")
+
+      if(from - today < 0 )
+      {
+        this.setState({new_plan_msg:`开始时间要在${today.format(base.DateFormat)}之后喔~`})
+        return false;
+      }
+    }
+
     if(from == null || to == null)
       return true;
 
     let min_seconds = to-from ;
     var days = min_seconds*1.0/base.DayMinSeconds;
     if(days > span)
+    {
+      this.setState({new_plan_msg:`这个目标太大了，最好不要超过${span}天`})
       return false;
+    }  
 
     return true;
   }
@@ -211,7 +225,7 @@ export default class Home extends Component{
                                  let ret = this.check_date(newValue,this.state.end,7);
                                  if(ret == false)
                                  {
-                                   this.setState({open:true,new_plan_msg:`这个目标太大了，最好不要超过${7}天`})
+                                   this.setState({open:true})
                                    return;
                                  }
                                  this.setState({start:newValue})
@@ -225,7 +239,7 @@ export default class Home extends Component{
                                  let ret = this.check_date(this.state.start,newValue,7);
                                  if(ret == false)
                                  {
-                                   this.setState({open:true,new_plan_msg:`这个目标太大了，最好不要超过${7}天`})
+                                   this.setState({open:true})
                                    return;
                                  }
 
@@ -255,7 +269,7 @@ export default class Home extends Component{
 
 
          <Dialog
-           title="Dialog With Actions"
+           title=""
            actions={actions}
            modal={false}
            open={this.state.open}
@@ -336,8 +350,12 @@ export default class Home extends Component{
 
                 <div style={{borderBottom:"1px solid #f2f2f2"}}/>
 
-                <div style={{display:"inline-block",fontSize:"14px",width:"100%",textAlign:"left"}}>
-                 已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/{item.total_days_count}天
+                <div style={{display:"inline-block",fontSize:"14px",width:"58%",textAlign:"left"}}>
+                  <span style={{color:base.COLOR.red}}>{start}</span> 到 <span  style={{color:base.COLOR.red}}>{end}</span>
+                </div>
+
+                <div style={{display:"inline-block",fontSize:"14px",width:"40%",textAlign:"right"}}>
+                  已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/{item.total_days_count}天
                 </div>
 
 
@@ -377,7 +395,7 @@ export default class Home extends Component{
         </div>
 
         <div style={{textAlign:"center",marginTop:"20px"}}>
-          <p style={{color:base.COLOR.red,fontWeight:"bold",fontSize:"24px"}}>{base.slogon1}</p>
+          <p style={{color:base.COLOR.red,fontWeight:"bold",fontSize:"14px"}}>  {base.slogon1} <br/><span style={{color:"black",fontSize:"12px",fontWeight:"normal"}}>今天是{base.today()}</span></p>
         </div>
         {new_plan}
         <div style={{textAlign:"center",marginTop:"20px"}}>

@@ -12,6 +12,8 @@ export function goto(path)
   history.push(path)
 }
 
+export const DateFormat = "YYYY-MM-DD";
+
 export function formatDate(str)
 {
   var m = moment(str,"YYYY-MM-DD");
@@ -39,7 +41,8 @@ export function today()
 export const COLOR={
   blue:"rgb(0, 188, 212)",
   red:"rgb(255, 64, 129)",
-  gray:"#f2f2f2"
+  gray:"#f2f2f2",
+  yellow:"#FFEB3B"
 
 }
 

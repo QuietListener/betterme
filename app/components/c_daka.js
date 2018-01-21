@@ -6,7 +6,9 @@ import * as base from "../betterme/base.js"
 const AlarmAdd = require('react-icons/lib/md/alarm-add');
 const AlarmOn = require('react-icons/lib/md/alarm-on');
 const Heart = require('react-icons/lib/fa/heart');
+const Stop = require('react-icons/lib/go/stop');
 
+import Moment from "moment"
 
 
 export default class CDaka extends Component{
@@ -110,12 +112,24 @@ export default class CDaka extends Component{
     var finished_days = plan.finished_days_count
     var total_days = plan.total_days_count
 
+    var today_ = Moment();
+    var end  = Moment(plan.end);
+
+    console.log("end",end);
     if(total_days == finished_days)
     {
       show_view = <div
         style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.red})}
       >
         <Heart style={styles.icon}/>完成了整个计划~
+      </div>
+    }
+    else if(today_ - end > 0)
+    {
+      show_view = <div
+        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.yellow})}
+      >
+        <Stop  style={styles.icon}/>计划过期
       </div>
     }
     else if(plan.finished_daka_today == true)

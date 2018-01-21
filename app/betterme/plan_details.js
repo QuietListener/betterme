@@ -114,7 +114,7 @@ class PlanDetails extends Component{
       </div>
 
       <div style={{textAlign:"center",borderBottom:"1px solid #f2f2f2"}}>
-        <CCalendar start={start} end={end} today={moment.now()} events={events}></CCalendar>
+        <CCalendar start={start} end={end} today={moment(start)} events={events}></CCalendar>
       </div>
 
       <div style={{backgroundColor:"white",padding:"18px",minHeight:400}}>

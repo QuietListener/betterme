@@ -202,6 +202,7 @@ const styles={
     padding:"10px",
     marginBottom:"",
     color:"white",
+    textAlign:"center",
     borderRadius:4,marginTop:10}
    ,
   icon:{

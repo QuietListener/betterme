@@ -15,7 +15,8 @@ import DatePicker  from 'material-ui/DatePicker';
 import TextField   from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 const ControlPoint = require('react-icons/lib/md/control-point');
-
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 const PlanName = "plan_name";
 const Start = "start";
@@ -44,6 +45,7 @@ export default class Home extends Component{
     this.valueChange = this.valueChange.bind(this);
     this.create_new_plan = this.create_new_plan.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
 
@@ -89,6 +91,20 @@ export default class Home extends Component{
     }
   }
 
+
+  check_date(from,to,span)
+  {
+    if(from == null || to == null)
+      return true;
+
+    let min_seconds = to-from ;
+    var days = min_seconds*1.0/base.DayMinSeconds;
+    if(days > span)
+      return false;
+
+    return true;
+  }
+
   create_new_plan()
   {
       var plan_name = this.state.plan_name;
@@ -130,6 +146,11 @@ export default class Home extends Component{
     this.setState(new_state);
   }
 
+  handleClose()
+  {
+    this.setState({open: false});
+  };
+
   render(){
 
     var user = this.state.user;
@@ -142,6 +163,14 @@ export default class Home extends Component{
     //plans = [];
     if(this.state.show_new_plan == true)
     {
+      const actions = [
+        <FlatButton
+          label="取消"
+          primary={true}
+          onClick={this.handleClose}
+        />,
+      ];
+
        new_plan = <div style={{position:"absolute",top:0,left:0,
          width:"100%",height:"100%",
          backgroundColor:"rgba(0,0,0,0.5)"
@@ -177,11 +206,31 @@ export default class Home extends Component{
 
                    <DatePicker value={this.state.start} hintText="开始日期" autoOk={true}
                                formatDate={(date)=>{return base.formatDate1(date)}}
-                               onChange={(event,newValue)=>{console.log(newValue);this.setState({start:newValue})}}/>
+                               onChange={(event,newValue)=>{
+                                 console.log(newValue);
+                                 let ret = this.check_date(newValue,this.state.end,7);
+                                 if(ret == false)
+                                 {
+                                   this.setState({open:true,new_plan_msg:`这个目标太大了，最好不要超过${7}天`})
+                                   return;
+                                 }
+                                 this.setState({start:newValue})
+
+                               }}/>
 
                    <DatePicker value={this.state.end} hintText="结束日期" autoOk={true}
                                formatDate={(date)=>{return base.formatDate1(date)}}
-                               onChange={(event,newValue)=>{this.setState({end:newValue})}}/>
+                               onChange={(event,newValue)=>{
+                                 console.log(newValue);
+                                 let ret = this.check_date(this.state.start,newValue,7);
+                                 if(ret == false)
+                                 {
+                                   this.setState({open:true,new_plan_msg:`这个目标太大了，最好不要超过${7}天`})
+                                   return;
+                                 }
+
+                                 this.setState({end:newValue})
+                               }}/>
                  {/*<input style={inner_style.input}*/}
                         {/*value={this.state.start}*/}
                         {/*placeholder={"开始日期"}*/}
@@ -203,6 +252,18 @@ export default class Home extends Component{
                           width:"100%", backgroundColor:"rgba(0,0,0,0.5)"}}
                   onClick={()=>{this.setState({show_new_plan:false})}}
              />
+
+
+         <Dialog
+           title="Dialog With Actions"
+           actions={actions}
+           modal={false}
+           open={this.state.open}
+           onRequestClose={this.handleClose}
+         >
+           {this.state.new_plan_msg}
+         </Dialog>
+
        </div>
     }
 

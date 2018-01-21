@@ -6,6 +6,7 @@ import * as base from "./base.js"
 import CCalendar from "../components/c_calendar.js"
 import moment from "moment"
 const ThumbsUp = require('react-icons/lib/fa/thumbs-up')
+import CDaka from "../components/c_daka.js"
 
 import "../css/app.css"
 
@@ -16,6 +17,8 @@ class PlanDetails extends Component{
     super(props)
     var id = this.props.params.id;
     this.state={id:id};
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.load = this.load.bind(this);
   }
 
   componentDidMount()
@@ -116,6 +119,9 @@ class PlanDetails extends Component{
 
       <div style={{backgroundColor:"white",padding:"18px",minHeight:400}}>
             <div style={{paddingBottom:"8px",textAlign:"center",fontSize:"14px",color:"#808080"}}>--- 我的打卡记录 ---</div>
+
+        <CDaka plan={this.state.plan_info} daka_success={this.componentDidMount} style={{marginBottom:"20px"}} />
+        <div style={{height:"20px"}} />
         {daka_views}
       </div>
 

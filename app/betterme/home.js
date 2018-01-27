@@ -33,7 +33,8 @@ export default class Home extends Component{
     this.state={
       show_new_plan:false,
       plan_name:"",
-      plans:init_plans
+      plans:init_plans,
+      MAX_DAYS:7
     };
 
     this.load = this.load.bind(this);
@@ -105,16 +106,25 @@ export default class Home extends Component{
       }
     }
 
+    if(from != null && to != null)
+    {
+      let min_seconds = to - from;
+      if(min_seconds <=0 )
+      {
+        this.setState({new_plan_msg: `结束日期太早了吧~`})
+        return false;
+      }
+
+      var days = min_seconds * 1.0 / base.DayMinSeconds;
+      if (days > span)
+      {
+        this.setState({new_plan_msg: `这个目标太大了，最好不要超过${span}天`})
+        return false;
+      }
+    }
+
     if(from == null || to == null)
       return true;
-
-    let min_seconds = to-from ;
-    var days = min_seconds*1.0/base.DayMinSeconds;
-    if(days > span)
-    {
-      this.setState({new_plan_msg:`这个目标太大了，最好不要超过${span}天`})
-      return false;
-    }  
 
     return true;
   }
@@ -218,11 +228,11 @@ export default class Home extends Component{
 
                  <div style={{textAlign:"center"}}>
 
-                   <DatePicker value={this.state.start} hintText="开始日期" autoOk={true}
+                   <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
                                formatDate={(date)=>{return base.formatDate1(date)}}
                                onChange={(event,newValue)=>{
                                  console.log(newValue);
-                                 let ret = this.check_date(newValue,this.state.end,7);
+                                 let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
                                  if(ret == false)
                                  {
                                    this.setState({open:true})
@@ -232,11 +242,11 @@ export default class Home extends Component{
 
                                }}/>
 
-                   <DatePicker value={this.state.end} hintText="结束日期" autoOk={true}
+                   <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
                                formatDate={(date)=>{return base.formatDate1(date)}}
                                onChange={(event,newValue)=>{
                                  console.log(newValue);
-                                 let ret = this.check_date(this.state.start,newValue,7);
+                                 let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
                                  if(ret == false)
                                  {
                                    this.setState({open:true})

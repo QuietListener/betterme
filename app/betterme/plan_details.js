@@ -56,7 +56,7 @@ class PlanDetails extends Component{
     var plan_info = this.state.plan_info;
     var daka_records = this.state.daka_records;
 
-    if(plan_info == null )
+    if(plan_info == null || daka_records == null)
       return null;
 
 
@@ -71,11 +71,15 @@ class PlanDetails extends Component{
         images = JSON.parse(images_);
       }
 
-      var images_view = images.map((img)=>{
-        let url = `${base.IMG_BASE}/${img}`;
-        return <img style={{margin:"4px",border:"1px solid #f2f2f2",borderRadius:"2px"}} width={80}  height={80} src={url} />
-      })
-
+      var images_view = null;
+      if(images!=null && images.length > 0)
+      {
+        images_view = images.map((img) => {
+          let url = `${base.IMG_BASE}/${img}`;
+          return <img style={{margin: "4px", border: "1px solid #f2f2f2", borderRadius: "2px"}} width={80} height={80}
+                      src={url}/>
+        })
+      }
 
 
       return <div style={{position:"relative",width:"100%",padding:"8px",borderRadius:"2px",border:"1px solid #f2f2f2",padding:"4px",marginBottom:"10px",backgroundColor:"#f2f2f2"}}>

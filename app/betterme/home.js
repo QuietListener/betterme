@@ -299,11 +299,10 @@ export default class Home extends Component{
       if(this.state.show_new_plan == false)
       {
         add_btn = <div>
-          <div style={{marginTop: "20px"}}>
-            <p style={{fontSize: "18px",color:"black"}}>
-              <span style={{fontSize:"28px",padding:"8px",color:base.COLOR.red}}>@{user.nick_name}</span>
-            </p>
-            <p  style={{fontSize: "20px",color:"black",fontSize: "18px"}}> 我们来制定你第一个小目标吧~</p>
+          <div style={{marginTop: "10px"}}>
+            <p  style={{fontSize: "20px",color:"black",fontSize: "18px"}}>
+              <span  style={{fontSize:"28px",padding:"8px",color:base.COLOR.red}}>@{user.nick_name}</span>
+              来制定你第一个小目标吧~</p>
           </div>
           <div style={{
                       position: "relative", margin: "auto",
@@ -330,7 +329,7 @@ export default class Home extends Component{
         </div>
       }
 
-      show_view =<div style={{marginTop:"100px"}}>
+      show_view =<div style={{marginTop:"30px"}}>
         {add_btn}
         {new_plan}
       </div>

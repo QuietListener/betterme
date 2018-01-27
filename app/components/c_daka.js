@@ -169,7 +169,7 @@ export default class CDaka extends Component{
                  onChange={(event)=> {
                    this.readFile(event)
                  }}
-                 type='file' multiple accept='image/*' />
+                 type='file' multiple accept='image/*' capture='camera'/>
 
           <div style={{textAlign:"center",border:"1px solid #f2f2f2",height:"80px",width:"80px",display:"inline-block",verticalAlign:"top"}}
                onClick={()=>{this.upload.click()}}>

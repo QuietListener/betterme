@@ -9,7 +9,6 @@ import axios from "axios"
 import CDaka from "../components/c_daka.js"
 import CProgress from "../components/c_progress.js"
 
-
 import moment from "moment"
 import DatePicker  from 'material-ui/DatePicker';
 import TextField   from 'material-ui/TextField';
@@ -17,6 +16,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 const ControlPoint = require('react-icons/lib/md/control-point');
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import CLoading from "../components/loadings/c_loading";
+
 const PlanName = "plan_name";
 const Start = "start";
 const End = "end";
@@ -34,7 +35,9 @@ export default class Home extends Component{
       show_new_plan:false,
       plan_name:"",
       plans:init_plans,
-      MAX_DAYS:7
+      MAX_DAYS:7,
+      loading:true,
+      daka_loading:false
     };
 
     this.load = this.load.bind(this);
@@ -46,6 +49,10 @@ export default class Home extends Component{
     this.create_new_plan = this.create_new_plan.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClose = this.handleClose.bind(this);
+
+    this.daka_error = this.daka_error.bind(this);
+    this.daka_start = this.daka_start.bind(this);
+
   }
 
 
@@ -64,18 +71,26 @@ export default class Home extends Component{
       var plans = res.data.data;
       that.setState({plans:plans});
       console.log(that.state);
+      this.setState({loading:false});
+    }).catch(e=>{
+      this.setState({loading:false});
     })
   }
 
   load()
   {
     var that = this;
+    this.setState({loading:true});
+
     axios.get(`${base.BaseHost}/index/user.json`).then((res)=>{
       console.log("res",res);
       var user = res.data.data;
       that.setState({user:user});
       console.log(that.state);
       that.load_plans(user.id)
+    }).catch(e=>{
+      console.log(e);
+      this.setState({loading:false});
     })
   }
 
@@ -141,6 +156,7 @@ export default class Home extends Component{
       plans.push(new_plan);
 
      var that = this;
+     this.setState({loading:true});
      axios.post(`${base.BaseHost}/index/create_plan.json`,
              {
                name:plan_name,
@@ -149,7 +165,11 @@ export default class Home extends Component{
              }).then((res)=>{
                 that.load_plans(that.state.user.id)
                 that.canel_new_plan();
-                })
+                this.setState({loading:false});
+             }).catch((e)=>{
+                 console.log(e);
+                 this.setState({loading:false});
+               })
   }
 
   canel_new_plan()
@@ -175,11 +195,26 @@ export default class Home extends Component{
     this.setState({open: false});
   };
 
+  daka_start()
+  {
+    this.setState({loading:true})
+  }
+
+  daka_error(e)
+  {
+    console.error(e);
+    this.setState({loading:false})
+  }
+
   render(){
+
+    var loading_view = <CLoading/>
+    if(this.state.loading == false)
+      loading_view = true;
 
     var user = this.state.user;
     if(user == null)
-      return null;
+      return loading_view;
 
     var plans = this.state.plans;
     var new_plan = null;
@@ -376,7 +411,11 @@ export default class Home extends Component{
             </div>
 
             {/*<p>{start} - {end}</p>*/}
-            <CDaka plan={item_} daka_success={this.componentDidMount} style={{}} />
+            <CDaka plan={item_}
+                   daka_success={this.componentDidMount}
+                   daka_start={()=>this.daka_start()}
+                   daka_error={(e)=>this.daka_error(e)}
+                   style={{}} />
             {/*<button onClick={()=>this.deletePlan(item.id)}>删除</button>*/}
           </div>
       })
@@ -395,8 +434,12 @@ export default class Home extends Component{
       </div>
     }
 
+
+
+
     return (
       <div style={{width:"100%"}}>
+        {loading_view}
         <div style={{backgroundColor:base.COLOR.red,textAlign:"center",padding:"10px",
           linearGradient:"(90deg,#5dc5ff,#638fff)"}}>
           <img style={{margin:"auto",width:50,height:50,borderRadius:25}} src={user.avatar}></img>

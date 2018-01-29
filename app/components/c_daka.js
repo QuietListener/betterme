@@ -8,6 +8,7 @@ const AlarmOn = require('react-icons/lib/md/alarm-on');
 const Heart = require('react-icons/lib/fa/heart');
 const Stop = require('react-icons/lib/go/stop');
 
+import CLoading from "../components/loadings/c_loading.js"
 import Moment from "moment"
 
 
@@ -20,7 +21,8 @@ export default class CDaka extends Component{
     this.state={
       show_daka:false,
       thought:null,
-      images:[]
+      images:[],
+      loading:false
     };
 
     this.valueChange = this.valueChange.bind(this);
@@ -86,14 +88,26 @@ export default class CDaka extends Component{
         console.log(item);
         console.log(index);
 
-
         formData.append(`images[]`,this.upload.files[index]);
+      }
+
+
+      if(this.props.daka_start)
+      {
+        this.props.daka_start();
       }
 
       axios.post(`${base.BaseHost}/index/create_plan_record.json`,
         formData).then((res)=>{
         if(that.props.daka_success)
             that.props.daka_success();
+      }).catch((e)=>{
+
+          if(this.props.daka_error)
+          {
+            this.props.daka_error(e);
+          }
+
       })
 
   }

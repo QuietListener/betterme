@@ -8,6 +8,7 @@ import moment from "moment"
 const ThumbsUp = require('react-icons/lib/fa/thumbs-up')
 import CDaka from "../components/c_daka.js"
 import CLoading from "../components/loadings/c_loading.js"
+import CImgs from "../components/c_imgs.js"
 
 import "../css/app.css"
 
@@ -94,10 +95,15 @@ class PlanDetails extends Component{
       var images_view = null;
       if(images!=null && images.length > 0)
       {
+        let urls_ = images.map((img) => {
+          let url = `${base.IMG_BASE}/${img}`;
+          return url;
+        });
+
         images_view = images.map((img) => {
           let url = `${base.IMG_BASE}/${img}`;
-          return <img style={{margin: "4px", border: "1px solid #f2f2f2", borderRadius: "2px"}} width={80} height={80}
-                      src={url}/>
+          //return <img style={{margin: "4px", border: "1px solid #f2f2f2", borderRadius: "2px"}}  height={80} src={url}/>
+          return <CImgs imgs={urls_} index={0} height={"80px"}/>
         })
       }
 

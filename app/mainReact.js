@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {render} from 'react-dom';
 import Home from './betterme/home.js'
 import PlanDetails from "./betterme/plan_details.js"
+import NewPlan from "./betterme/new_plan.js"
 
 import './css/main.css'
 
@@ -29,6 +30,7 @@ class App extends Component
         <Router  history={hashHistory} >
             <Route path="/" component={Home}></Route>
             <Route path="/plan_details/:id" component={PlanDetails} />
+            <Route path="/new_plan/:id" component={NewPlan} />
           </Router>
         </Provider>
       </MuiThemeProvider>)

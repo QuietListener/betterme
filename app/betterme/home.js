@@ -13,7 +13,8 @@ import moment from "moment"
 import DatePicker  from 'material-ui/DatePicker';
 import TextField   from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-const ControlPoint = require('react-icons/lib/md/control-point');
+const IconControlPoint = require('react-icons/lib/md/control-point');
+const IconEdit = require("react-icons/lib/fa/edit");
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CLoading from "../components/loadings/c_loading";
@@ -46,9 +47,9 @@ export default class Home extends Component{
     this.canel_new_plan = this.canel_new_plan.bind(this);
     this.show_create_plan = this.show_create_plan.bind(this);
     this.valueChange = this.valueChange.bind(this);
-    this.create_new_plan = this.create_new_plan.bind(this);
+
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+
 
     this.daka_error = this.daka_error.bind(this);
     this.daka_start = this.daka_start.bind(this);
@@ -107,71 +108,6 @@ export default class Home extends Component{
   }
 
 
-  check_date(from,to,span)
-  {
-    console.log("check_date",from,to)
-    if(from != null)
-    {
-      var today =moment().startOf("day")
-
-      if(from - today < 0 )
-      {
-        this.setState({new_plan_msg:`开始时间要在${today.format(base.DateFormat)}之后喔~`})
-        return false;
-      }
-    }
-
-    if(from != null && to != null)
-    {
-      let min_seconds = to - from;
-      if(min_seconds <=0 )
-      {
-        this.setState({new_plan_msg: `结束日期太早了吧~`})
-        return false;
-      }
-
-      var days = min_seconds * 1.0 / base.DayMinSeconds;
-      if (days > span)
-      {
-        this.setState({new_plan_msg: `这个目标太大了，最好不要超过${span}天`})
-        return false;
-      }
-    }
-
-    if(from == null || to == null)
-      return true;
-
-    return true;
-  }
-
-  create_new_plan()
-  {
-      var plan_name = this.state.plan_name;
-      var start = this.state.start;
-      var end  = this.state.end;
-
-      var new_plan = {plan_name,start,end};
-
-      var plans = this.state.plans;
-      plans.push(new_plan);
-
-     var that = this;
-     this.setState({loading:true});
-     axios.post(`${base.BaseHost}/index/create_plan.json`,
-             {
-               name:plan_name,
-               start_time:start,
-               end_time:end
-             }).then((res)=>{
-                that.load_plans(that.state.user.id)
-                that.canel_new_plan();
-                this.setState({loading:false});
-             }).catch((e)=>{
-                 console.log(e);
-                 this.setState({loading:false});
-               })
-  }
-
   canel_new_plan()
   {
     this.setState({show_new_plan:false});
@@ -189,11 +125,6 @@ export default class Home extends Component{
     new_state[item_name] =  event.target.value;
     this.setState(new_state);
   }
-
-  handleClose()
-  {
-    this.setState({open: false});
-  };
 
   daka_start()
   {
@@ -220,111 +151,7 @@ export default class Home extends Component{
     var new_plan = null;
 
     //plans = [];
-    if(this.state.show_new_plan == true)
-    {
-      const actions = [
-        <FlatButton
-          label="取消"
-          primary={true}
-          onClick={this.handleClose}
-        />,
-      ];
 
-       new_plan = <div style={{position:"absolute",top:0,left:0,
-         width:"100%",height:"100%",
-         backgroundColor:"rgba(0,0,0,0.5)"
-       }}
-       >
-           <div style={{position:"absolute", height:"200px",
-                        width:"100%",backgroundColor:"rgba(0,0,0,0.1)"
-           }}
-                onClick={()=>{this.setState({show_new_plan:false})}}
-           />
-
-            <div style={{margin:"auto",backgroundColor:"white",marginTop:"200px",margin:"8px",borderRadius:"4px"}}>
-
-              <div style={{textAlign:"center",marginBottom:"1px",marginTop:"20px",marginTop:"20px"}}>
-                  <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{base.slogon1}</p>
-              </div>
-
-                 <div style={{textAlign:"center",marginBottom:"1px"}}>
-                  {/*<input style={inner_style.input}*/}
-                         {/*value={this.state.plan_name}*/}
-                         {/*placeholder={"输入我要制定的目标"}*/}
-                         {/*onChange={(event)=>this.valueChange(event,PlanName)} />*/}
-
-                   <TextField
-                     hintText={"我的目标名字"}
-                     value={this.state.plan_name}
-                     onChange={(event,new_value)=>this.setState({plan_name:new_value})}
-                   />
-                 </div>
-
-
-                 <div style={{textAlign:"center"}}>
-
-                   <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
-                               formatDate={(date)=>{return base.formatDate1(date)}}
-                               onChange={(event,newValue)=>{
-                                 console.log(newValue);
-                                 let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
-                                 if(ret == false)
-                                 {
-                                   this.setState({open:true})
-                                   return;
-                                 }
-                                 this.setState({start:newValue})
-
-                               }}/>
-
-                   <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
-                               formatDate={(date)=>{return base.formatDate1(date)}}
-                               onChange={(event,newValue)=>{
-                                 console.log(newValue);
-                                 let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
-                                 if(ret == false)
-                                 {
-                                   this.setState({open:true})
-                                   return;
-                                 }
-
-                                 this.setState({end:newValue})
-                               }}/>
-                 {/*<input style={inner_style.input}*/}
-                        {/*value={this.state.start}*/}
-                        {/*placeholder={"开始日期"}*/}
-                        {/*onChange={(event)=>this.valueChange(event,Start)} />*/}
-
-                 {/*<input style={inner_style.input}*/}
-                        {/*value={this.state.end}*/}
-                        {/*placeholder={"结束日期"}*/}
-                        {/*onChange={(event)=>this.valueChange(event,End)} />*/}
-
-
-                   <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={this.canel_new_plan}  ></RaisedButton>
-
-                  <RaisedButton label={"制定小目标"} secondary={true} style={{margin:"10px"}} onClick={this.create_new_plan} ></RaisedButton>
-                 </div>
-            </div>
-
-             <div style={{position:"absolute",height:"150px",
-                          width:"100%", backgroundColor:"rgba(0,0,0,0.5)"}}
-                  onClick={()=>{this.setState({show_new_plan:false})}}
-             />
-
-
-         <Dialog
-           title=""
-           actions={actions}
-           modal={false}
-           open={this.state.open}
-           onRequestClose={this.handleClose}
-         >
-           {this.state.new_plan_msg}
-         </Dialog>
-
-       </div>
-    }
 
     var show_view = null;
     if(plans.length == 0 )
@@ -345,9 +172,10 @@ export default class Home extends Component{
                       backgroundColor: base.COLOR.red, marginTop: "20px",
                       boxShadow:"0 4px 8px hsla(0,0%,71%,.8)"
                     }}
-               onClick={this.show_create_plan
+               onClick={()=>base.goto("/new_plan/-1")
                }
           >
+
             <div
               style={{
                 width: "100px",
@@ -388,9 +216,20 @@ export default class Home extends Component{
             <div style={{display:"inline-block",width:"100%"}}>
               <div style={{}}>
 
-                <div style={{padding:"4px",display:"inline-block",color:base.COLOR.red, fontSize:"18px",width:"100%",textAlign:"center"}}
-                     onClick={()=>base.goto(`/plan_details/${item.id}`)}
-                >{item.name}</div>
+                <div style={{padding:"4px",display:"inline-block",color:base.COLOR.red, fontSize:"18px",width:"100%",textAlign:"left"}}
+
+                >
+                  <div style={{display:"inline-block",width:"80%"}}  onClick={()=>base.goto(`/plan_details/${item.id}`)}>
+                  <span>{item.name}</span>
+                </div>
+
+                <div style={{display:"inline-block",width:"18%",textAlign:"center",backgroundColor:base.COLOR.gray,padding:"2px",borderRadius:"2px"}}
+                onClick={()=>base.goto(`/new_plan/${item.id}`)}
+                >
+                  <IconEdit style={{fontSize:"14px"}}></IconEdit><span style={{fontSize:"14px"}}>编辑</span>
+               </div>
+
+                </div>
 
                 <div style={{borderBottom:"1px solid #f2f2f2"}}/>
 
@@ -422,9 +261,15 @@ export default class Home extends Component{
 
       var new_plan_small_btn = null;
       if(this.state.show_new_plan == false)
-        new_plan_small_btn = <button  style={{fontSize:"16px",backgroundColor:base.COLOR.red,color:"white",borderRadius:"4px",marginTop:"10px",padding:"8px"}} onClick={this.show_create_plan}>
-          <ControlPoint style={{fontSize:"18px",marginRight:"4px",marginBottom:"2px"}}/>
-        <span>我还有一个小目标</span>
+        new_plan_small_btn = <button  style={{fontSize:"16px",backgroundColor:base.COLOR.red,
+          color:"white",borderRadius:"4px",marginTop:"10px",padding:"8px"}}
+         onClick={()=>base.goto(`/new_plan/-1`)}
+        >
+
+          <IconControlPoint style={{fontSize:"18px",marginRight:"4px",marginBottom:"2px"}}/>
+
+          <span>我还有一个小目标</span>
+
       </button>
 
       var show_view = <div style={{marginTop:"10px"}}>

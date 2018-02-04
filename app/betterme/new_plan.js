@@ -21,7 +21,10 @@ class NewPlan extends Component{
   {
     super(props)
     var id = (this.props.params != null && this.props.params.id != null) ?this.props.params.id: null;
-    this.state={id:id,open:false};
+    this.state={
+      id:id,
+      open:false
+    };
 
     this.componentDidMount = this.componentDidMount.bind(this);
     this.load = this.load.bind(this);
@@ -87,6 +90,27 @@ class NewPlan extends Component{
     })
   }
 
+
+  create_or_update_alert()
+  {
+
+    var plan_id = this.state.id;
+    var hours = this.state.hours;
+    var minutes  = this.state.minutes;
+
+    var data = {plan_id,hours,minutes}
+    var that = this;
+    this.setState({loading:true});
+    axios.post(`${base.BaseHost}/index/create_or_update_alert.json`,data).then((res)=>{
+      alert("保存成功");
+      this.setState({loading:false});
+    }).catch((e)=>{
+      console.log(e);
+      this.setState({loading:false,new_plan_msg:"网络错误",open:true});
+    })
+  }
+
+
   check_date(from,to,span)
   {
     console.log("check_date",from,to)
@@ -151,9 +175,7 @@ class NewPlan extends Component{
       />,
     ];
 
-    var new_plan = <div style={{ width:"100%",height:"100%"}} >
-
-      <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
+    var new_plan =  <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
 
         <div style={{textAlign:"center",marginBottom:"1px",marginTop:"20px",marginTop:"20px"}}>
           <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{base.slogon1}</p>
@@ -205,10 +227,8 @@ class NewPlan extends Component{
 
           <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={()=>base.goto("/")}  ></RaisedButton>
 
-          <RaisedButton label={"制定小目标"} secondary={true} style={{margin:"10px"}} onClick={this.create_new_plan} ></RaisedButton>
+          <RaisedButton label={"制定小目标"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_new_plan()} ></RaisedButton>
         </div>
-      </div>
-
 
       <Dialog
         title=""
@@ -220,10 +240,31 @@ class NewPlan extends Component{
         {this.state.new_plan_msg}
       </Dialog>
 
-    </div>
+      </div>
+
+
+
+
+
+
+
+
+    var alert_view=  <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
+          <div>提醒时间</div>
+
+          <div>小时: <input value={this.state.hours} onChange={(e)=>this.setState({hours:e.target.value})}/></div>
+          <div>分钟: <input value={this.state.minutes} onChange={(e)=>this.setState({minutes:e.target.value})} /> </div>
+
+      <RaisedButton label={"确定"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_or_update_alert()} ></RaisedButton>
+      </div>
+
 
     return(
-      new_plan
+      <div>
+        {new_plan}
+
+        {alert_view}
+      </div>
     )
 
   }

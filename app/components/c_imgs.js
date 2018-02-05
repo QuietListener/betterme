@@ -88,7 +88,9 @@ export default class CImgs extends Component
 
 
     return(<div style={{height:this.props.height}}>
-        <img src={this.state.img} style={Object.assign({height:this.props.height||"80px"},imgStyle)} onClick={()=>this.toggle()} />
+        <img src={this.state.img}
+             style={Object.assign({height:this.props.height||"80px"},imgStyle)}
+             onClick={()=>this.toggle()} />
         {dialog}
       </div>
     );

@@ -96,7 +96,7 @@ class PlanDetails extends Component{
       if(images!=null && images.length > 0)
       {
         let urls_ = images.map((img) => {
-          let url = `${base.IMG_BASE}/${img}`;
+          let url = `${base.IMG_BASE}/rs1_${img}`;
           return url;
         });
 

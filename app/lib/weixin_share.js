@@ -14,7 +14,7 @@ export default function init_share(url)
 // 如果你的 router 使用的是 hash 形式，应该不用每次都重新获取微信分享参数
   const data = axios.get(url).then((r) => {
 
-    console.log("init_share",res);
+    console.log("init_share",r);
     var res = r.data;
 
     var {appId, timestamp, nonceStr, signature} = res.config;

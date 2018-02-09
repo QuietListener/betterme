@@ -4,7 +4,7 @@ import moment from "moment"
 export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
 //export const BaseHost = "http://www.coderlong.com:3000"
-export const BaseHost = "http://localhost:3000"
+export const BaseHost = `http://21bebd7c.ngrok.io`
 export const IMG_BASE = `${BaseHost}/upload/`
 
 const history = hashHistory;

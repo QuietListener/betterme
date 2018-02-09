@@ -12,6 +12,8 @@ export function goto(path)
 {
   history.push(path)
 }
+export const axios = require("axios")
+
 
 export const DateFormat = "YYYY-MM-DD";
 

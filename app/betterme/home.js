@@ -23,6 +23,9 @@ const PlanName = "plan_name";
 const Start = "start";
 const End = "end";
 
+
+import init_share from "../lib/weixin_share.js"
+
 export default class Home extends Component{
 
   constructor(props)
@@ -61,6 +64,8 @@ export default class Home extends Component{
   {
       this.load();
       console.log("componentDidMount",this.state);
+      var url = `${base.BaseHost}/weixin/get_share_config.json`
+      init_share(url)
   }
 
 

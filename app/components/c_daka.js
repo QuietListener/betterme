@@ -130,7 +130,7 @@ export default class CDaka extends Component{
     var end  = Moment(plan.end);
 
     console.log("end",end);
-    if(total_days == finished_days)
+    if(total_days <= finished_days)
     {
       show_view = <div
         style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.red})}

@@ -23,7 +23,8 @@ class NewPlan extends Component{
     var id = (this.props.params != null && this.props.params.id != null) ?this.props.params.id: null;
     this.state={
       id:id,
-      open:false
+      open:false,
+      MAX_DAYS:21
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -48,7 +49,7 @@ class NewPlan extends Component{
           start:start,
           end:end,
           loading: false});
-        console.log(that.state);
+        console.log("state",that.state);
       }).catch(e => {
         console.error(e);
         that.setState({loading: false});
@@ -113,17 +114,19 @@ class NewPlan extends Component{
 
   check_date(from,to,span)
   {
-    console.log("check_date",from,to)
-    if(from != null)
-    {
-      var today =moment().startOf("day")
+    console.log("check_date from",from)
+    console.log("check_date to",to)
 
-      if(from - today < 0 )
-      {
-        this.setState({new_plan_msg:`开始时间要在${today.format(base.DateFormat)}之后喔~`})
-        return false;
-      }
-    }
+    // if(from != null)
+    // {
+    //   var today =moment().startOf("day")
+    //
+    //   if(from - today < 0 )
+    //   {
+    //     this.setState({new_plan_msg:`开始时间要在${today.format(base.DateFormat)}之后喔~`})
+    //     return false;
+    //   }
+    // }
 
     if(from != null && to != null)
     {
@@ -214,7 +217,7 @@ class NewPlan extends Component{
           <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
-                        console.log("newValue",newValue);
+                        console.log(`start=${this.state.start} newValue`,newValue);
                         let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
                         if(ret == false)
                         {
@@ -263,7 +266,7 @@ class NewPlan extends Component{
       <div>
         {new_plan}
 
-        {alert_view}
+        {/*{alert_view}*/}
       </div>
     )
 

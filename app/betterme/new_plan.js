@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import config from '../conf/config.json';
 import _ from "lodash"
-import axios from "axios"
+import {axios} from "./base.js"
 import * as base from "./base.js"
 import CCalendar from "../components/c_calendar.js"
 import moment from "moment"
@@ -36,7 +36,6 @@ class NewPlan extends Component{
 
   load()
   {
-
       var that = this;
       that.setState({loading: true});
       axios.get(`${base.BaseHost}/index/plan.json?id=${this.state.id}`).then((res) => {
@@ -203,7 +202,7 @@ class NewPlan extends Component{
           <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
-                        console.log("newValue",newValue);
+                        console.log(`start:end=${this.state.start} newValue`,newValue);
                         let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
                         if(ret == false)
                         {
@@ -217,7 +216,7 @@ class NewPlan extends Component{
           <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
-                        console.log(`start=${this.state.start} newValue`,newValue);
+                        console.log(`end:start=${this.state.start} newValue`,newValue);
                         let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
                         if(ret == false)
                         {
@@ -225,6 +224,9 @@ class NewPlan extends Component{
                           return;
                         }
 
+                        var m = moment(newValue)
+                        var date_ = m.format("YYYY-MM-DD");
+                        var value = moment(date_,date_).toDate()
                         this.setState({end:newValue})
                       }}/>
 

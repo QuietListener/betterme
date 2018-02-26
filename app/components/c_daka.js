@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import config from '../conf/config.json';
 import _ from "lodash"
-import axios from "axios"
+import {axios} from "../betterme/base.js"
 import * as base from "../betterme/base.js"
 const AlarmAdd = require('react-icons/lib/md/alarm-add');
 const AlarmOn = require('react-icons/lib/md/alarm-on');

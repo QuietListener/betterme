@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import config from '../conf/config.json';
 import _ from "lodash"
-import axios from "axios"
+import {axios} from "./base.js"
 import * as base from "./base.js"
 import CCalendar from "../components/c_calendar.js"
 import moment from "moment"

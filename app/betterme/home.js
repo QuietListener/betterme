@@ -4,7 +4,7 @@ import * as base from "./base.js"
 import _ from "lodash"
 import  '../css/app.css';
 import NewPlanFlow from "../components/new_plan_flow.js"
-import axios from "axios"
+import {axios} from "./base.js"
 
 import CDaka from "../components/c_daka.js"
 import CProgress from "../components/c_progress.js"

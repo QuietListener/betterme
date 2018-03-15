@@ -12,6 +12,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import "../css/app.css"
 
@@ -21,10 +23,15 @@ class NewPlan extends Component{
   {
     super(props)
     var id = (this.props.params != null && this.props.params.id != null) ?this.props.params.id: null;
+    var m = moment();
     this.state={
       id:id,
       open:false,
-      MAX_DAYS:21
+      MAX_DAYS:21,
+      days:null,
+      minutes:m.minutes(),
+      hours:m.hours(),
+
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -177,10 +184,31 @@ class NewPlan extends Component{
       />,
     ];
 
+
+    var hours_itmes = [];
+    for(var i = 0; i<=23; i++)
+    {
+      hours_itmes.push( <MenuItem value={i} primaryText={`${i}时`} />)
+    }
+
+    var minitues_items = [];
+    for(var i = 0; i<=59; i++)
+    {
+      minitues_items.push( <MenuItem value={i} primaryText={`${i}分`} />)
+    }
+
+
     var new_plan =  <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
 
+
         <div style={{textAlign:"center",marginBottom:"1px",marginTop:"20px",marginTop:"20px"}}>
-          <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{base.slogon1}</p>
+          <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{`制定新计划`}</p>
+        </div>
+
+      <div style={{borderTop:"1px solid",paddingTop:"10px",color:"#f2f2f2"}}>
+
+        <div style={{verticalAlign:"middle",textAlign:"center",color:"black"}}>
+          <p style={{fontSize:14}}>基本信息</p>
         </div>
 
         <div style={{textAlign:"center",marginBottom:"1px"}}>
@@ -190,16 +218,13 @@ class NewPlan extends Component{
           {/*onChange={(event)=>this.valueChange(event,PlanName)} />*/}
 
           <TextField
-            hintText={"我的目标名字"}
+            hintText="任务名字"
+            style={{}}
             value={this.state.plan_name}
             onChange={(event,new_value)=>this.setState({plan_name:new_value})}
           />
-        </div>
-
-
-        <div style={{textAlign:"center"}}>
-
-          <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
+          <DatePicker value={this.state.start}
+                      hintText="开始日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
                         console.log(`start:end=${this.state.start} newValue`,newValue);
@@ -213,26 +238,65 @@ class NewPlan extends Component{
 
                       }}/>
 
-          <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
-                      formatDate={(date)=>{return base.formatDate1(date)}}
-                      onChange={(event,newValue)=>{
-                        console.log(`end:start=${this.state.start} newValue`,newValue);
-                        let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
-                        if(ret == false)
-                        {
-                          this.setState({open:true})
-                          return;
-                        }
+          <SelectField
 
-                        var m = moment(newValue)
-                        var date_ = m.format("YYYY-MM-DD");
-                        var value = moment(date_,date_).toDate()
-                        this.setState({end:newValue})
-                      }}/>
+            floatingLabelFixed={true}
+            hintText="总天数"
+            value={this.state.days}
+            style={{textAlign:"left"}}
+            onChange={(event, index, value) => this.setState({days:value})}
+          >
+            <MenuItem value={7} primaryText="1周" />
+            <MenuItem value={8} primaryText="8天" />
+            <MenuItem value={9} primaryText="9天" />
+          </SelectField>
 
-          <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={()=>base.goto("/")}  ></RaisedButton>
+        </div>
 
-          <RaisedButton label={"制定小目标"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_new_plan()} ></RaisedButton>
+          <div style={{borderTop:"1px solid",borderBottom:"1px solid ",paddingTop:"10px",color:"#f2f2f2"}}>
+
+            <div style={{verticalAlign:"middle",textAlign:"center",color:"black"}}>
+              <p style={{fontSize:14}}>通知时间</p>
+            </div>
+            <div style={{textAlign:"center"}}>
+              <SelectField
+
+                floatingLabelFixed={true}
+                hintText="时"
+                value={this.state.hours}
+                style={{textAlign:"center",width:"44%",marginRight:"10px"}}
+                onChange={(event, index, value) => this.setState({hours:value})}
+              >
+                {hours_itmes}
+
+              </SelectField>
+
+              <SelectField
+
+                floatingLabelFixed={true}
+                hintText="分"
+                value={this.state.minutes}
+                style={{textAlign:"center",width:"44%"}}
+                onChange={(event, index, value) => this.setState({minutes:value})}
+              >
+                {minitues_items}
+              </SelectField>
+            </div>
+
+            <p style={{textAlign:"center",fontSize:12,marginBottom:"10"}}>在{this.state.hours}:{this.state.minutes}您会收到一条任务提醒通知</p>
+          </div>
+        <div style={{textAlign:"center",marginTop:"30px"}}>
+
+          <RaisedButton label={"取消"}
+                        primary={true}
+                        style={{margin:"10px"}}
+                        onClick={()=>base.goto("/")}  ></RaisedButton>
+
+          <RaisedButton label={"制定小目标"}
+                        secondary={true}
+                        style={{margin:"10px"}}
+                        onClick={()=>this.create_new_plan()} ></RaisedButton>
+        </div>
         </div>
 
       <Dialog

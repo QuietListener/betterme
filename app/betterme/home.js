@@ -18,6 +18,7 @@ const IconEdit = require("react-icons/lib/fa/edit");
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CLoading from "../components/loadings/c_loading";
+import CBottomSaveBar from "../components/c_bottom_save_bar"
 
 const PlanName = "plan_name";
 const Start = "start";
@@ -168,7 +169,6 @@ export default class Home extends Component{
         add_btn = <div>
           <div style={{marginTop: "10px"}}>
             <p  style={{fontSize: "20px",color:"black",fontSize: "18px"}}>
-              <span  style={{fontSize:"28px",padding:"8px",color:base.COLOR.red}}>@{user.nick_name}</span>
               来制定你第一个小目标吧~</p>
           </div>
           <div style={{
@@ -185,7 +185,7 @@ export default class Home extends Component{
               style={{
                 width: "100px",
                 textAlign: "center",
-                verticalAlign: "center",
+                verticalAlign: "middle",
                 position: "absolute",
                 top: "50%", left: "50%",
                 marginLeft: "-50px", marginTop: "-20px"
@@ -288,21 +288,46 @@ export default class Home extends Component{
 
 
     return (
-      <div style={{width:"100%"}}>
+      <div style={{width:"100%",overflow:"no-display",backgroundColor:base.COLOR.gray}}>
+      <div style={{overflowY:"scroll",paddingTop:"6px",marginBottom:"60px"}}>
         {loading_view}
-        <div style={{backgroundColor:base.COLOR.red,textAlign:"center",padding:"10px",
-          linearGradient:"(90deg,#5dc5ff,#638fff)"}}>
-          <img style={{margin:"auto",width:50,height:50,borderRadius:25}} src={user.avatar}></img>
-          <div style={{margin:"auto",fontSize:"20px",color:"white"}}>{user.nick_name}</div>
+
+
+        <div style={{paddingLeft:"20px",borderBottom:"1px solid #fafafa",paddingBottom:"8px"}}>
+          <div style={{height:"50px",textAlign:"left",verticalAlign:"middle"}}>
+             <img style={{margin:"auto",width:"50px",height:"50px",borderRadius:"25px"}}
+                  src={"http://7n.bczcdn.com/pack/assets/default_avatar.png"||user.avatar}></img>
+
+            <div style={{height:"50px",display:"inline-block",verticalAlign:"middle",marginLeft:"8px",fontSize:"20px",color:base.COLOR.red}}>
+              {user.nick_name||user.name}
+            </div>
+
+          </div>
+
+          <p style={{marginTop:"8px",color:base.COLOR.red,fontWeight:"bold",fontSize:"14px"}}>
+              <span style={{color:"black",fontSize:"12px",fontWeight:"normal"}}>
+                Hi,今天是{base.today()}
+                </span>
+          </p>
         </div>
 
-        <div style={{textAlign:"center",marginTop:"20px"}}>
-          <p style={{color:base.COLOR.red,fontWeight:"bold",fontSize:"14px"}}>  {base.slogon1} <br/><span style={{color:"black",fontSize:"12px",fontWeight:"normal"}}>今天是{base.today()}</span></p>
-        </div>
+
+
+
+
         {new_plan}
         <div style={{textAlign:"center",marginTop:"20px"}}>
           {show_view}
         </div>
+
+
+      </div>
+
+        <CBottomSaveBar active_item_index={0}
+                        items={[{title:"打卡"},{title:"我"}]}
+                        onItemClick={(i)=>console.log(`CBottomSaveBar ${i} clicked`)}
+                        style={{position:"fixed",bottom:0,zIndex:1000}}
+        />
 
       </div>
     )

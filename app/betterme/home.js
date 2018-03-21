@@ -154,9 +154,9 @@ export default class Home extends Component{
     if(this.state.plan_type==type)
     {
       ret["color"]=base.COLOR.red;
-      ret["background-color"]="white"
+      ret["backgroundColor"]="white"
       ret['border']=`1px solid ${base.COLOR.red}`
-      ret['border-radius']="4px";
+      ret['borderRadius']="4px";
     }
     else
     {

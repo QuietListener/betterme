@@ -19,6 +19,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CLoading from "../components/loadings/c_loading";
 import CBottomSaveBar from "../components/c_bottom_save_bar"
+import Moment from "moment"
 
 const PlanName = "plan_name";
 const Start = "start";
@@ -27,13 +28,15 @@ const End = "end";
 
 import init_share from "../lib/weixin_share.js"
 
+const PlanTypeIng = 0
+const PlanTypeOverdue = 1
 export default class Home extends Component{
 
   constructor(props)
   {
 
-    var init_plans = [{id:1,plan_name:"背单词",start:"2017-12-12",end:"2017-12-22"},
-      {id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
+    var init_plans = [];//[{id:1,plan_name:"背单词",start:"2017-12-12",end:"2017-12-22"},
+      //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
     super(props);
     this.state={
@@ -42,7 +45,8 @@ export default class Home extends Component{
       plans:init_plans,
       MAX_DAYS:7,
       loading:true,
-      daka_loading:false
+      daka_loading:false,
+      plan_type:PlanTypeIng
     };
 
     this.load = this.load.bind(this);
@@ -57,6 +61,7 @@ export default class Home extends Component{
 
     this.daka_error = this.daka_error.bind(this);
     this.daka_start = this.daka_start.bind(this);
+    this.plan_mapper = this.plan_mapper.bind(this);
 
   }
 
@@ -143,6 +148,82 @@ export default class Home extends Component{
     this.setState({loading:false})
   }
 
+  active_type(type)
+  {
+    var ret = {};
+    if(this.state.plan_type==type)
+    {
+      ret["color"]=base.COLOR.red;
+      ret["background-color"]="white"
+      ret['border']=`1px solid ${base.COLOR.red}`
+      ret['border-radius']="4px";
+    }
+    else
+    {
+      ret;
+    }
+
+    return ret;
+  }
+
+  plan_mapper(item)
+  {
+    var start = base.formatDate(item.start);
+    var end = base.formatDate(item.end);
+    let item_=item;
+
+    return <div style={{border:"1px solid #fff",
+      backgroundColor:"white",
+      padding:"20px",paddingTop:"2px",margin:"10px",borderRadius:"4px",
+      boxShadow:"0 4px 8px hsla(0,0%,71%,.8)"
+
+    }}
+    >
+      <div style={{display:"inline-block",width:"100%"}}>
+        <div style={{}}>
+
+          <div style={{padding:"4px",display:"inline-block",color:base.COLOR.red, fontSize:"18px",width:"100%",textAlign:"left"}}
+
+          >
+            <div style={{display:"inline-block",width:"69%"}}  onClick={()=>base.goto(`/plan_details/${item.id}`)}>
+              <span>{item.name}</span>
+            </div>
+
+            <div style={{display:"inline-block",width:"30%",textAlign:"center",backgroundColor:base.COLOR.gray,padding:"2px",borderRadius:"2px"}}
+                 onClick={()=>base.goto(`/new_plan/${item.id}`)}
+            >
+              <IconEdit style={{fontSize:"14px"}}></IconEdit><span style={{fontSize:"14px"}}>编辑</span>
+            </div>
+
+          </div>
+
+          <div style={{borderBottom:"1px solid #f2f2f2"}}/>
+
+          <div style={{display:"inline-block",fontSize:"14px",width:"69%",textAlign:"left"}}>
+            <span style={{color:base.COLOR.red}}>{start}</span> 到 <span  style={{color:base.COLOR.red}}>{end}</span>
+          </div>
+
+          <div style={{display:"inline-block",fontSize:"14px",width:"30%",textAlign:"right"}}>
+            <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/ {item.total_days_count}天
+          </div>
+
+
+        </div>
+      </div>
+
+      <div style={{marginTop:"4px",marginBottom:"20px"}}>
+        <CProgress percent={0.5} />
+      </div>
+
+      {/*<p>{start} - {end}</p>*/}
+      <CDaka plan={item_}
+             daka_success={this.componentDidMount}
+             daka_start={()=>this.daka_start()}
+             daka_error={(e)=>this.daka_error(e)}
+             style={{}} />
+      {/*<button onClick={()=>this.deletePlan(item.id)}>删除</button>*/}
+    </div>
+  }
   render(){
 
     var loading_view = <CLoading/>
@@ -150,7 +231,7 @@ export default class Home extends Component{
       loading_view = true;
 
     var user = this.state.user;
-    if(user == null)
+    if(user == null || this.state.loading == true)
       return loading_view;
 
     var plans = this.state.plans;
@@ -159,7 +240,12 @@ export default class Home extends Component{
     //plans = [];
 
 
+
+
+
     var show_view = null;
+    var plans_ing = [];
+    var plans_overdue = [];
     if(plans.length == 0 )
     {
       var add_btn = null;
@@ -205,87 +291,81 @@ export default class Home extends Component{
     else
     {
 
-      var plans_ = plans.map((item)=>{
+       plans_ing = plans.filter((item1)=>{
+        if(!item1 || !item1.end)
+          return false;
 
-          var start = base.formatDate(item.start);
-          var end = base.formatDate(item.end);
-          let item_=item;
+         var today_ = Moment();
+         var end  = Moment(item1.end);
 
-          return <div style={{border:"1px solid #fff",
-                              backgroundColor:"white",
-                              padding:"20px",paddingTop:"2px",margin:"10px",borderRadius:"4px",
-                              boxShadow:"0 4px 8px hsla(0,0%,71%,.8)"
+        var finished_days = item1.finished_days_count
+        var total_days = item1.total_days_count
 
-          }}
-          >
-            <div style={{display:"inline-block",width:"100%"}}>
-              <div style={{}}>
+        if(total_days >= finished_days &&  today_ - end <= 0)
+        {
+          return true;
+        }
 
-                <div style={{padding:"4px",display:"inline-block",color:base.COLOR.red, fontSize:"18px",width:"100%",textAlign:"left"}}
+        return false;
 
-                >
-                  <div style={{display:"inline-block",width:"80%"}}  onClick={()=>base.goto(`/plan_details/${item.id}`)}>
-                  <span>{item.name}</span>
-                </div>
-
-                <div style={{display:"inline-block",width:"18%",textAlign:"center",backgroundColor:base.COLOR.gray,padding:"2px",borderRadius:"2px"}}
-                onClick={()=>base.goto(`/new_plan/${item.id}`)}
-                >
-                  <IconEdit style={{fontSize:"14px"}}></IconEdit><span style={{fontSize:"14px"}}>编辑</span>
-               </div>
-
-                </div>
-
-                <div style={{borderBottom:"1px solid #f2f2f2"}}/>
-
-                <div style={{display:"inline-block",fontSize:"14px",width:"58%",textAlign:"left"}}>
-                  <span style={{color:base.COLOR.red}}>{start}</span> 到 <span  style={{color:base.COLOR.red}}>{end}</span>
-                </div>
-
-                <div style={{display:"inline-block",fontSize:"14px",width:"40%",textAlign:"right"}}>
-                  已经完成 <span style={{fontSize:"20px",color:"red",padding:"6px"}}>{item.finished_days_count}</span>/{item.total_days_count}天
-                </div>
+      }).map((item)=>{
+          return this.plan_mapper(item);
+      });
 
 
-              </div>
-            </div>
+       plans_overdue = plans.filter((item1)=>{
+         if(!item1 || !item1.end)
+           return false;
 
-            <div style={{marginTop:"4px",marginBottom:"20px"}}>
-              <CProgress percent={0.5} />
-            </div>
+         var today_ = Moment();
+         var end  = Moment(item1.end);
 
-            {/*<p>{start} - {end}</p>*/}
-            <CDaka plan={item_}
-                   daka_success={this.componentDidMount}
-                   daka_start={()=>this.daka_start()}
-                   daka_error={(e)=>this.daka_error(e)}
-                   style={{}} />
-            {/*<button onClick={()=>this.deletePlan(item.id)}>删除</button>*/}
-          </div>
+         var finished_days = item1.finished_days_count
+         var total_days = item1.total_days_count
+
+         if(total_days >= finished_days &&  today_ - end <= 0)
+         {
+           return false;
+         }
+
+         return true;
+
+      }).map((item)=>{
+        return this.plan_mapper(item);
       })
+
 
       var new_plan_small_btn = null;
       if(this.state.show_new_plan == false)
-        new_plan_small_btn = <button  style={{fontSize:"16px",backgroundColor:base.COLOR.red,
+        new_plan_small_btn = plans_ing.length < 4 ? <button  style={{fontSize:"16px",backgroundColor:base.COLOR.red,
           color:"white",borderRadius:"4px",marginTop:"10px",padding:"8px"}}
          onClick={()=>base.goto(`/new_plan/-1`)}
         >
 
           <IconControlPoint style={{fontSize:"18px",marginRight:"4px",marginBottom:"2px"}}/>
 
-          <span>我还有一个小目标</span>
+          <span>添加小目标</span>
 
-      </button>
+      </button>:null;
 
       var show_view = <div style={{marginTop:"10px"}}>
-        {plans_}
-
+        {this.state.plan_type == PlanTypeIng ? plans_ing : plans_overdue}
         {new_plan_small_btn}
       </div>
     }
 
 
+    var btn = <div style={{display:"inline-block"}}  onClick={()=>{
+      if(this.state.plan_type  == PlanTypeIng)
+        this.setState({plan_type:PlanTypeOverdue})
+      else
+        this.setState({plan_type:PlanTypeIng})
+    }}>
 
+      <div style={Object.assign({padding:"4px",display:"inline-block",marginLeft:"4px"},this.active_type(PlanTypeIng))}>进行中的计划({plans_ing.length})</div>
+      <div  style={Object.assign({padding:"4px",display:"inline-block",marginLeft:"4px"},this.active_type(PlanTypeOverdue))}>完成了的计划({plans_overdue.length})</div>
+
+    </div>
 
     return (
       <div style={{width:"100%",overflow:"no-display",backgroundColor:base.COLOR.gray}}>
@@ -317,17 +397,18 @@ export default class Home extends Component{
 
         {new_plan}
         <div style={{textAlign:"center",marginTop:"20px"}}>
+          {btn}
           {show_view}
         </div>
 
 
       </div>
 
-        <CBottomSaveBar active_item_index={0}
-                        items={[{title:"打卡"},{title:"我"}]}
-                        onItemClick={(i)=>console.log(`CBottomSaveBar ${i} clicked`)}
-                        style={{position:"fixed",bottom:0,zIndex:1000}}
-        />
+        {/*<CBottomSaveBar active_item_index={0}*/}
+                        {/*items={[{title:"打卡"},{title:"我"}]}*/}
+                        {/*onItemClick={(i)=>console.log(`CBottomSaveBar ${i} clicked`)}*/}
+                        {/*style={{position:"fixed",bottom:0,zIndex:1000}}*/}
+        {/*/>*/}
 
       </div>
     )

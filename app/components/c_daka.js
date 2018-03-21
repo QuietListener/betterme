@@ -135,37 +135,30 @@ export default class CDaka extends Component{
       show_view = <div
         style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.red})}
       >
-        <Heart style={styles.icon}/>完成了整个计划~
+        <Heart style={styles.icon}/>计划完成
       </div>
     }
     else if(today_ - end > 0)
     {
-      show_view = <div
-        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.yellow})}
-      >
+      show_view = <div style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.yellow})}>
         <Stop  style={styles.icon}/>计划过期
       </div>
     }
     else if(plan.finished_daka_today == true)
     {
-      show_view = <div
-        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.blue})}
-      >
-        <AlarmOn  style={styles.icon}/>完成今天的打卡
+      show_view = <div style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.blue})} >
+        <AlarmOn  style={styles.icon}/>打卡完成
       </div>
     }
     else if(this.state.show_daka == false)
     {
-      show_view = <div
-        style={Object.assign(styles.daka_box,{color:"black"})}
-        onClick={()=>this.show_daka()}
-      >
+      show_view = <div  style={Object.assign(styles.daka_box,{color:"black"})}
+        onClick={()=>this.show_daka()} >
         <AlarmAdd style={styles.icon}/>打卡
       </div>
     }
     else
     {
-
       var imgs_view = this.state.images.map((img)=>{
         return <img style={{border:"1px solid #f2f2f2",height:"80px",display:"inline-block",verticalAlign:"top",marginLeft:"4px"}} src={img[1]} />
       });
@@ -212,7 +205,6 @@ const styles={
   daka_box:{padding:"8px",
     width:"100%",height:"40px",
     fontWeight:"bold",
-    backgroundColor:base.COLOR.gray,
     padding:"10px",
     marginBottom:"",
     color:"white",
@@ -221,6 +213,7 @@ const styles={
    ,
   icon:{
     fontSize:"18px",
+    color:"white",
     marginRight:"4px",
     verticalAlign:"bottom"
   }

@@ -25,8 +25,8 @@ const PlanName = "plan_name";
 const Start = "start";
 const End = "end";
 
-
 import init_share from "../lib/weixin_share.js"
+import CReward from "../components/c_reward";
 
 const PlanTypeIng = 0
 const PlanTypeOverdue = 1
@@ -367,8 +367,13 @@ export default class Home extends Component{
 
     </div>
 
+
+    var reward = <CReward/>;
+
     return (
       <div style={{width:"100%",overflow:"no-display",backgroundColor:base.COLOR.gray}}>
+        {reward}
+
       <div style={{overflowY:"scroll",paddingTop:"6px",marginBottom:"60px"}}>
         {loading_view}
 

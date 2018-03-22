@@ -34,7 +34,6 @@ export default class Home extends Component{
 
   constructor(props)
   {
-
     var init_plans = [];//[{id:1,plan_name:"背单词",start:"2017-12-12",end:"2017-12-22"},
       //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
@@ -164,6 +163,11 @@ export default class Home extends Component{
     }
 
     return ret;
+  }
+
+  hide_reward_modal()
+  {
+    this.setState({show_reward_modal:false});
   }
 
   plan_mapper(item)
@@ -368,7 +372,11 @@ export default class Home extends Component{
     </div>
 
 
-    var reward = <CReward/>;
+    var reward = null;
+    if(user.lucky_token && this.state.show_reward_modal != false)
+    {
+      reward = <CReward lucky_token={user.lucky_token} hide={()=>this.hide_reward_modal()}/>;
+    }
 
     return (
       <div style={{width:"100%",overflow:"no-display",backgroundColor:base.COLOR.gray}}>

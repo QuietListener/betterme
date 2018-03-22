@@ -387,7 +387,7 @@ export default class Home extends Component{
 
 
         <div style={{paddingLeft:"20px",borderBottom:"1px solid #fafafa",paddingBottom:"8px"}}>
-          <div style={{height:"50px",textAlign:"left",verticalAlign:"middle"}}>
+          <div style={{height:"50px",textAlign:"left",verticalAlign:"middle"}} onClick={()=>base.goto("/mine")}>
              <img style={{margin:"auto",width:"50px",height:"50px",borderRadius:"25px"}}
                   src={"http://7n.bczcdn.com/pack/assets/default_avatar.png"||user.avatar}></img>
 
@@ -417,11 +417,11 @@ export default class Home extends Component{
 
       </div>
 
-        {/*<CBottomSaveBar active_item_index={0}*/}
-                        {/*items={[{title:"打卡"},{title:"我"}]}*/}
-                        {/*onItemClick={(i)=>console.log(`CBottomSaveBar ${i} clicked`)}*/}
-                        {/*style={{position:"fixed",bottom:0,zIndex:1000}}*/}
-        {/*/>*/}
+        <CBottomSaveBar active_item_index={0}
+                        items={[{title:"打卡"},{title:"我"}]}
+                        onItemClick={(i)=>{if(i == 1) base.goto("/mine")}}
+                        style={{position:"fixed",bottom:0,zIndex:1000}}
+        />
 
       </div>
     )

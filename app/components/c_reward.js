@@ -73,7 +73,8 @@ export default class CReward extends Component
       msg = this.state.score
     }
 
-    var tip = "您获得一次抽奖机会"
+    var tip = (<p>您完成了今天所有打卡<br/>获得一个次抽奖机会</p>);
+
     if(this.state.step == 2 && this.state.score > 0)
     {
       tip = "哇喔，您获得了~"
@@ -83,14 +84,14 @@ export default class CReward extends Component
         <CModal >
           <div style={{position:"relative",textAlign:"center",marginTop:"40%",}}>
 
-            <div style={{position:"relative",display:"inline-block",width:"200px",height:"250px",backgroundColor:"white",borderRadius:"4px",textAlign:"center",verticalAlign:"middle",backgroundColor:base.COLOR.gray}}>
+            <div style={{position:"relative",display:"inline-block",width:"240px",height:"290px",backgroundColor:"white",borderRadius:"4px",textAlign:"center",verticalAlign:"middle",backgroundColor:base.COLOR.gray}}>
 
-              <span style={{display:"inline-block",position:"absolute",top:4,right:6,color:"black",fontSize:16}}
+              <span style={{display:"inline-block",position:"absolute",top:4,right:12,color:"black",fontSize:30}}
                    onClick={this.hide}>x</span>
 
               <p style={{color:base.COLOR.red,paddingTop:"10px"}}>{tip}</p>
 
-              <div style={{margin:"auto",backgroundColor:base.COLOR.red,width:120,height:120,borderRadius:60,verticalAlign:"middle",fontSize:30,marginTop:25,paddingTop:35}}
+              <div style={{margin:"auto",backgroundColor:base.COLOR.red,width:120,height:120,borderRadius:60,verticalAlign:"middle",fontSize:30,marginTop:20,paddingTop:40}}
                   onClick={this.get_reward}
               >{msg}</div>
 

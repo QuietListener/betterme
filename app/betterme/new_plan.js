@@ -74,8 +74,8 @@ class NewPlan extends Component{
   {
 
     var plan_name = this.state.plan_name;
-    var start = this.state.start;
-    var end  = this.state.end;
+    var start = base.formatDate1(this.state.start);
+    var end  =  base.formatDate1(this.state.end);
     var new_plan = {plan_name,start,end};
 
     var that = this;
@@ -255,6 +255,9 @@ componentDidMount()
           <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
+
+                        console.log("start123",base.formatDate1(this.state.start));
+
                         console.log(`start:end=${this.state.start} newValue`,newValue);
                         let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
                         this.caculate_need_score(newValue,this.state.end);

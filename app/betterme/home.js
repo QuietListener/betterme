@@ -220,8 +220,12 @@ export default class Home extends Component{
       </div>
 
       {/*<p>{start} - {end}</p>*/}
-      <CDaka plan={item_}
-             daka_success={this.componentDidMount}
+      <CDaka key={item_.id}
+             plan={item_}
+             daka_success={()=> {
+               this.load_plans(this.state.user.id);
+               setTimeout(()=>this.load(),1500);
+             }}
              daka_start={()=>this.daka_start()}
              daka_error={(e)=>this.daka_error(e)}
              style={{}} />
@@ -235,7 +239,7 @@ export default class Home extends Component{
       loading_view = true;
 
     var user = this.state.user;
-    if(user == null || this.state.loading == true)
+    if(user == null)
       return loading_view;
 
     var plans = this.state.plans;

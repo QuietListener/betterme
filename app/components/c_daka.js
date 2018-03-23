@@ -213,8 +213,8 @@ export default class CDaka extends Component{
     return <div>
 
       {/*打卡领积分*/}
-      {this.state.reward ?<CToast hide={this.reset_reward} >
-        <p style={{color:"white"}}>恭喜获得<span style={{fontSize:20,color:"white"}}>{this.state.reward}</span>积分</p>
+      {this.state.reward ?<CToast timeout={1500} hide={this.reset_reward} >
+        <p style={{color:"white",fontSize:"20px"}}>恭喜获得<span style={{margin:6,fontSize:30,color:"white",color:base.COLOR.red}}>{this.state.reward}</span>积分</p>
       </CToast> : null}
 
       {show_view}
@@ -226,9 +226,10 @@ const styles={
 
   daka_box:{padding:"8px",
     width:"100%",height:"40px",
+    borderWidth:1,
+    borderColor:base.COLOR.gray,
     fontWeight:"bold",
     padding:"10px",
-    marginBottom:"",
     color:"white",
     textAlign:"center",
     borderRadius:4,marginTop:10}

@@ -24,13 +24,17 @@ class NewPlan extends Component{
     this.state={
       id:id,
       open:false,
-      MAX_DAYS:21
+      MAX_DAYS:21,
+      score_per_day:50,
+      need_score:0
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
     this.load = this.load.bind(this);
     this.create_new_plan = this.create_new_plan.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.load_data = this.load_data.bind(this);
+
   }
 
 
@@ -82,7 +86,17 @@ class NewPlan extends Component{
         end_time:end
       }).then((res)=>{
 
-      base.goto("/")
+      var data = res.data;
+      if(data && data.status == 1)
+      {
+        base.goto("/")
+      }
+      else
+      {
+          alert(data.smsg||data.msg)
+      }
+
+
     }).catch((e)=>{
       console.log(e);
       this.setState({loading:false,new_plan_msg:"网络错误",open:true});
@@ -142,6 +156,7 @@ class NewPlan extends Component{
         this.setState({new_plan_msg: `这个目标太大了，最好不要超过${span}天`})
         return false;
       }
+
     }
 
     if(from == null || to == null)
@@ -151,8 +166,25 @@ class NewPlan extends Component{
   }
 
 
-  componentDidMount()
+  caculate_need_score(from,to)
   {
+    if(from != null && to != null)
+    {
+      let min_seconds = to - from;
+      if (min_seconds <= 0)
+      {
+        return false;
+      }
+
+      var days = Math.ceil(min_seconds * 1.0 / base.DayMinSeconds);
+      var need_scores = days*this.state.score_per_day;
+      this.setState({need_score:need_scores});
+    }
+  }
+
+componentDidMount()
+  {
+    this.load_data();
     if(this.state.id != null && parseInt(this.state.id) > 0)
     {
       this.load();
@@ -160,14 +192,31 @@ class NewPlan extends Component{
     console.log("componentDidMount",this.state);
   }
 
+  async load_data()
+  {
+    try
+    {
+      this.setState({loading:true})
+      var res = await axios.get(`${base.BaseHost}/index/user.json`);
+      console.log("res",res);
+      var user = res.data.data;
+      this.setState({user:user});
+      this.setState({loading:false})
+    }
+    catch(e)
+    {
+      this.setState({loading:false});
+    }
+  }
 
   render(){
 
     console.log("state",this.state);
+    var user = this.state.user;
 
     var loading_view = <CLoading/>
-    if(this.state.loading == false)
-      loading_view = null;
+    if(this.state.loading == true)
+      return loading_view;
 
     const actions = [
       <FlatButton
@@ -204,6 +253,7 @@ class NewPlan extends Component{
                       onChange={(event,newValue)=>{
                         console.log(`start:end=${this.state.start} newValue`,newValue);
                         let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
+                        this.caculate_need_score(newValue,this.state.end);
                         if(ret == false)
                         {
                           this.setState({open:true})
@@ -218,6 +268,7 @@ class NewPlan extends Component{
                       onChange={(event,newValue)=>{
                         console.log(`end:start=${this.state.start} newValue`,newValue);
                         let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
+                        this.caculate_need_score(this.state.start,newValue);
                         if(ret == false)
                         {
                           this.setState({open:true})
@@ -230,9 +281,14 @@ class NewPlan extends Component{
                         this.setState({end:newValue})
                       }}/>
 
+
+          {this.state.user ?<div>
+            <span>总积分:</span><span>{ this.state.user.statistics.total_score }</span>   <span>需要消耗:</span><span>{this.state.need_score}分</span>
+          </div>:null}
+
           <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={()=>base.goto("/")}  ></RaisedButton>
 
-          <RaisedButton label={"制定小目标"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_new_plan()} ></RaisedButton>
+          <RaisedButton label={"制定  小目标"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_new_plan()} ></RaisedButton>
         </div>
 
       <Dialog

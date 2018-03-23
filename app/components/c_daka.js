@@ -10,7 +10,7 @@ const Stop = require('react-icons/lib/go/stop');
 
 import CLoading from "../components/loadings/c_loading.js"
 import Moment from "moment"
-
+import CToast from "./c_toast"
 
 export default class CDaka extends Component{
 
@@ -29,6 +29,7 @@ export default class CDaka extends Component{
     this.show_daka = this.show_daka.bind(this);
     this.create_record = this.create_record.bind(this);
     this.readFile = this.readFile.bind(this);
+    this.reset_reward = this.reset_reward.bind(this);
   }
 
   componentDidMount()
@@ -99,6 +100,14 @@ export default class CDaka extends Component{
 
       axios.post(`${base.BaseHost}/index/create_plan_record.json`,
         formData).then((res)=>{
+
+        console.log("daka res",res);
+
+        if(res.data && res.data.data && res.data.data.reward)
+        {
+          this.setState({reward:res.data.data.reward.content})
+        }
+
         if(that.props.daka_success)
             that.props.daka_success();
       }).catch((e)=>{
@@ -110,6 +119,11 @@ export default class CDaka extends Component{
 
       })
 
+  }
+
+  reset_reward()
+  {
+    this.setState({reward:null})
   }
 
   show_daka()
@@ -196,7 +210,15 @@ export default class CDaka extends Component{
       </div>
     }
 
-    return show_view;
+    return <div>
+
+      {/*打卡领积分*/}
+      {this.state.reward ?<CToast hide={this.reset_reward} >
+        <p style={{color:"white"}}>恭喜获得<span style={{fontSize:20,color:"white"}}>{this.state.reward}</span>积分</p>
+      </CToast> : null}
+
+      {show_view}
+      </div>
   }
 }
 

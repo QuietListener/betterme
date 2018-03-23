@@ -16,9 +16,9 @@ export default class CModal extends Component{
   {
 
     return (
-      <div style={{position:"absolute",top:0,left:0,
+      <div style={Object.assign({position:"absolute",top:0,left:0,zIndex:1000,
         width:"100%",height:"100%",textAlign:"center",color:"white",
-        backgroundColor:"rgba(0,0,0,0.5)"}}>
+        backgroundColor:"rgba(0,0,0,0.5)"},this.props.style)}>
         {this.props.children}
       </div>
     );

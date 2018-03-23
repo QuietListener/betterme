@@ -45,7 +45,7 @@ export function formatDate1(date)
 export function formatDateTime(str)
 {
   var m = moment(str);
-  var f = m.format("YYYY-MM-DD h:mm:ss")
+  var f = m.format("YYYY-MM-DD HH:mm:ss")
   return f;
 }
 

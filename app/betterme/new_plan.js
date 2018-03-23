@@ -52,6 +52,8 @@ class NewPlan extends Component{
           start:start,
           end:end,
           loading: false});
+
+        this.caculate_need_score(start,end);
         console.log("state",that.state);
       }).catch(e => {
         console.error(e);
@@ -156,7 +158,6 @@ class NewPlan extends Component{
         this.setState({new_plan_msg: `这个目标太大了，最好不要超过${span}天`})
         return false;
       }
-
     }
 
     if(from == null || to == null)
@@ -176,7 +177,7 @@ class NewPlan extends Component{
         return false;
       }
 
-      var days = Math.ceil(min_seconds * 1.0 / base.DayMinSeconds);
+      var days = Math.ceil(min_seconds * 1.0 / base.DayMinSeconds)+1;
       var need_scores = days*this.state.score_per_day;
       this.setState({need_score:need_scores});
     }
@@ -200,8 +201,8 @@ componentDidMount()
       var res = await axios.get(`${base.BaseHost}/index/user.json`);
       console.log("res",res);
       var user = res.data.data;
-      this.setState({user:user});
-      this.setState({loading:false})
+      this.setState({user:user,loading:false});
+
     }
     catch(e)
     {
@@ -246,8 +247,11 @@ componentDidMount()
         </div>
 
 
+
         <div style={{textAlign:"center"}}>
 
+          { !this.state.id || this.state.id < 0  ?
+          <div>
           <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
@@ -262,7 +266,6 @@ componentDidMount()
                         this.setState({start:newValue})
 
                       }}/>
-
           <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
                       formatDate={(date)=>{return base.formatDate1(date)}}
                       onChange={(event,newValue)=>{
@@ -280,10 +283,17 @@ componentDidMount()
                         var value = moment(date_,date_).toDate()
                         this.setState({end:newValue})
                       }}/>
+          </div>:
+
+            <div>
+             <div style={inner_styles.time_row}>{this.state.start? base.formatDate1(this.state.start):null}  ---  {this.state.end? base.formatDate1(this.state.end):null}</div>
+            </div>
+
+          }
 
 
-          {this.state.user ?<div>
-            <span>总积分:</span><span>{ this.state.user.statistics.total_score }</span>   <span>需要消耗:</span><span>{this.state.need_score}分</span>
+          {this.state.user ?<div style={inner_styles.time_row}>
+            <span>总积分:</span><span>{ this.state.user.statistics.total_score }</span>   <span>消耗:</span><span>{this.state.need_score}分</span>
           </div>:null}
 
           <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={()=>base.goto("/")}  ></RaisedButton>
@@ -331,6 +341,16 @@ componentDidMount()
   }
 }
 
+const inner_styles={
+  time_row:{
+    padding:"4px",
+    margin:"4px",
+    fontSize:"20px",
+    textAlign:"center",
+    marginLeft:"14px"
+
+  }
+}
 
 import { connect } from "react-redux";
 import {TEST,test} from "./redux/actions/actions"

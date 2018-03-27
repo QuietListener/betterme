@@ -60,13 +60,14 @@ export default class CBottomSaveBar extends Component{
 }
 
 const styles={
-  nav_bar_style:{height:"40px",textAlign:"center",width:"100%",borderTop:"1px solid #f2f2",backgroundColor:"#f2f2f2"},
+  nav_bar_style:{height:"50px",textAlign:"center",width:"100%",borderTop:"1px solid #f2f2",backgroundColor:"#f2f2f2"},
   nav_bar_item:{
     display:"inline-block",
     textAlign:"center",
     verticalAlign:"center",
-    height:40,
-    padding:8,
-    fontSize:"20px"
+    height:"50px",
+    padding:12,
+    fontSize:"20px",
+    verticalAlign:"middle"
   }
 }

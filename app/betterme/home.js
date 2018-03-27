@@ -39,7 +39,7 @@ export default class Home extends Component{
 
     super(props);
     this.state={
-      show_new_plan:false,
+      show_new_plan:null,
       plan_name:"",
       plans:init_plans,
       MAX_DAYS:7,
@@ -80,11 +80,10 @@ export default class Home extends Component{
     axios.get(`${base.BaseHost}/index/plans.json?user_id=${user_id}`).then((res)=>{
       console.log("res",res);
       var plans = res.data.data;
-      that.setState({plans:plans});
+      that.setState({plans:plans,show_new_plan:false,loading:false});
       console.log(that.state);
-      this.setState({loading:false});
     }).catch(e=>{
-      this.setState({loading:false});
+      this.setState({loading:false,show_new_plan:false});
     })
   }
 
@@ -232,6 +231,9 @@ export default class Home extends Component{
       {/*<button onClick={()=>this.deletePlan(item.id)}>删除</button>*/}
     </div>
   }
+
+
+
   render(){
 
     var loading_view = <CLoading/>
@@ -303,13 +305,15 @@ export default class Home extends Component{
         if(!item1 || !item1.end)
           return false;
 
-         var today_ = Moment();
-         var end  = Moment(item1.end);
+         var today_ = new Moment(base.formatDate1(Moment().toDate()));
+         var end = new Moment(base.formatDate(item1.end));
 
         var finished_days = item1.finished_days_count
         var total_days = item1.total_days_count
 
-        if(total_days >= finished_days &&  today_ - end <= 0)
+        var diff = today_ - end;
+
+        if(diff <= 0)
         {
           return true;
         }
@@ -326,17 +330,22 @@ export default class Home extends Component{
            return false;
 
          var today_ = Moment();
-         var end  = Moment(item1.end);
+         var end = new Moment(base.formatDate(item1.end));
+         var diff = today_ - end;
+
+         console.log("##today_ = ",today_)
+         console.log("##end = ", end);
+         console.log("##today_ - end = ",  diff);
 
          var finished_days = item1.finished_days_count
          var total_days = item1.total_days_count
 
-         if(total_days >= finished_days &&  today_ - end <= 0)
+         if( diff >0)
          {
-           return false;
+           return true;
          }
 
-         return true;
+         return false;
 
       }).map((item)=>{
         return this.plan_mapper(item);

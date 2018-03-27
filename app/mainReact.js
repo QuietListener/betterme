@@ -4,6 +4,7 @@ import Home from './betterme/home.js'
 import PlanDetails from "./betterme/plan_details.js"
 import NewPlan from "./betterme/new_plan.js"
 import Mine from "./betterme/mine.js"
+import Test from "./betterme/test.js"
 
 import './css/main.css'
 
@@ -33,6 +34,7 @@ class App extends Component
             <Route path="/mine" component={Mine} />
             <Route path="/plan_details/:id" component={PlanDetails} />
             <Route path="/new_plan/:id" component={NewPlan} />
+            <Route path="/test" component={Test} />
           </Router>
         </Provider>
       </MuiThemeProvider>)

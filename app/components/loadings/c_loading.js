@@ -14,8 +14,7 @@ export default class CLoading extends Component{
     return <div style={{width:"100%",height:"200%",textAlign:"center",position:"absolute",zIndex:999,backgroundColor:"rgba(0,0,0,0.1)"}}>
 
       <div style={{textAlign:"center",marginTop:"200px",color:"white",fontSize:16}}>
-        loading....
-        {/*<image src={"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/mantpl/img/base/loading_72b1da62.gif"} />*/}
+        <img width="80" height="80" src={"http://www.coderlong.com/images/spinner_betterme.gif"}></img>
       </div>
     </div>
   }

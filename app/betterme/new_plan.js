@@ -284,117 +284,94 @@ componentDidMount()
       />,
     ];
 
-    var new_plan =  <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
-
-        <div style={{textAlign:"center",marginBottom:"1px",marginTop:"20px",marginTop:"20px"}}>
-          <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{base.slogon1}</p>
-        </div>
-
-        <div style={{textAlign:"center",marginBottom:"1px"}}>
-          {/*<input style={inner_style.input}*/}
-          {/*value={this.state.plan_name}*/}
-          {/*placeholder={"输入我要制定的目标"}*/}
-          {/*onChange={(event)=>this.valueChange(event,PlanName)} />*/}
-
-          <TextField
-            hintText={"我的目标名字"}
-            value={this.state.plan_name}
-            onChange={(event,new_value)=>this.setState({plan_name:new_value})}
-          />
-        </div>
-
-
-
-        <div style={{textAlign:"center"}}>
-
-          { !this.state.id || this.state.id < 0  ?
-          <div>
-          <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
-                      formatDate={(date)=>{return base.formatDate1(date)}}
-                      onChange={(event,newValue)=>{
-
-                        console.log("start123",base.formatDate1(this.state.start));
-
-                        console.log(`start:end=${this.state.start} newValue`,newValue);
-                        let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
-                        this.caculate_need_score(newValue,this.state.end);
-                        if(ret == false)
-                        {
-                          this.setState({open:true})
-                          return;
-                        }
-                        this.setState({start:newValue})
-
-                      }}/>
-          <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
-                      formatDate={(date)=>{return base.formatDate1(date)}}
-                      onChange={(event,newValue)=>{
-                        console.log(`end:start=${this.state.start} newValue`,newValue);
-                        let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
-                        this.caculate_need_score(this.state.start,newValue);
-                        if(ret == false)
-                        {
-                          this.setState({open:true})
-                          return;
-                        }
-
-                        var m = moment(newValue)
-                        var date_ = m.format("YYYY-MM-DD");
-                        var value = moment(date_,date_).toDate()
-                        this.setState({end:newValue})
-                      }}/>
-          </div>:
-
-            <div>
-             <div style={inner_styles.time_row}>{this.state.start? base.formatDate1(this.state.start):null}  ---  {this.state.end? base.formatDate1(this.state.end):null}</div>
-            </div>
-
-          }
-
-
-          {this.state.user ?<div style={inner_styles.time_row}>
-            <span>总积分:</span><span>{ this.state.user.statistics.total_score }</span>   <span>消耗:</span><span>{this.state.need_score}分</span>
-          </div>:null}
-
-          <RaisedButton label={"取消"} primary={true} style={{margin:"10px"}} onClick={()=>base.goto("/")}  ></RaisedButton>
-
-          <RaisedButton label={"制定  小目标"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_new_plan()} ></RaisedButton>
-        </div>
-
-      <Dialog
-        title=""
-        actions={actions}
-        modal={false}
-        open={this.state.open}
-        onRequestClose={this.handleClose}
-      >
-        {this.state.new_plan_msg}
-      </Dialog>
-
-      </div>
-
-
-
-
-
-
-
-
-    var alert_view=  <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
-          <div>提醒时间</div>
-
-          <div>小时: <input value={this.state.hours} onChange={(e)=>this.setState({hours:e.target.value})}/></div>
-          <div>分钟: <input value={this.state.minutes} onChange={(e)=>this.setState({minutes:e.target.value})} /> </div>
-
-      <RaisedButton label={"确定"} secondary={true} style={{margin:"10px"}} onClick={()=>this.create_or_update_alert()} ></RaisedButton>
-      </div>
-
 
     return(
       <div>
-        {new_plan}
+        <div style={{margin:"auto",backgroundColor:"white",margin:"8px",borderRadius:"4px"}}>
+
+          <div style={{textAlign:"center",marginBottom:"1px",marginTop:"20px",marginTop:"20px"}}>
+            <p style={{padding:"9px",fontSize:"25px",color:base.COLOR.red}}>{base.slogon1}</p>
+          </div>
+
+          <div style={{textAlign:"center",marginBottom:"1px"}}>
+            {/*<input style={inner_style.input}*/}
+            {/*value={this.state.plan_name}*/}
+            {/*placeholder={"输入我要制定的目标"}*/}
+            {/*onChange={(event)=>this.valueChange(event,PlanName)} />*/}
+
+            <TextField
+              hintText={"我的目标名字"}
+              value={this.state.plan_name}
+              onChange={(event,new_value)=>this.setState({plan_name:new_value})}
+            />
+          </div>
 
 
+
+          <div style={{textAlign:"center"}}>
+
+            { !this.state.id || this.state.id < 0  ?
+              <div>
+                <DatePicker value={this.state.start} hintText="开始日期" autoOk={false}
+                            formatDate={(date)=>{return base.formatDate1(date)}}
+                            onChange={(event,newValue)=>{
+
+                              console.log("start123",base.formatDate1(this.state.start));
+
+                              console.log(`start:end=${this.state.start} newValue`,newValue);
+                              let ret = this.check_date(newValue,this.state.end,this.state.MAX_DAYS);
+                              this.caculate_need_score(newValue,this.state.end);
+                              if(ret == false)
+                              {
+                                this.setState({open:true})
+                                return;
+                              }
+                              this.setState({start:newValue})
+
+                            }}/>
+                <DatePicker value={this.state.end} hintText="结束日期" autoOk={false}
+                            formatDate={(date)=>{return base.formatDate1(date)}}
+                            onChange={(event,newValue)=>{
+                              console.log(`end:start=${this.state.start} newValue`,newValue);
+                              let ret = this.check_date(this.state.start,newValue,this.state.MAX_DAYS);
+                              this.caculate_need_score(this.state.start,newValue);
+                              if(ret == false)
+                              {
+                                this.setState({open:true})
+                                return;
+                              }
+
+                              var m = moment(newValue)
+                              var date_ = m.format("YYYY-MM-DD");
+                              var value = moment(date_,date_).toDate()
+                              this.setState({end:newValue})
+                            }}/>
+              </div>:
+
+              <div>
+                <div style={inner_styles.time_row}>{this.state.start? base.formatDate1(this.state.start):null}  ---  {this.state.end? base.formatDate1(this.state.end):null}</div>
+              </div>
+
+            }
+
+
+            {this.state.user ?<div style={inner_styles.time_row}>
+              <span>总积分:</span><span>{ this.state.user.statistics.total_score }</span>   <span>消耗:</span><span>{this.state.need_score}分</span>
+            </div>:null}
+
+          </div>
+
+          <Dialog
+            title=""
+            actions={actions}
+            modal={false}
+            open={this.state.open}
+            onRequestClose={this.handleClose}
+          >
+            {this.state.new_plan_msg}
+          </Dialog>
+
+        </div>
         <div style={Object.assign({textAlign:"center"},this.props.style)}>
 
           <div style={{border:`1px solid ${base.COLOR.blue}`}}>
@@ -418,10 +395,14 @@ componentDidMount()
             发送提醒通知
           </div>
         </div>
+        <div style={{textAlign:"center",borderTop:"1px solid "}}>
+          <RaisedButton label={"取消"} primary={true}
+                        style={{margin:"10px"}} onClick={()=>base.goto("/")}  ></RaisedButton>
 
-        <RaisedButton label={"确定"} secondary={true}
-                      style={{margin:"10px"}}
-                      onClick={()=>this.create_or_update_alert()} ></RaisedButton>
+          <RaisedButton label={"制定  小目标"} secondary={true}
+                        style={{margin:"10px"}} onClick={()=>this.create_new_plan()} ></RaisedButton>
+        </div>
+
       </div>
     )
 

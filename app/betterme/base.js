@@ -3,8 +3,8 @@ import moment from "moment"
 
 export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
-//export const BaseHost = "http://localhost:3000"
-export const BaseHost = `http://www.coderlong.com`
+export const BaseHost = "http://localhost:3000"
+//export const BaseHost = `http://www.coderlong.com`
 export const IMG_BASE = `${BaseHost}/upload/`
 
 const history = hashHistory;
@@ -59,7 +59,8 @@ export const COLOR={
   blue:"rgb(0, 188, 212)",
   red:"rgb(255, 64, 129)",
   gray:"#f2f2f2",
-  yellow:"#FFEB3B"
+  yellow:"#FFEB3B",
+  green:"green",
 
 }
 

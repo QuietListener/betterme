@@ -147,7 +147,7 @@ export default class CDaka extends Component{
     if(total_days <= finished_days)
     {
       show_view = <div
-        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.red})}
+        style={Object.assign({},styles.daka_box,{backgroundColor:base.COLOR.green})}
       >
         <Heart style={styles.icon}/>计划完成
       </div>
@@ -166,7 +166,7 @@ export default class CDaka extends Component{
     }
     else if(this.state.show_daka == false)
     {
-      show_view = <div  style={Object.assign(styles.daka_box,{color:"black"})}
+      show_view = <div  style={Object.assign(styles.daka_box,{color:"white",backgroundColor:base.COLOR.red})}
         onClick={()=>this.show_daka()} >
         <AlarmAdd style={styles.icon}/>打卡
       </div>

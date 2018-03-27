@@ -11,8 +11,7 @@ import TextField   from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-
-
+import Picker from 'react-mobile-picker';
 import "../css/app.css"
 
 class NewPlan extends Component{
@@ -21,12 +20,38 @@ class NewPlan extends Component{
   {
     super(props)
     var id = (this.props.params != null && this.props.params.id != null) ?this.props.params.id: null;
+
+    var m = moment();
+
+    var hoursOptions = [];
+    var minutesOptions = [];
+    for(var i = 0; i< 24; i++)
+    {
+      hoursOptions.push(i);
+    }
+
+    for(var j = 0; j< 60; j++)
+    {
+      minutesOptions.push(j);
+    }
+
     this.state={
       id:id,
       open:false,
       MAX_DAYS:21,
       score_per_day:50,
-      need_score:0
+      need_score:0,
+      init_hours: m.hours(),
+      init_minutes: m.minutes(),
+      valueGroups: {
+        hours: m.hours(),
+        minutes: m.hours(),
+      },
+
+      optionGroups: {
+        hours: hoursOptions,
+        minutes: minutesOptions
+      }
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -34,6 +59,7 @@ class NewPlan extends Component{
     this.create_new_plan = this.create_new_plan.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.load_data = this.load_data.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
   }
 
@@ -43,18 +69,28 @@ class NewPlan extends Component{
       var that = this;
       that.setState({loading: true});
       axios.get(`${base.BaseHost}/index/plan.json?id=${this.state.id}`).then((res) => {
-        console.log("res", res);
+        console.log("res plan.json", res);
         var plan = res.data.data;
 
         var start = moment(plan.start,"YYYY-MM-DD").toDate();
         var end  =  moment(plan.end,"YYYY-MM-DD").toDate();
+
+        var valueGroups={
+          hours:plan.alert?plan.alert.hours : moment().hours(),
+          minutes:plan.alert?plan.alert.minutes : moment().minutes()
+        }
+
+        //alert(plan.alert.hours);
         that.setState({plan_name: plan.name,
           start:start,
           end:end,
-          loading: false});
+          loading: false,
+          valueGroups:valueGroups
+        });
 
         this.caculate_need_score(start,end);
         console.log("state",that.state);
+
       }).catch(e => {
         console.error(e);
         that.setState({loading: false});
@@ -80,12 +116,16 @@ class NewPlan extends Component{
 
     var that = this;
     this.setState({loading:true});
+    console.log("create_new_plan.json",this.state);
     axios.post(`${base.BaseHost}/index/create_plan.json`,
       {
         id:this.state.id,
         name:plan_name,
         start_time:start,
-        end_time:end
+        end_time:end,
+        hours:this.state.valueGroups.hours,
+        minutes:this.state.valueGroups.minutes
+
       }).then((res)=>{
 
       var data = res.data;
@@ -183,6 +223,13 @@ class NewPlan extends Component{
     }
   }
 
+  onTimeChange(hours,minutes)
+  {
+    this.setState({hours:hours,minutes:minutes})
+
+    console.log(`onTimeChange ${JSON.stringify(this.state)}`)
+  }
+
 componentDidMount()
   {
     this.load_data();
@@ -192,6 +239,16 @@ componentDidMount()
     }
     console.log("componentDidMount",this.state);
   }
+
+  // Update the value in response to user picking event
+  handleChange(name, value)
+  {
+    console.log(`picker change: ${name} - ${value}`);
+    var valueGroups = this.state.valueGroups;
+    valueGroups[name] = value;
+    this.setState({valueGroups:valueGroups});
+  }
+
 
   async load_data()
   {
@@ -214,8 +271,8 @@ componentDidMount()
 
     console.log("state",this.state);
     var user = this.state.user;
-
     var loading_view = <CLoading/>
+
     if(this.state.loading == true)
       return loading_view;
 
@@ -337,7 +394,34 @@ componentDidMount()
       <div>
         {new_plan}
 
-        {/*{alert_view}*/}
+
+        <div style={Object.assign({textAlign:"center"},this.props.style)}>
+
+          <div style={{border:`1px solid ${base.COLOR.blue}`}}>
+            <div style={{padding:"0 20px 0 20px",borderBottom:`1px solid ${base.COLOR.blue}`,verticalAlign:"middle"}}>
+              <div style={inner_styles.header_item}>时</div>
+              <div style={inner_styles.header_item}>分</div>
+            </div>
+
+            <Picker style={{border:`1px solid ${base.COLOR.blue}`}}
+                    height={160}
+                    itemHeight={40}
+                    optionGroups={this.state.optionGroups}
+                    valueGroups={this.state.valueGroups}
+                    onChange={this.handleChange} />
+          </div>
+
+          <div style={{fontSize:"16px"}}>
+            我们将在
+            <span style={inner_styles.hilight_time}> {this.state.valueGroups.hours} </span>:
+            <span style={inner_styles.hilight_time}> {this.state.valueGroups.minutes}</span>
+            发送提醒通知
+          </div>
+        </div>
+
+        <RaisedButton label={"确定"} secondary={true}
+                      style={{margin:"10px"}}
+                      onClick={()=>this.create_or_update_alert()} ></RaisedButton>
       </div>
     )
 
@@ -351,7 +435,17 @@ const inner_styles={
     fontSize:"20px",
     textAlign:"center",
     marginLeft:"14px"
-
+  },
+  header_item:{
+    width:"50%",
+    display:"inline-block",
+    verticalAlign:"middle",
+    textAlign:"center",
+    fontSize:"20px"
+  },
+  hilight_time:{
+    fontSize:"20px",
+    color:base.COLOR.red
   }
 }
 

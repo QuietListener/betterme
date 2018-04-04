@@ -73,8 +73,8 @@ export default class Test extends Component{
   {
 
     var default_option_groups = [
-      [["01时",1],["02时",2],["03时",3],["04时",4]],
-      [["1分",1],["2分",2],["3分",3]]
+      [["01",1],["02",2],["03",3],["04",4],["05",5],["06",6]],
+      [["1",1],["2",2],["3",3],["4",4]]
     ];
     var default_value_indexes = [1,2];
 
@@ -84,8 +84,11 @@ export default class Test extends Component{
         <CPicker style={{width:"70%",margin:"auto",textAlign:"center",border:"1px solid black",padding:20}}
                  item_style={{fontSize:"24px",minWidth:"100px"}}
                  show_item_style={{fontSize:"26px",minHeight:60,minWidth:"100px",color:"red"}}
+                 tip_style={{fontSize:"20px",marginLeft:"4px",color:"black"}}
+                 show_rows_count={5}
                  value_changed={this.value_changed}
                  option_groups={default_option_groups}
+                 default_value_tip={["点","分"]}
                  default_value_indexes={default_value_indexes}></CPicker>
         </div>
       </div>

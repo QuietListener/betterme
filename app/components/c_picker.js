@@ -92,6 +92,7 @@ export default class CPicker extends Component
 
 
 
+    var default_value_tip = this.props.default_value_tip||null;
     var option_group = this.props.option_groups
 
 
@@ -125,9 +126,9 @@ export default class CPicker extends Component
            else
            {
              if(j == middle)
-                column.push( <div value={options[k][1]} style={Object.assign(styles.show_item_style,this.props.show_item_style)}>{options[k][0]}</div> );
+               column.push( <div value={options[k][1]} style={Object.assign(styles.show_item_style,this.props.show_item_style)}>{options[k][0]}<span style={Object.assign({marginLeft:2},this.props.tip_style)}>{default_value_tip?default_value_tip[i]:null}</span> </div>);
              else
-               column.push( <div value={options[k][1]} style={Object.assign(styles.item_style,this.props.item_style)}>{options[k][0]}</div> );
+               column.push( <div value={options[k][1]} style={Object.assign(styles.item_style,this.props.item_style)}>{options[k][0]}<span style={Object.assign({marginLeft:2,visibility:'hidden'},this.props.tip_style)}>{default_value_tip?default_value_tip[i]:null}</span></div> );
            }
         }
 

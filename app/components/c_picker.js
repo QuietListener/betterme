@@ -45,9 +45,9 @@ export default class CPicker extends Component
 
         var adder = 1;
         if(abs_span >= ThreshHold2 && abs_span < ThreshHold3)
-          adder = 2;
+          adder = 3;
         else if(abs_span >= ThreshHold3)
-          adder = 4;
+          adder = 8;
 
         if (abs_span > ThreshHold1)
         {

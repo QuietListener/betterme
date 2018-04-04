@@ -80,7 +80,14 @@ export default class Test extends Component{
 
     return <div>
         <CTimepicker hours={3} minutes={10}/>
-        <CPicker value_changed={this.value_changed} option_groups={default_option_groups} default_value_indexes={default_value_indexes}></CPicker>
+        <div style={{margin:"auto"}}>
+        <CPicker style={{width:"70%",margin:"auto",textAlign:"center",border:"1px solid black",padding:20}}
+                 item_style={{fontSize:"24px",minWidth:"100px"}}
+                 show_item_style={{fontSize:"26px",minHeight:60,minWidth:"100px",color:"red"}}
+                 value_changed={this.value_changed}
+                 option_groups={default_option_groups}
+                 default_value_indexes={default_value_indexes}></CPicker>
+        </div>
       </div>
   }
 }

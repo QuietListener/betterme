@@ -6,9 +6,9 @@ import * as base from "../betterme/base.js"
 import Picker from 'react-mobile-picker';
 import Moment from "moment"
 
-const ThreshHold1 = 40;
-const ThreshHold2 = 2*ThreshHold1;
-const ThreshHold3 = 4*ThreshHold1;
+const ThreshHold1 = 20;
+const ThreshHold2 = 4*ThreshHold1;
+const ThreshHold3 = 7*ThreshHold1;
 export default class CPicker extends Component
 {
   constructor(props)
@@ -120,18 +120,18 @@ export default class CPicker extends Component
         {
            if(k < 0 || k >= options.length)
            {
-             column.push( <div style={styles.item}>{" "}</div> );
+             column.push( <div style={Object.assign(styles.item_style,this.props.item_style)}>{" "}</div> );
            }
            else
            {
              if(j == middle)
-                column.push( <div value={options[k][1]} style={styles.show_item}>{options[k][0]}</div> );
+                column.push( <div value={options[k][1]} style={Object.assign(styles.show_item_style,this.props.show_item_style)}>{options[k][0]}</div> );
              else
-               column.push( <div value={options[k][1]} style={styles.item}>{options[k][0]}</div> );
+               column.push( <div value={options[k][1]} style={Object.assign(styles.item_style,this.props.item_style)}>{options[k][0]}</div> );
            }
         }
 
-        item_group.push(<div ref={`group_${i}`} style={{display:"inline-block",verticalAlign:"top"}}>{column}</div>);
+        item_group.push(<div ref={`group_${i}`} style={Object.assign(styles.group_style,this.props.group_style)}>{column}</div>);
     }
 
     return (
@@ -151,18 +151,31 @@ const styles ={
     textAlign:"center",
     fontSize:"20px"
   },
-  item:{
+  item_style:{
+    display:"flex",/*Flex布局*/
+    display: "-webkit-flex", /* Safari */
+    alignItems:"center",/*指定垂直居中*/
     minWidth:"80px",
     minHeight:"40px",
     textAlign:"center",
+    justifyContent:"center",
     verticalAlign:"middle"
   },
-  show_item:{
+
+  show_item_style:{
+    display:"flex",/*Flex布局*/
+    display: "-webkit-flex", /* Safari */
+    alignItems:"center",/*指定垂直居中*/
     minWidth:"80px",
     minHeight:"40px",
     textAlign:"center",
+    justifyContent:"center",
     verticalAlign:"middle",
     borderTop:"1px solid",
     borderBottom:"1px solid"
+  },
+  group_style:{
+    display:"inline-block",
+    verticalAlign:"top"
   }
 };

@@ -20,6 +20,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CLoading from "../components/loadings/c_loading";
 import CBottomSaveBar from "../components/c_bottom_save_bar"
 import Moment from "moment"
+import CPicker from "../components/c_picker.js"
 
 const PlanName = "plan_name";
 const Start = "start";
@@ -36,6 +37,7 @@ export default class Test extends Component{
   constructor(props)
   {
       super(props);
+      this.value_changed = this.value_changed.bind(this);
   }
 
 
@@ -62,11 +64,23 @@ export default class Test extends Component{
     })
   }
 
+  value_changed(values)
+  {
+    console.log("value_changed",values);
+  }
+
   render()
   {
 
+    var default_option_groups = [
+      [["01时",1],["02时",2],["03时",3],["04时",4]],
+      [["1分",1],["2分",2],["3分",3]]
+    ];
+    var default_value_indexes = [1,2];
+
     return <div>
         <CTimepicker hours={3} minutes={10}/>
+        <CPicker value_changed={this.value_changed} option_groups={default_option_groups} default_value_indexes={default_value_indexes}></CPicker>
       </div>
   }
 }

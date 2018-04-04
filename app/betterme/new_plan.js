@@ -375,12 +375,12 @@ componentDidMount()
         <div style={Object.assign({textAlign:"center"},this.props.style)}>
 
           <div style={{border:`1px solid ${base.COLOR.blue}`}}>
-            <div style={{padding:"0 20px 0 20px",borderBottom:`1px solid ${base.COLOR.blue}`,verticalAlign:"middle"}}>
+            <div style={{padding:"0 20px 20px 20px",verticalAlign:"middle"}}>
               <div style={inner_styles.header_item}>时</div>
               <div style={inner_styles.header_item}>分</div>
             </div>
 
-            <Picker style={{border:`1px solid ${base.COLOR.blue}`}}
+            <Picker style={{border:`1px solid ${base.COLOR.blue}`,backgroundColor:"white"}}
                     height={160}
                     itemHeight={40}
                     optionGroups={this.state.optionGroups}

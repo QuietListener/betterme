@@ -20,7 +20,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CLoading from "../components/loadings/c_loading";
 import CBottomSaveBar from "../components/c_bottom_save_bar"
 import Moment from "moment"
-import CPicker from "../components/c_picker.js"
+import CPicker1 from "../components/c_picker1.js"
 
 const PlanName = "plan_name";
 const Start = "start";
@@ -81,7 +81,7 @@ export default class Test extends Component{
     return <div>
         <CTimepicker hours={3} minutes={10}/>
         <div style={{margin:"auto"}}>
-        <CPicker style={{width:"70%",margin:"auto",textAlign:"center",border:"1px solid black",padding:20}}
+        <CPicker1 style={{width:"70%",margin:"auto",textAlign:"center",border:"1px solid black",padding:20}}
                  item_style={{fontSize:"24px",minWidth:"100px"}}
                  show_item_style={{fontSize:"26px",minHeight:60,minWidth:"100px",color:"red"}}
                  tip_style={{fontSize:"20px",marginLeft:"4px",color:"black"}}
@@ -89,7 +89,7 @@ export default class Test extends Component{
                  value_changed={this.value_changed}
                  option_groups={default_option_groups}
                  default_value_tip={["点","分"]}
-                 default_value_indexes={default_value_indexes}></CPicker>
+                 default_value_indexes={default_value_indexes}></CPicker1>
         </div>
       </div>
   }

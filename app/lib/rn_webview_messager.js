@@ -18,6 +18,7 @@ export default class RNWebviewMessager
       var {id, method, result} = JSON.parse(message);
       var call_back = that.call_backs[id.toString() ];
 
+      alert(`${call_back} is ${call_back}: id=${id}, method=${method},result=${JSON.stringify(result)}`)
       //result必须为数组
       if(call_back != null)
         call_back(...result);
@@ -32,7 +33,6 @@ export default class RNWebviewMessager
     this.call(cmd, share_data_ , call_back);
    }
 
-
   call(method, args, call_back)
   {
       var command = {method, args}
@@ -44,6 +44,7 @@ export default class RNWebviewMessager
       console.log("to RN:"+msg);
       this.call_backs[id.toString()]=call_back;
 
+      alert(`to native msg:${JSON.stringify(msg)}`);
       window.postMessage(msg);
   }
 }

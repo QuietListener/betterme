@@ -43,7 +43,7 @@ module.exports={
      plugins:[
         new webpack.HotModuleReplacementPlugin(),//热加载插件
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
         //new ExtractTextPlugin("[name]-[hash].css")
     ]
 

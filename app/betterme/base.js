@@ -23,8 +23,8 @@ const HttpTimeout = 10000//毫秒
 
 import axios_ from "axios"
 const instance = axios_.create({timeout: HttpTimeout,headers:headers});
-instance.defaults.headers.common["User-Agent"] = UserAgent;
-instance.defaults.withCredentials = true
+// instance.defaults.headers.common["User-Agent"] = UserAgent;
+// instance.defaults.withCredentials = true
 
 export const axios = instance
 

@@ -21,9 +21,8 @@ class GreeterReact extends Component{
 
     share_callback(result,chanel)
     {
-      //alert(`chanel:${chanel}, result:${JSON.stringify(result)}`)
+      alert(`chanel:${chanel}, result:${JSON.stringify(result)}`)
       this.setState({result:result,chanel:chanel});
-
     }
 
     show()
@@ -33,7 +32,7 @@ class GreeterReact extends Component{
       var img = "https://7n.bczcdn.com/cover_img/rimg_package_999999999_1503051309_13505.jpeg"
 
       var share_data = {"url": url, "title": "测试", "desc": "desc", "img": img, "share_type": "", "share_media": ""}
-      this.msger.share(onShareClick, this.share_callback)
+      this.msger.share(share_data, this.share_callback)
     }
 
     render(){
@@ -48,6 +47,10 @@ class GreeterReact extends Component{
                 </div>
 
                 <div style={{fontSize:40}} onClick={this.show.bind(this)}>show</div>
+
+                 {/*<div style={{fontSize:40}} onClick={()=>this.msger.call("startRecord",{},()=>{})}>startRecord</div>*/}
+                 {/*<div style={{fontSize:40}} onClick={()=>this.msger.call("stopRecord",{},()=>{})}>stopRecord</div>*/}
+                 {/*<div style={{fontSize:40}} onClick={()=>this.msger.call("playRecord",{},()=>{})}>playRecord</div>*/}
             </div>
         )
     }

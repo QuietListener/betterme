@@ -70,7 +70,7 @@ export default class Article extends Component
     }
     var url = `${BaseHost}/reading/update_sentence.json`;
     console.log(url);
-    axios.post(url , params).then((res) => {
+    axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
     }).catch(e => {
@@ -108,27 +108,38 @@ export default class Article extends Component
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
 
-    var words_divs = words.map(w => {
-      return <div style={{display: "inline-block", margin: "2px", border: "1px solid"}}
-                  onClick={() => this.choose(w.order)}>
-        <div>{w.text}</div>
-        <div>{w.order}</div>
-      </div>
-    })
+    var maxOrder = -1;
 
 
     var sentence_divs = sentences.map(s => {
 
       let start = s.start_word_order;
       let end = s.end_word_order;
+      if (maxOrder <= start) maxOrder = start;
+      if (maxOrder <= end) maxOrder = end;
+
       let s_word_divs = words.filter((w) => {
         return w.order >= start && w.order <= end;
       }).map(w => {
         return <div style={{display: "inline-block", margin: "2px"}}>{w.text}</div>
       })
 
-      return <div style={{display: "inline-block", margin: "4px", padding: "2px", border: "1px solid"}}>
+      return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
         {s_word_divs}
+      </div>
+    })
+
+
+    var words_divs = words.map(w => {
+      let color = w.order <= maxOrder ? "2px solid red" : "1px solid black";
+
+      console.log(maxOrder+":"+w.order+":"+color);
+
+      return <div
+        style={{display: "inline-block", margin: "2px", border: color }}
+        onClick={() => this.choose(w.order)}>
+        <div>{w.text}</div>
+        <div>{w.order}</div>
       </div>
     })
 
@@ -153,7 +164,7 @@ export default class Article extends Component
               end:{this.state.end}
             </div>
 
-            <div style={{display: "inline-block",border:"1px solid"}}
+            <div style={{display: "inline-block", border: "1px solid"}}
                  onClick={this.saveSentence}>
               save
             </div>

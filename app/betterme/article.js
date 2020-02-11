@@ -6,7 +6,7 @@ import '../css/app.css';
 import {axios} from "./base.js"
 
 
-const BaseHost = "http://127.0.0.1:3100"
+const BaseHost = "http://localhost:3100"
 
 
 export default class Article extends Component
@@ -20,10 +20,18 @@ export default class Article extends Component
     super(props);
     this.state = {
       id: 1,
-      data: {}
+      data: {},
+      start: -1,
+      end: -1,
+      which: "start"
     };
 
     this.load = this.load.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.click = this.click.bind(this);
+    this.choose = this.choose.bind(this);
+    this.saveSentence = this.saveSentence.bind(this);
+
   }
 
   componentDidMount()
@@ -49,6 +57,50 @@ export default class Article extends Component
     })
   }
 
+  saveSentence()
+  {
+    var that = this;
+    this.setState({loading: true});
+
+    var id = this.state.id;
+    var params = {
+      article_id: id,
+      start_word_order: this.state.start,
+      end_word_order: this.state.end,
+    }
+    var url = `${BaseHost}/reading/update_sentence.json`;
+    console.log(url);
+    axios.post(url , params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    }).done();
+
+  }
+
+
+  handleChange(propName, event)
+  {
+    this.setState({propName: event.target.value});
+  }
+
+  click(which)
+  {
+    this.setState({which: which});
+  }
+
+  choose(order)
+  {
+    let data = {}
+    data[this.state.which + ""] = order;
+
+    this.setState(data);
+  }
+
+
   render()
   {
 
@@ -57,11 +109,12 @@ export default class Article extends Component
     var sentences = this.state.data.sentences || [];
 
     var words_divs = words.map(w => {
-      return <div style={{display: "inline-block", margin: "2px" , border: "1px solid"}}>
-        <div>{w.text}</div> <div>{w.order}</div>
+      return <div style={{display: "inline-block", margin: "2px", border: "1px solid"}}
+                  onClick={() => this.choose(w.order)}>
+        <div>{w.text}</div>
+        <div>{w.order}</div>
       </div>
     })
-
 
 
     var sentence_divs = sentences.map(s => {
@@ -83,6 +136,29 @@ export default class Article extends Component
         <div style={inner_style.part}>{words_divs}</div>
         <div style={inner_style.part}>
           {sentence_divs}
+
+          <div>
+            <div style={{
+              display: "inline-block",
+              border: this.state.which == "start" ? "1px solid" : "0px",
+              margin: "10px"
+            }}
+                 onClick={() => this.click("start")}>
+              start:{this.state.start}
+            </div>
+
+            <div
+              style={{display: "inline-block", border: this.state.which == "end" ? "1px solid" : "0px", margin: "10px"}}
+              onClick={() => this.click("end")}>
+              end:{this.state.end}
+            </div>
+
+            <div style={{display: "inline-block",border:"1px solid"}}
+                 onClick={this.saveSentence}>
+              save
+            </div>
+
+          </div>
         </div>
       </div>
     );

@@ -23,7 +23,8 @@ export default class Article extends Component
       data: {},
       start: -1,
       end: -1,
-      which: "start"
+      which: "start",
+      audio_splits:[]
     };
 
     this.load = this.load.bind(this);
@@ -32,13 +33,66 @@ export default class Article extends Component
     this.choose = this.choose.bind(this);
     this.saveSentence = this.saveSentence.bind(this);
     this.saveSentence_ = this.saveSentence_.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.removeAudioSplit = this.removeAudioSplit.bind(this);
+
+    this.audioRef = new Object();
   }
 
   componentDidMount()
   {
     this.load();
+    document.addEventListener("keydown", this.onKeyDown)
   }
 
+  onKeyDown(event)
+  {
+    //console.log("key down",event);
+    if (event.code == "Space")
+    {
+      console.log("space click")
+      var audio = this.refs.audioRef;
+      //console.log(audio);
+      this.troggle(audio);
+    }
+  }
+
+  troggle(audio)
+  {
+    if (audio !== null)
+    {
+      //检测播放是否已暂停.audio.paused 在播放器播放时返回false.
+      //alert(audio.paused);
+      if (audio.paused)
+      {
+        audio.play();//audio.play();// 这个就是播放
+      } else
+      {
+        audio.pause();// 这个就是暂停
+        this.processAudio(audio);
+      }
+    }
+  }
+
+  processAudio(audio)
+  {
+    let currentTime = audio.currentTime;
+    console.log("currentTime", currentTime)
+    var splits = this.state.audio_splits;
+    splits.push(currentTime);
+    this.setState({audio_splits:splits})
+  }
+
+  removeAudioSplit(t){
+    if(!t || t <= 0) return;
+
+    var splits = this.state.audio_splits;
+    splits = splits.filter(st=>{
+      return t-st > -0.001;
+    });
+
+    this.setState({audio_splits:splits})
+  }
 
   load()
   {
@@ -67,10 +121,11 @@ export default class Article extends Component
 
     var start = this.state.start;
     var end = this.state.end;
-    this.saveSentence_(id,s_id,start,end);
+    this.saveSentence_(id, s_id, start, end);
   }
 
-  saveSentence_(article_id,s_id,word_start,word_end,audio_start,audio_end){
+  saveSentence_(article_id, s_id, word_start, word_end, audio_start, audio_end)
+  {
     var params = {
       sentence_id: s_id,
       article_id: article_id,
@@ -95,8 +150,11 @@ export default class Article extends Component
 
   handleChange(propName, event)
   {
-    this.setState({propName: event.target.value});
+    let data = {}
+    data[propName] = event.target.value;
+    this.setState(data);
   }
+
 
   click(which)
   {
@@ -107,15 +165,12 @@ export default class Article extends Component
   {
     let data = {}
     data[this.state.which + ""] = order;
-
     this.setState(data);
   }
 
 
   render()
   {
-
-
     var article = this.state.data.article || {};
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
@@ -139,10 +194,25 @@ export default class Article extends Component
       return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
         <div>
           <span>word：</span><span>{s.id}:{start}:{end}</span>
-          <span>音频：</span><input style={{width:"60px"}} value={s.audio_start_at||-1} /> :
-          <input  style={{width:"60px"}}value={s.audio_end_at||-1}/>
+          <span>音频：</span>
+          <input style={{width: "60px"}} value={this.state["audio_start_" + s.id] || s.audio_end_at || 0}
+                 onChange={(event) => {
+                   this.handleChange("audio_start_" + s.id, event)
+                 }}/> :
+          <input style={{width: "60px"}} value={this.state["audio_end_" + s.id] || s.audio_end_at || 0}
+                 onChange={(event) => {
+                   this.handleChange("audio_end_" + s.id, event)
+                 }}
+          />
+
+          <div style={{display: "inline-block", border: "1px solid"}}
+               onClick={() => this.saveSentence_(this.state.id, s.id, null, null, this.state["audio_start_" + s.id], this.state["audio_end_" + s.id])}
+          >save
+          </div>
+
         </div>
-          {s_word_divs}
+
+        {s_word_divs}
         <div style={{display: "inline-block"}}></div>
       </div>
     })
@@ -151,7 +221,7 @@ export default class Article extends Component
     var words_divs = words.map(w => {
       let color = w.order <= maxOrder ? "2px solid red" : "1px solid black";
 
-      console.log(maxOrder + ":" + w.order + ":" + color);
+      //console.log(maxOrder + ":" + w.order + ":" + color);
 
       return <div
         style={{display: "inline-block", margin: "2px", border: color}}
@@ -160,6 +230,16 @@ export default class Article extends Component
         <div>{w.order}</div>
       </div>
     })
+
+
+
+    var audio_splits_divs=this.state.audio_splits.map(t=>{
+        return <div style= {{display:"inline-block", padding:"2px"}} >
+          {t}
+          <div style={{background:"black",color:"white",margin:"4px"}}
+               onClick={()=>{ console.log("del"+t); this.removeAudioSplit(t);}} >del</div>
+        </div>
+    });
 
     return (
 
@@ -209,19 +289,24 @@ export default class Article extends Component
 
           <div>
 
-            <audio controls src={article.audio_normal} style={{width:"100%"}}>
-                Your browser does not support this audio format.
+            <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%"}}>
+              Your browser does not support this audio format.
             </audio>
+
+            <div>
+              {audio_splits_divs}
+            </div>
+
           </div>
 
 
         </div>
       </div>
-  );
+    );
   }
-  }
+}
 
-  const inner_style = {
-    part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
-    input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
-  }
+const inner_style = {
+  part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
+  input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
+}

@@ -24,7 +24,7 @@ export default class Article extends Component
       start: -1,
       end: -1,
       which: "start",
-      audio_splits:[]
+      audio_splits: []
     };
 
     this.load = this.load.bind(this);
@@ -35,8 +35,12 @@ export default class Article extends Component
     this.saveSentence_ = this.saveSentence_.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.removeAudioSplit = this.removeAudioSplit.bind(this);
+    this.saveSplitAudio = this.saveSplitAudio.bind(this);
+    this.playAudio = this.playAudio.bind(this);
 
     this.audioRef = new Object();
+
+    this.timeoutPlay = null;
   }
 
   componentDidMount()
@@ -74,24 +78,43 @@ export default class Article extends Component
     }
   }
 
+  playAudio(from, to)
+  {
+    if (this.timeoutPlay != null)
+    {
+      clearTimeout(this.timeoutPlay);
+    }
+
+    let timeOut = Math.abs(to - from)*1000;
+
+    console.log("play",from,to,timeOut);
+    var audio = this.refs.audioRef;
+    audio.currentTime = from;
+    this.timeoutPlay = setTimeout(() => {
+      audio.pause()
+    }, timeOut);
+    audio.play();
+  }
+
   processAudio(audio)
   {
     let currentTime = audio.currentTime;
     console.log("currentTime", currentTime)
     var splits = this.state.audio_splits;
     splits.push(currentTime);
-    this.setState({audio_splits:splits})
+    this.setState({audio_splits: splits})
   }
 
-  removeAudioSplit(t){
-    if(!t || t <= 0) return;
+  removeAudioSplit(t)
+  {
+    if (!t || t <= 0) return;
 
     var splits = this.state.audio_splits;
-    splits = splits.filter(st=>{
-      return t-st > -0.001;
+    splits = splits.filter(st => {
+      return t > st ;
     });
 
-    this.setState({audio_splits:splits})
+    this.setState({audio_splits: splits})
   }
 
   load()
@@ -124,6 +147,35 @@ export default class Article extends Component
     this.saveSentence_(id, s_id, start, end);
   }
 
+  saveSplitAudio(article_id)
+  {
+    let splits = this.state.audio_splits;
+    var sentences = this.state.data.sentences || [];
+
+    if (splits.length + 1 != sentences.length)
+    {
+      alert("句子和切分点对不上 切点 " + splits.length + " 句子:" + sentences.length)
+      return;
+    }
+
+    var params = {
+      article_id: article_id,
+      splits: this.state.audio_splits
+    }
+
+    var url = `${BaseHost}/reading/save_audio_splits.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+
+  }
+
   saveSentence_(article_id, s_id, word_start, word_end, audio_start, audio_end)
   {
     var params = {
@@ -144,7 +196,7 @@ export default class Article extends Component
       console.log(e);
       this.setState({loading: false});
       this.load();
-    }).done();
+    })
 
   }
 
@@ -191,15 +243,17 @@ export default class Article extends Component
         return <div style={{display: "inline-block", margin: "2px"}}>{w.text}</div>
       })
 
+      let start_audio_ = this.state["audio_start_" + s.id] || s.audio_start_at || 0;
+      let end_audio_ =  this.state["audio_end_" + s.id] || s.audio_end_at || 0;
       return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
         <div>
           <span>word：</span><span>{s.id}:{start}:{end}</span>
           <span>音频：</span>
-          <input style={{width: "60px"}} value={this.state["audio_start_" + s.id] || s.audio_end_at || 0}
+          <input style={{width: "60px"}} value={start_audio_}
                  onChange={(event) => {
                    this.handleChange("audio_start_" + s.id, event)
                  }}/> :
-          <input style={{width: "60px"}} value={this.state["audio_end_" + s.id] || s.audio_end_at || 0}
+          <input style={{width: "60px"}} value={end_audio_}
                  onChange={(event) => {
                    this.handleChange("audio_end_" + s.id, event)
                  }}
@@ -210,6 +264,7 @@ export default class Article extends Component
           >save
           </div>
 
+          <div style={{display: "inline-block", border: "1px solid",marginLeft:"2px"}} onClick={()=>this.playAudio(start_audio_,end_audio_)}>play</div>
         </div>
 
         {s_word_divs}
@@ -232,14 +287,18 @@ export default class Article extends Component
     })
 
 
-
-    var audio_splits_divs=this.state.audio_splits.map(t=>{
-        return <div style= {{display:"inline-block", padding:"2px"}} >
-          {t}
-          <div style={{background:"black",color:"white",margin:"4px"}}
-               onClick={()=>{ console.log("del"+t); this.removeAudioSplit(t);}} >del</div>
+    var audio_splits_divs = this.state.audio_splits.map(t => {
+      return <div style={{display: "inline-block", padding: "2px",border:"1px solid"}}>
+        {t}
+        <div style={{background: "black", color: "white", margin: "4px"}}
+             onClick={() => {
+               console.log("del" + t);
+               this.removeAudioSplit(t);
+             }}>del
         </div>
+      </div>
     });
+
 
     return (
 
@@ -295,6 +354,13 @@ export default class Article extends Component
 
             <div>
               {audio_splits_divs}
+            </div>
+
+            <div style={{border: "2px solid ", padding: "6px",textAlign:"center",marginTop:"10px"}}
+                 onClick={() => {
+                   this.saveSplitAudio(this.state.id)
+                 }}
+            >fill all
             </div>
 
           </div>

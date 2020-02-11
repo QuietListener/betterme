@@ -31,7 +31,7 @@ export default class Article extends Component
     this.click = this.click.bind(this);
     this.choose = this.choose.bind(this);
     this.saveSentence = this.saveSentence.bind(this);
-
+    this.saveSentence_ = this.saveSentence_.bind(this);
   }
 
   componentDidMount()
@@ -62,12 +62,24 @@ export default class Article extends Component
     var that = this;
     this.setState({loading: true});
 
+    let s_id = this.refs.sId.value
     var id = this.state.id;
+
+    var start = this.state.start;
+    var end = this.state.end;
+    this.saveSentence_(id,s_id,start,end);
+  }
+
+  saveSentence_(article_id,s_id,word_start,word_end,audio_start,audio_end){
     var params = {
-      article_id: id,
-      start_word_order: this.state.start,
-      end_word_order: this.state.end,
+      sentence_id: s_id,
+      article_id: article_id,
+      start_word_order: word_start,
+      end_word_order: word_end,
+      audio_start_at: audio_start,
+      audio_end_at: audio_end,
     }
+
     var url = `${BaseHost}/reading/update_sentence.json`;
     console.log(url);
     axios.post(url, params).then((res) => {
@@ -80,7 +92,6 @@ export default class Article extends Component
     }).done();
 
   }
-
 
   handleChange(propName, event)
   {
@@ -105,6 +116,7 @@ export default class Article extends Component
   {
 
 
+    var article = this.state.data.article || {};
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
 
@@ -125,7 +137,13 @@ export default class Article extends Component
       })
 
       return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
-        {s_word_divs}
+        <div>
+          <span>word：</span><span>{s.id}:{start}:{end}</span>
+          <span>音频：</span><input style={{width:"60px"}} value={s.audio_start_at||-1} /> :
+          <input  style={{width:"60px"}}value={s.audio_end_at||-1}/>
+        </div>
+          {s_word_divs}
+        <div style={{display: "inline-block"}}></div>
       </div>
     })
 
@@ -133,22 +151,33 @@ export default class Article extends Component
     var words_divs = words.map(w => {
       let color = w.order <= maxOrder ? "2px solid red" : "1px solid black";
 
-      console.log(maxOrder+":"+w.order+":"+color);
+      console.log(maxOrder + ":" + w.order + ":" + color);
 
       return <div
-        style={{display: "inline-block", margin: "2px", border: color }}
+        style={{display: "inline-block", margin: "2px", border: color}}
         onClick={() => this.choose(w.order)}>
         <div>{w.text}</div>
         <div>{w.order}</div>
       </div>
     })
 
-    return (<div style={{}}>
+    return (
+
+      <div style={{}}>
         <div style={inner_style.part}>{words_divs}</div>
+
+
         <div style={inner_style.part}>
           {sentence_divs}
 
           <div>
+            <div style={{
+              display: "inline-block",
+              margin: "10px"
+            }}>
+              句子Id:<input ref={"sId"}/>
+            </div>
+
             <div style={{
               display: "inline-block",
               border: this.state.which == "start" ? "1px solid" : "0px",
@@ -164,19 +193,35 @@ export default class Article extends Component
               end:{this.state.end}
             </div>
 
-            <div style={{display: "inline-block", border: "1px solid"}}
+            <div style={{
+              display: "inline-block",
+              border: "1px solid ",
+              background: "black",
+              padding: "2px",
+              color: "white"
+            }}
                  onClick={this.saveSentence}>
               save
             </div>
 
           </div>
+
+
+          <div>
+
+            <audio controls src={article.audio_normal} style={{width:"100%"}}>
+                Your browser does not support this audio format.
+            </audio>
+          </div>
+
+
         </div>
       </div>
-    );
+  );
   }
-}
+  }
 
-const inner_style = {
-  part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
-  input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
-}
+  const inner_style = {
+    part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
+    input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
+  }

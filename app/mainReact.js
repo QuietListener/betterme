@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {render} from 'react-dom';
 import Home from './betterme/home.js'
 import Article from './betterme/article.js'
+import Articles from './betterme/articles.js'
 import PlanDetails from "./betterme/plan_details.js"
 import NewPlan from "./betterme/new_plan.js"
 import Mine from "./betterme/mine.js"
@@ -32,7 +33,9 @@ class App extends Component
         <Provider store={store}>
 
         <Router  history={hashHistory} >
-          <Route path="/" component={Article}></Route>
+          <Route path="/" component={Articles}></Route>
+          <Route path="/article/:id" component={Article}></Route>
+
             {/*<Route path="/" component={Home}></Route>*/}
             <Route path="/mine" component={Mine} />
             <Route path="/plan_details/:id" component={PlanDetails} />

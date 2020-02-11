@@ -14,12 +14,15 @@ export default class Article extends Component
 
   constructor(props)
   {
+    super(props)
     var init_plans = [];//[{id:1,plan_name:"背单词",start:"2017-12-12",end:"2017-12-22"},
     //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
-    super(props);
+    var id = this.props.params.id;
+    console.log("id",id);
+
     this.state = {
-      id: 1,
+      id: id,
       data: {},
       start: -1,
       end: -1,

@@ -238,8 +238,10 @@ export default class Article extends Component
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
     var splits = this.state.data.splits || [];
-
+    var end_word_orders = sentences.map(t=>t.end_word_order);
+    var start_word_orders = sentences.map(t=>t.start_word_order);
     var maxOrder = -1;
+
 
 
     var splitsObjs = this.state.audio_splits.map(ss=>{return {point:ss};});
@@ -318,6 +320,12 @@ export default class Article extends Component
 
     var words_divs = words.map(w => {
       let background = w.order <= maxOrder ? "green" : "black";
+
+      if(end_word_orders.indexOf(w.order) >=0){
+        background="red";
+      }else if(start_word_orders.indexOf(w.order) >= 0){
+        background="blue";
+      }
 
       //console.log(maxOrder + ":" + w.order + ":" + color);
 

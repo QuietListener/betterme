@@ -140,6 +140,7 @@ export default class ReadingPage extends Component
 
     audio.currentTime += span;
     audio.play();
+    this.setState({playState:Playing})
   }
   playAudio(from, to)
   {
@@ -216,19 +217,31 @@ export default class ReadingPage extends Component
     return (
 
       <div>
-        <div style={{display: "block", height: "90%", overflow: "scroll"}} ref={"sentenceScrollDiv"}>
+        <div style={{display: "block", height: "90%", overflow: "scroll",minHeight:"400px"}} ref={"sentenceScrollDiv"}>
+          <div style={{fontSize:"18px",fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
+            {article.title}
+          </div>
+
           <div style={inner_style.part}>
             {sentence_divs}
           </div>
+
+
+          <div style={{width:"100%",textAlign:"center",marginBottom:"20px"}}>
+            <div style={{padding:"6px",fontSize:"16px", background:"red" ,borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}>
+              finish
+            </div>
+          </div>
+
         </div>
 
-        <div style={{display: "block", height: "60px", overflow: "scroll"}}>
+        <div style={{display: "block", height: "60px", overflow: "scroll",backgroundColor:"#f2f2f2"}}>
 
           <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
             Your browser does not support this audio format.
           </audio>
 
-          <div style={{textAlign: "center"}}>
+          <div style={{textAlign: "center",marginTop:"5px"}}>
 
             <div style={{width: "100%", textAlign: "left", verticalAlign: "top"}}>
               <div style={{width: `${this.state.progress * 100}%`, height: "1px", background: "green"}}></div>
@@ -237,7 +250,7 @@ export default class ReadingPage extends Component
             <div style={{textAlign: "center",position:"relative"}}>
 
 
-              <div style={{display:"inline-block",verticalAlign:"top"}} onClick={()=>{this.playSpan(-5)}}>
+              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"10px"}} onClick={()=>{this.playSpan(-5)}}>
                 5s
               </div>
 
@@ -247,7 +260,7 @@ export default class ReadingPage extends Component
               </div>
 
 
-              <div style={{display:"inline-block",verticalAlign:"top"}} onClick={()=>{this.playSpan(5)}}>
+              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"10px"}} onClick={()=>{this.playSpan(5)}}>
                 5s
               </div>
             </div>

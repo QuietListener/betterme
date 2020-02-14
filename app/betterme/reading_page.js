@@ -4,10 +4,12 @@ import * as base from "./base.js"
 import _ from "lodash"
 import '../css/app.css';
 import {axios} from "./base.js"
-
+import playPng from "../resource/imgs/play.png";
+import stopPng from "../resource/imgs/stop.png";
 
 const BaseHost = "http://localhost:3100"
-
+const Playing = 1;
+const Stopped = 2;
 
 export default class ReadingPage extends Component
 {
@@ -19,7 +21,7 @@ export default class ReadingPage extends Component
     //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
     var id = this.props.params.id;
-    console.log("id",id);
+    console.log("id", id);
 
     this.state = {
       id: id,
@@ -28,14 +30,15 @@ export default class ReadingPage extends Component
       end: -1,
       which: "start",
       audio_splits: [],
-      playingSentence:-1 ,//正在播放哪个,
-      progress:0.0
+      playingSentence: -1,//正在播放哪个,
+      progress: 0.0,
+      playState: Stopped
     };
 
     this.load = this.load.bind(this);
     this.playAudio = this.playAudio.bind(this);
     this.scrollSentence = this.scrollSentence.bind(this);
-
+    this.playSpan = this.playSpan.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
 
@@ -46,60 +49,67 @@ export default class ReadingPage extends Component
   {
     this.load();
     document.addEventListener("keydown", this.onKeyDown)
-    this.interval = setInterval(()=>{
+    this.interval = setInterval(() => {
       this.scrollSentence();
-    },500);
+    }, 500);
   }
 
 
-  scrollSentence(){
-    try{
+  scrollSentence()
+  {
+    try
+    {
 
       var audio = this.refs.audioRef;
       var sentences = this.state.data.sentences || [];
       var splits_ = this.state.data.splits || [];
 
-      if(!audio || sentences.length <= 0){
+      if (!audio || sentences.length <= 0)
+      {
         return;
       }
 
       var curTime = audio.currentTime;
       var duration = audio.duration;
-      let progress = curTime/duration;
-      this.setState({progress:progress});
+      let progress = curTime / duration;
+      this.setState({progress: progress});
 
-      var sentenceScrollDiv =  this.refs["sentenceScrollDiv"];
+      var sentenceScrollDiv = this.refs["sentenceScrollDiv"];
 
-      for(let index = 0; index < sentences.length; index++){
+      for (let index = 0; index < sentences.length; index++)
+      {
 
         let s = sentences[index];
         let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
         let end_audio_ = index < splits_.length ? splits_[index]["point"] : 10000;
 
-        var refName = "s_s_"+s.id;
+        var refName = "s_s_" + s.id;
         var sentence_div = this.refs[refName];
-       // console.log(refName+"_height",sentence_div.height);
+        // console.log(refName+"_height",sentence_div.height);
 
-        if(curTime>start_audio_ && curTime <end_audio_ &&  this.setState.playingSentence != s.id){
+        if (curTime > start_audio_ && curTime < end_audio_ && this.setState.playingSentence != s.id)
+        {
           this.setState({playingSentence: s.id});
 
           var span = 250;
-          let top = parseInt(sentence_div.offsetTop/span);
-          let shouldScrollTo = span*top;
-          console.log(refName+"_scroll_height:"+sentence_div.offsetTop+" top:"+top);
-          console.log("shouldScrollTo",shouldScrollTo);
+          let top = parseInt(sentence_div.offsetTop / span);
+          let shouldScrollTo = span * top;
+          console.log(refName + "_scroll_height:" + sentence_div.offsetTop + " top:" + top);
+          console.log("shouldScrollTo", shouldScrollTo);
 
-          if(shouldScrollTo <= 0){
+          if (shouldScrollTo <= 0)
+          {
             return;
           }
 
-          sentenceScrollDiv.scrollTo(0, shouldScrollTo-30);
+          sentenceScrollDiv.scrollTo(0, shouldScrollTo - 30);
           return;
         }
 
       }
 
-    }catch(e){
+    } catch (e)
+    {
       console.log(e);
     }
   }
@@ -114,13 +124,23 @@ export default class ReadingPage extends Component
       if (audio.paused)
       {
         audio.play();//audio.play();// 这个就是播放
+        this.setState({playState:Playing})
       } else
       {
         audio.pause();// 这个就是暂停
+        this.setState({playState:Stopped});
       }
     }
   }
 
+  playSpan(span){
+    var audio = this.refs.audioRef;
+    if(!audio)
+      return;
+
+    audio.currentTime += span;
+    audio.play();
+  }
   playAudio(from, to)
   {
     if (this.timeoutPlay != null)
@@ -128,9 +148,9 @@ export default class ReadingPage extends Component
       clearTimeout(this.timeoutPlay);
     }
 
-    let timeOut = Math.abs(to - from)*1000;
+    let timeOut = Math.abs(to - from) * 1000;
 
-    console.log("play",from,to,timeOut);
+    console.log("play", from, to, timeOut);
     var audio = this.refs.audioRef;
     audio.currentTime = from;
     this.timeoutPlay = setTimeout(() => {
@@ -138,7 +158,6 @@ export default class ReadingPage extends Component
     }, timeOut);
     audio.play();
   }
-
 
 
   load()
@@ -159,7 +178,6 @@ export default class ReadingPage extends Component
   }
 
 
-
   render()
   {
     var article = this.state.data.article || {};
@@ -169,8 +187,7 @@ export default class ReadingPage extends Component
     var maxOrder = -1;
 
 
-
-    var sentence_divs = sentences.map((s,index) => {
+    var sentence_divs = sentences.map((s, index) => {
 
       let start = s.start_word_order;
       let end = s.end_word_order;
@@ -184,11 +201,12 @@ export default class ReadingPage extends Component
       })
 
 
-      let start_audio_ = (index-1 >=0 && index < splits_.length) ? splits_[index-1]["point"] : 0 ;
-      let end_audio_ =  index < splits_.length ?  splits_[index]["point"] : 1000000;
+      let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
+      let end_audio_ = index < splits_.length ? splits_[index]["point"] : 1000000;
 
-      let color = this.state.playingSentence == s.id ? "green":"black";
-      return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`}  ref={`s_s_${s.id}`}  style={{margin: "4px", padding: "4px", border: "0px solid",color:color}}>
+      let color = this.state.playingSentence == s.id ? "green" : "black";
+      return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`} ref={`s_s_${s.id}`}
+                  style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
         <div style={{display: "inline-block"}}></div>
       </div>
@@ -198,27 +216,42 @@ export default class ReadingPage extends Component
     return (
 
       <div>
-        <div style={{display:"block",height:"90%",overflow:"scroll"}} ref={"sentenceScrollDiv"}>
+        <div style={{display: "block", height: "90%", overflow: "scroll"}} ref={"sentenceScrollDiv"}>
           <div style={inner_style.part}>
             {sentence_divs}
           </div>
         </div>
 
-        <div style={{display:"block",height:"8%",overflow:"scroll"}}>
+        <div style={{display: "block", height: "60px", overflow: "scroll"}}>
 
-          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%",display:"none"}}>
+          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
             Your browser does not support this audio format.
           </audio>
 
-          <div>
-            <div style={{width:"16%",textAlign:"center",display:"inline-block",verticalAlign:"top"}}>
-              <div onClick={()=>{
-                var audio = this.refs.audioRef;this.troggle(audio);;
-              }}>play</div>
+          <div style={{textAlign: "center"}}>
+
+            <div style={{width: "100%", textAlign: "left", verticalAlign: "top"}}>
+              <div style={{width: `${this.state.progress * 100}%`, height: "1px", background: "green"}}></div>
             </div>
-            <div style={{width:"80%",textAlign:"left",display:"inline-block",verticalAlign:"top"}}>
-              <div style={{width:`${this.state.progress*100}%`,height:"20px",background:"green"}}></div>
+
+            <div style={{textAlign: "center",position:"relative"}}>
+
+
+              <div style={{display:"inline-block",verticalAlign:"top"}} onClick={()=>{this.playSpan(-5)}}>
+                5s
+              </div>
+
+              <div style={{width:"30px",height:"30px",borderRadius:"15px",position:"relative",padding:"5px",margin:"auto",display:"inline-block",verticalAlign:"top"}}
+                  onClick={() => {var audio = this.refs.audioRef;this.troggle(audio);}}>
+                <img src={this.state.playState == Playing ? stopPng : playPng} style={{ width: "20px"}}/>
+              </div>
+
+
+              <div style={{display:"inline-block",verticalAlign:"top"}} onClick={()=>{this.playSpan(5)}}>
+                5s
+              </div>
             </div>
+
           </div>
         </div>
 

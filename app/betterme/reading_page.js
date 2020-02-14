@@ -27,42 +27,78 @@ export default class ReadingPage extends Component
       start: -1,
       end: -1,
       which: "start",
-      audio_splits: []
+      audio_splits: [],
+      playingSentence:-1 //正在播放哪个
     };
 
     this.load = this.load.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.click = this.click.bind(this);
-    this.choose = this.choose.bind(this);
-    this.saveSentence = this.saveSentence.bind(this);
-    this.saveSentence_ = this.saveSentence_.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.removeAudioSplit = this.removeAudioSplit.bind(this);
-    this.saveSplitAudio = this.saveSplitAudio.bind(this);
     this.playAudio = this.playAudio.bind(this);
+    this.scrollSentence = this.scrollSentence.bind(this);
 
     this.audioRef = new Object();
-
     this.timeoutPlay = null;
+
+    this.interval = null;
   }
 
   componentDidMount()
   {
     this.load();
     document.addEventListener("keydown", this.onKeyDown)
+    this.interval = setInterval(()=>{
+      this.scrollSentence();
+    },500);
   }
 
-  onKeyDown(event)
-  {
-    //console.log("key down",event);
-    if (event.code == "Space")
-    {
-      console.log("space click")
+
+  scrollSentence(){
+    try{
+
       var audio = this.refs.audioRef;
-      //console.log(audio);
-      this.troggle(audio);
+      var sentences = this.state.data.sentences || [];
+      var splits_ = this.state.data.splits || [];
+
+      if(!audio || sentences.length <= 0){
+        return;
+      }
+
+      var curTime = audio.currentTime;
+      var sentenceScrollDiv =  this.refs["sentenceScrollDiv"];
+
+      for(let index = 0; index < sentences.length; index++){
+
+        let s = sentences[index];
+        let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
+        let end_audio_ = index < splits_.length ? splits_[index]["point"] : 10000;
+
+        var refName = "s_s_"+s.id;
+        var sentence_div = this.refs[refName];
+       // console.log(refName+"_height",sentence_div.height);
+
+        if(curTime>start_audio_ && curTime <end_audio_ &&  this.setState.playingSentence != s.id){
+          this.setState({playingSentence: s.id});
+
+          var span = 250;
+          let top = parseInt(sentence_div.offsetTop/span);
+          let shouldScrollTo = span*top;
+          console.log(refName+"_scroll_height:"+sentence_div.offsetTop+" top:"+top);
+          console.log("shouldScrollTo",shouldScrollTo);
+
+          if(shouldScrollTo <= 0){
+            return;
+          }
+
+          sentenceScrollDiv.scrollTo(0, shouldScrollTo-30);
+          return;
+        }
+
+      }
+
+    }catch(e){
+      console.log(e);
     }
   }
+
 
   troggle(audio)
   {
@@ -99,26 +135,7 @@ export default class ReadingPage extends Component
     audio.play();
   }
 
-  processAudio(audio)
-  {
-    let currentTime = audio.currentTime;
-    console.log("currentTime", currentTime)
-    var splits = this.state.audio_splits;
-    splits.push(currentTime);
-    this.setState({audio_splits: splits})
-  }
 
-  removeAudioSplit(t)
-  {
-    if (!t || t <= 0) return;
-
-    var splits = this.state.audio_splits;
-    splits = splits.filter(st => {
-      return t > st ;
-    });
-
-    this.setState({audio_splits: splits})
-  }
 
   load()
   {
@@ -137,99 +154,6 @@ export default class ReadingPage extends Component
     })
   }
 
-  saveSentence()
-  {
-    var that = this;
-    this.setState({loading: true});
-
-    let s_id = this.refs.sId.value
-    var id = this.state.id;
-
-    var start = this.state.start;
-    var end = this.state.end;
-    this.saveSentence_(id, s_id, start, end);
-    this.setState({which:"start"})
-  }
-
-  saveSplitAudio(article_id)
-  {
-    let splits = this.state.audio_splits;
-    var sentences = this.state.data.sentences || [];
-
-    // if (splits.length + 1 != sentences.length)
-    // {
-    //   alert("句子和切分点对不上 切点 " + splits.length + " 句子:" + sentences.length)
-    //   return;
-    // }
-
-    var params = {
-      article_id: article_id,
-      splits: this.state.audio_splits
-    }
-
-    var url = `${BaseHost}/reading/save_audio_splits.json`;
-    console.log(url);
-    var that = this;
-    axios.post(url, params).then((res) => {
-      console.log("res", res);
-      this.load();
-      that.setState({audio_splits:[]});
-    }).catch(e => {
-      console.log(e);
-      this.setState({loading: false});
-      this.load();
-    })
-
-  }
-
-  saveSentence_(article_id, s_id, word_start, word_end, audio_start, audio_end)
-  {
-    var params = {
-      sentence_id: s_id,
-      article_id: article_id,
-      start_word_order: word_start,
-      end_word_order: word_end,
-      audio_start_at: audio_start,
-      audio_end_at: audio_end,
-    }
-
-    var url = `${BaseHost}/reading/update_sentence.json`;
-    console.log(url);
-    axios.post(url, params).then((res) => {
-      console.log("res", res);
-      this.load();
-    }).catch(e => {
-      console.log(e);
-      this.setState({loading: false});
-      this.load();
-    })
-
-  }
-
-  handleChange(propName, event)
-  {
-    let data = {}
-    data[propName] = event.target.value;
-    this.setState(data);
-  }
-
-
-  click(which)
-  {
-    this.setState({which: which});
-  }
-
-  choose(order)
-  {
-    let data = {}
-    data[this.state.which + ""] = order;
-
-    var which = this.state.which == "start" ? "end":"start";
-    data["which"] = which;
-    this.setState(data);
-
-
-  }
 
 
   render()
@@ -259,28 +183,10 @@ export default class ReadingPage extends Component
       let start_audio_ = (index-1 >=0 && index < splits_.length) ? splits_[index-1]["point"] : 0 ;
       let end_audio_ =  index < splits_.length ?  splits_[index]["point"] : 1000000;
 
-      return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
-        <div>
-          <span>word：</span><span>{s.id}:{start}:{end}</span>
-          <span>音频：</span>
-          <input style={{width: "60px"}} value={start_audio_}
-            // onChange={(event) => {
-            //   this.handleChange("audio_start_" + s.id, event)
-            // }}
-          /> :
-          <input style={{width: "60px"}} value={end_audio_}
-            // onChange={(event) => {
-            //   this.handleChange("audio_end_" + s.id, event)
-            // }}
-          />
+      let color = this.state.playingSentence == s.id ? "green":"black";
+      return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`}  ref={`s_s_${s.id}`}  style={{margin: "4px", padding: "2px", border: "1px solid",color:color}}>
 
-          {/*<div style={{display: "inline-block", border: "1px solid"}}*/}
-          {/*onClick={() => this.saveSentence_(this.state.id, s.id, null, null, this.state["audio_start_" + s.id], this.state["audio_end_" + s.id])}*/}
-          {/*>save*/}
-          {/*</div>*/}
 
-          <div style={{display: "inline-block", border: "1px solid",marginLeft:"2px"}} onClick={()=>this.playAudio(start_audio_,end_audio_)}>play</div>
-        </div>
 
         {s_word_divs}
         <div style={{display: "inline-block"}}></div>
@@ -291,7 +197,7 @@ export default class ReadingPage extends Component
     return (
 
       <div>
-        <div style={{display:"block",height:"90%",overflow:"scroll"}}>
+        <div style={{display:"block",height:"90%",overflow:"scroll"}} ref={"sentenceScrollDiv"}>
 
 
           <div style={inner_style.part}>

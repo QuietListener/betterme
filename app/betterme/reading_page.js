@@ -28,7 +28,8 @@ export default class ReadingPage extends Component
       end: -1,
       which: "start",
       audio_splits: [],
-      playingSentence:-1 //正在播放哪个
+      playingSentence:-1 ,//正在播放哪个,
+      progress:0.0
     };
 
     this.load = this.load.bind(this);
@@ -63,6 +64,10 @@ export default class ReadingPage extends Component
       }
 
       var curTime = audio.currentTime;
+      var duration = audio.duration;
+      let progress = curTime/duration;
+      this.setState({progress:progress});
+
       var sentenceScrollDiv =  this.refs["sentenceScrollDiv"];
 
       for(let index = 0; index < sentences.length; index++){
@@ -112,7 +117,6 @@ export default class ReadingPage extends Component
       } else
       {
         audio.pause();// 这个就是暂停
-        this.processAudio(audio);
       }
     }
   }
@@ -184,10 +188,7 @@ export default class ReadingPage extends Component
       let end_audio_ =  index < splits_.length ?  splits_[index]["point"] : 1000000;
 
       let color = this.state.playingSentence == s.id ? "green":"black";
-      return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`}  ref={`s_s_${s.id}`}  style={{margin: "4px", padding: "2px", border: "1px solid",color:color}}>
-
-
-
+      return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`}  ref={`s_s_${s.id}`}  style={{margin: "4px", padding: "4px", border: "0px solid",color:color}}>
         {s_word_divs}
         <div style={{display: "inline-block"}}></div>
       </div>
@@ -198,59 +199,27 @@ export default class ReadingPage extends Component
 
       <div>
         <div style={{display:"block",height:"90%",overflow:"scroll"}} ref={"sentenceScrollDiv"}>
-
-
           <div style={inner_style.part}>
             {sentence_divs}
-
-            <div>
-              <div style={{
-                display: "inline-block",
-                margin: "10px"
-              }}>
-                句子Id:<input ref={"sId"}/>
-              </div>
-
-              <div style={{
-                display: "inline-block",
-                border: this.state.which == "start" ? "1px solid" : "0px",
-                margin: "10px"
-              }}
-                   onClick={() => this.click("start")}>
-                start:{this.state.start}
-              </div>
-
-              <div
-                style={{display: "inline-block", border: this.state.which == "end" ? "1px solid" : "0px", margin: "10px"}}
-                onClick={() => this.click("end")}>
-                end:{this.state.end}
-              </div>
-
-              <div style={{
-                display: "inline-block",
-                border: "1px solid ",
-                background: "black",
-                padding: "2px",
-                color: "white"
-              }}
-                   onClick={this.saveSentence}>
-                save
-              </div>
-
-            </div>
-
-
           </div>
         </div>
 
-
-
         <div style={{display:"block",height:"8%",overflow:"scroll"}}>
 
-          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%"}}>
+          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%",display:"none"}}>
             Your browser does not support this audio format.
           </audio>
 
+          <div>
+            <div style={{width:"16%",textAlign:"center",display:"inline-block",verticalAlign:"top"}}>
+              <div onClick={()=>{
+                var audio = this.refs.audioRef;this.troggle(audio);;
+              }}>play</div>
+            </div>
+            <div style={{width:"80%",textAlign:"left",display:"inline-block",verticalAlign:"top"}}>
+              <div style={{width:`${this.state.progress*100}%`,height:"20px",background:"green"}}></div>
+            </div>
+          </div>
         </div>
 
       </div>

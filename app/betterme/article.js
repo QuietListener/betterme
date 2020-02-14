@@ -148,6 +148,7 @@ export default class Article extends Component
     var start = this.state.start;
     var end = this.state.end;
     this.saveSentence_(id, s_id, start, end);
+    this.setState({which:"start"})
   }
 
   saveSplitAudio(article_id)
@@ -155,11 +156,11 @@ export default class Article extends Component
     let splits = this.state.audio_splits;
     var sentences = this.state.data.sentences || [];
 
-    if (splits.length + 1 != sentences.length)
-    {
-      alert("句子和切分点对不上 切点 " + splits.length + " 句子:" + sentences.length)
-      return;
-    }
+    // if (splits.length + 1 != sentences.length)
+    // {
+    //   alert("句子和切分点对不上 切点 " + splits.length + " 句子:" + sentences.length)
+    //   return;
+    // }
 
     var params = {
       article_id: article_id,
@@ -168,9 +169,11 @@ export default class Article extends Component
 
     var url = `${BaseHost}/reading/save_audio_splits.json`;
     console.log(url);
+    var that = this;
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
+      that.setState({audio_splits:[]});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -220,7 +223,12 @@ export default class Article extends Component
   {
     let data = {}
     data[this.state.which + ""] = order;
+
+    var which = this.state.which == "start" ? "end":"start";
+    data["which"] = which;
     this.setState(data);
+
+
   }
 
 
@@ -229,11 +237,40 @@ export default class Article extends Component
     var article = this.state.data.article || {};
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
+    var splits = this.state.data.splits || [];
 
     var maxOrder = -1;
 
 
-    var sentence_divs = sentences.map(s => {
+    var splitsObjs = this.state.audio_splits.map(ss=>{return {point:ss};});
+    var splits_ = splits.concat(splitsObjs);
+    var audio_splits_divs =splits_.map(t_ => {
+
+      let t =  t_["point"];
+      return <div style={{display: "inline-block", padding: "2px",border:"1px solid"}}>
+        {t}
+
+        <div>
+          <div style={{display:"inline-block",width:"45%", background: "black", color: "white", margin: "1px"}}
+               onClick={() => {
+                 console.log("del" + t);
+                 this.removeAudioSplit(t);
+               }}>del
+          </div>
+
+          <div style={{display:"inline-block",width:"45%", background: "black", color: "white", margin: "1px"}}
+               onClick={() => {
+                 console.log("play" + t);
+                 this.playAudio(t,100000)
+               }}>p
+          </div>
+        </div>
+      </div>
+    });
+
+
+
+    var sentence_divs = sentences.map((s,index) => {
 
       let start = s.start_word_order;
       let end = s.end_word_order;
@@ -246,26 +283,29 @@ export default class Article extends Component
         return <div style={{display: "inline-block", margin: "2px"}}>{w.text}</div>
       })
 
-      let start_audio_ = this.state["audio_start_" + s.id] || s.audio_start_at || 0;
-      let end_audio_ =  this.state["audio_end_" + s.id] || s.audio_end_at || 0;
+
+      let start_audio_ = (index-1 >=0 && index < splits_.length) ? splits_[index-1]["point"] : 0 ;
+      let end_audio_ =  index < splits_.length ?  splits_[index]["point"] : 1000000;
+
       return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
         <div>
           <span>word：</span><span>{s.id}:{start}:{end}</span>
           <span>音频：</span>
           <input style={{width: "60px"}} value={start_audio_}
-                 onChange={(event) => {
-                   this.handleChange("audio_start_" + s.id, event)
-                 }}/> :
+                 // onChange={(event) => {
+                 //   this.handleChange("audio_start_" + s.id, event)
+                 // }}
+          /> :
           <input style={{width: "60px"}} value={end_audio_}
-                 onChange={(event) => {
-                   this.handleChange("audio_end_" + s.id, event)
-                 }}
+                 // onChange={(event) => {
+                 //   this.handleChange("audio_end_" + s.id, event)
+                 // }}
           />
 
-          <div style={{display: "inline-block", border: "1px solid"}}
-               onClick={() => this.saveSentence_(this.state.id, s.id, null, null, this.state["audio_start_" + s.id], this.state["audio_end_" + s.id])}
-          >save
-          </div>
+          {/*<div style={{display: "inline-block", border: "1px solid"}}*/}
+               {/*onClick={() => this.saveSentence_(this.state.id, s.id, null, null, this.state["audio_start_" + s.id], this.state["audio_end_" + s.id])}*/}
+          {/*>save*/}
+          {/*</div>*/}
 
           <div style={{display: "inline-block", border: "1px solid",marginLeft:"2px"}} onClick={()=>this.playAudio(start_audio_,end_audio_)}>play</div>
         </div>
@@ -277,12 +317,12 @@ export default class Article extends Component
 
 
     var words_divs = words.map(w => {
-      let color = w.order <= maxOrder ? "2px solid red" : "1px solid black";
+      let background = w.order <= maxOrder ? "green" : "black";
 
       //console.log(maxOrder + ":" + w.order + ":" + color);
 
       return <div
-        style={{display: "inline-block", margin: "2px", border: color}}
+        style={{display: "inline-block", margin: "2px", color:"white",background:background}}
         onClick={() => this.choose(w.order)}>
         <div>{w.text}</div>
         <div>{w.order}</div>
@@ -290,22 +330,11 @@ export default class Article extends Component
     })
 
 
-    var audio_splits_divs = this.state.audio_splits.map(t => {
-      return <div style={{display: "inline-block", padding: "2px",border:"1px solid"}}>
-        {t}
-        <div style={{background: "black", color: "white", margin: "4px"}}
-             onClick={() => {
-               console.log("del" + t);
-               this.removeAudioSplit(t);
-             }}>del
-        </div>
-      </div>
-    });
-
 
     return (
 
-      <div style={{}}>
+      <div>
+      <div style={{display:"block",height:"80%",overflow:"scroll"}}>
         <div style={inner_style.part}>{words_divs}</div>
 
 
@@ -349,27 +378,30 @@ export default class Article extends Component
           </div>
 
 
+        </div>
+      </div>
+
+
+
+        <div style={{display:"block",height:"18%",overflow:"scroll"}}>
+
+          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%"}}>
+            Your browser does not support this audio format.
+          </audio>
+
           <div>
-
-            <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%"}}>
-              Your browser does not support this audio format.
-            </audio>
-
-            <div>
-              {audio_splits_divs}
-            </div>
-
-            <div style={{border: "2px solid ", padding: "6px",textAlign:"center",marginTop:"10px"}}
-                 onClick={() => {
-                   this.saveSplitAudio(this.state.id)
-                 }}
-            >fill all
-            </div>
-
+            {audio_splits_divs}
           </div>
 
+          <div style={{border: "2px solid ", padding: "6px",textAlign:"center",marginTop:"10px",marginBottom:"50px"}}
+               onClick={() => {
+                 this.saveSplitAudio(this.state.id)
+               }}
+          >fill all
+          </div>
 
         </div>
+
       </div>
     );
   }

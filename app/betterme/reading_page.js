@@ -32,6 +32,14 @@ export default class ReadingPage extends Component
 
     this.load = this.load.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.click = this.click.bind(this);
+    this.choose = this.choose.bind(this);
+    this.saveSentence = this.saveSentence.bind(this);
+    this.saveSentence_ = this.saveSentence_.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.removeAudioSplit = this.removeAudioSplit.bind(this);
+    this.saveSplitAudio = this.saveSplitAudio.bind(this);
+    this.playAudio = this.playAudio.bind(this);
 
     this.audioRef = new Object();
 
@@ -44,7 +52,73 @@ export default class ReadingPage extends Component
     document.addEventListener("keydown", this.onKeyDown)
   }
 
+  onKeyDown(event)
+  {
+    //console.log("key down",event);
+    if (event.code == "Space")
+    {
+      console.log("space click")
+      var audio = this.refs.audioRef;
+      //console.log(audio);
+      this.troggle(audio);
+    }
+  }
 
+  troggle(audio)
+  {
+    if (audio !== null)
+    {
+      //检测播放是否已暂停.audio.paused 在播放器播放时返回false.
+      //alert(audio.paused);
+      if (audio.paused)
+      {
+        audio.play();//audio.play();// 这个就是播放
+      } else
+      {
+        audio.pause();// 这个就是暂停
+        this.processAudio(audio);
+      }
+    }
+  }
+
+  playAudio(from, to)
+  {
+    if (this.timeoutPlay != null)
+    {
+      clearTimeout(this.timeoutPlay);
+    }
+
+    let timeOut = Math.abs(to - from)*1000;
+
+    console.log("play",from,to,timeOut);
+    var audio = this.refs.audioRef;
+    audio.currentTime = from;
+    this.timeoutPlay = setTimeout(() => {
+      audio.pause()
+    }, timeOut);
+    audio.play();
+  }
+
+  processAudio(audio)
+  {
+    let currentTime = audio.currentTime;
+    console.log("currentTime", currentTime)
+    var splits = this.state.audio_splits;
+    splits.push(currentTime);
+    this.setState({audio_splits: splits})
+  }
+
+  removeAudioSplit(t)
+  {
+    if (!t || t <= 0) return;
+
+    var splits = this.state.audio_splits;
+    splits = splits.filter(st => {
+      return t > st ;
+    });
+
+    this.setState({audio_splits: splits})
+  }
 
   load()
   {
@@ -63,8 +137,74 @@ export default class ReadingPage extends Component
     })
   }
 
+  saveSentence()
+  {
+    var that = this;
+    this.setState({loading: true});
 
+    let s_id = this.refs.sId.value
+    var id = this.state.id;
 
+    var start = this.state.start;
+    var end = this.state.end;
+    this.saveSentence_(id, s_id, start, end);
+    this.setState({which:"start"})
+  }
+
+  saveSplitAudio(article_id)
+  {
+    let splits = this.state.audio_splits;
+    var sentences = this.state.data.sentences || [];
+
+    // if (splits.length + 1 != sentences.length)
+    // {
+    //   alert("句子和切分点对不上 切点 " + splits.length + " 句子:" + sentences.length)
+    //   return;
+    // }
+
+    var params = {
+      article_id: article_id,
+      splits: this.state.audio_splits
+    }
+
+    var url = `${BaseHost}/reading/save_audio_splits.json`;
+    console.log(url);
+    var that = this;
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+      that.setState({audio_splits:[]});
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+
+  }
+
+  saveSentence_(article_id, s_id, word_start, word_end, audio_start, audio_end)
+  {
+    var params = {
+      sentence_id: s_id,
+      article_id: article_id,
+      start_word_order: word_start,
+      end_word_order: word_end,
+      audio_start_at: audio_start,
+      audio_end_at: audio_end,
+    }
+
+    var url = `${BaseHost}/reading/update_sentence.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+
+  }
 
   handleChange(propName, event)
   {
@@ -74,22 +214,145 @@ export default class ReadingPage extends Component
   }
 
 
+  click(which)
+  {
+    this.setState({which: which});
+  }
+
+  choose(order)
+  {
+    let data = {}
+    data[this.state.which + ""] = order;
+
+    var which = this.state.which == "start" ? "end":"start";
+    data["which"] = which;
+    this.setState(data);
+
+
+  }
 
 
   render()
   {
+    var article = this.state.data.article || {};
+    var words = this.state.data.words || [];
+    var sentences = this.state.data.sentences || [];
+    var splits_ = this.state.data.splits || [];
+    var maxOrder = -1;
+
+
+
+    var sentence_divs = sentences.map((s,index) => {
+
+      let start = s.start_word_order;
+      let end = s.end_word_order;
+      if (maxOrder <= start) maxOrder = start;
+      if (maxOrder <= end) maxOrder = end;
+
+      let s_word_divs = words.filter((w) => {
+        return w.order >= start && w.order <= end;
+      }).map(w => {
+        return <div style={{display: "inline-block", margin: "2px"}}>{w.text}</div>
+      })
+
+
+      let start_audio_ = (index-1 >=0 && index < splits_.length) ? splits_[index-1]["point"] : 0 ;
+      let end_audio_ =  index < splits_.length ?  splits_[index]["point"] : 1000000;
+
+      return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
+        <div>
+          <span>word：</span><span>{s.id}:{start}:{end}</span>
+          <span>音频：</span>
+          <input style={{width: "60px"}} value={start_audio_}
+            // onChange={(event) => {
+            //   this.handleChange("audio_start_" + s.id, event)
+            // }}
+          /> :
+          <input style={{width: "60px"}} value={end_audio_}
+            // onChange={(event) => {
+            //   this.handleChange("audio_end_" + s.id, event)
+            // }}
+          />
+
+          {/*<div style={{display: "inline-block", border: "1px solid"}}*/}
+          {/*onClick={() => this.saveSentence_(this.state.id, s.id, null, null, this.state["audio_start_" + s.id], this.state["audio_end_" + s.id])}*/}
+          {/*>save*/}
+          {/*</div>*/}
+
+          <div style={{display: "inline-block", border: "1px solid",marginLeft:"2px"}} onClick={()=>this.playAudio(start_audio_,end_audio_)}>play</div>
+        </div>
+
+        {s_word_divs}
+        <div style={{display: "inline-block"}}></div>
+      </div>
+    })
+
 
     return (
 
-      <div style={{}}>
+      <div>
+        <div style={{display:"block",height:"90%",overflow:"scroll"}}>
 
-         hello
+
+          <div style={inner_style.part}>
+            {sentence_divs}
+
+            <div>
+              <div style={{
+                display: "inline-block",
+                margin: "10px"
+              }}>
+                句子Id:<input ref={"sId"}/>
+              </div>
+
+              <div style={{
+                display: "inline-block",
+                border: this.state.which == "start" ? "1px solid" : "0px",
+                margin: "10px"
+              }}
+                   onClick={() => this.click("start")}>
+                start:{this.state.start}
+              </div>
+
+              <div
+                style={{display: "inline-block", border: this.state.which == "end" ? "1px solid" : "0px", margin: "10px"}}
+                onClick={() => this.click("end")}>
+                end:{this.state.end}
+              </div>
+
+              <div style={{
+                display: "inline-block",
+                border: "1px solid ",
+                background: "black",
+                padding: "2px",
+                color: "white"
+              }}
+                   onClick={this.saveSentence}>
+                save
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+        <div style={{display:"block",height:"8%",overflow:"scroll"}}>
+
+          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%"}}>
+            Your browser does not support this audio format.
+          </audio>
+
+        </div>
+
       </div>
     );
   }
 }
 
 const inner_style = {
-  part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
+  part: {display: "inline-block", verticalAlign: "top", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
 }

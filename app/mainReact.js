@@ -34,7 +34,7 @@ class App extends Component
         <Provider store={store}>
 
         <Router  history={hashHistory} >
-          <Route path="/" component={ReadingPage}></Route>
+          <Route path="/reading_page/:id" component={ReadingPage}></Route>
           <Route path="/article/:id" component={Article}></Route>
           <Route path="/articles" component={Articles}></Route>
             {/*<Route path="/" component={Home}></Route>*/}

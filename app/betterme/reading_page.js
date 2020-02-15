@@ -26,6 +26,7 @@ export default class ReadingPage extends Component
     console.log("id", id);
 
     this.state = {
+      user_id:1,
       id: id,
       data: {},
       start: -1,
@@ -237,7 +238,7 @@ export default class ReadingPage extends Component
 
 
           <div>
-            {this.state.id ? <Comment id={this.state.id}></Comment> :null}
+            {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id}></Comment> :null}
           </div>
 
         </div>

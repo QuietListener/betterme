@@ -42,6 +42,7 @@ export default class Comment extends Component
     this.submitComment = this.submitComment.bind(this);
     this.load = this.load.bind(this);
     this.commentDiv = this.commentDiv.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   componentDidMount()
@@ -75,6 +76,24 @@ export default class Comment extends Component
     })
   }
 
+  deleteComment(id){
+    var params = {
+      comment_id:id
+    }
+
+    var url = `${BaseHost}/comment/deleteComment.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+  }
+
+
 
   load()
   {
@@ -105,15 +124,24 @@ export default class Comment extends Component
   commentDiv(c){
     let userMap = this.state.userMap;
     let user = userMap[c.user_id] || {}
+    let deleteDiv = null;
+
+    if(this.props.user_id == user.id){
+      deleteDiv =  <div onClick={()=>this.deleteComment(c.id)}>delete</div>;
+    }
 
     let time = c.created_at.split("T")[0];
-    return <div style={{width:"100%",marginLeft:"8px",margin:"4px",marginBottom:"20px",fontSize:"14px"}}>
+    return <div style={{width:"100%",marginLeft:"8px",margin:"4px",marginBottom:"20px",fontSize:"14px",borderBottom:"1px solid green"}}>
       <div>
       {user["name"]||"user"} {time}
       </div>
 
-      <div style={{marginBottom:"8px",borderBottom:"1px solid green",fontSize:"14px"}}>
+      <div style={{marginBottom:"8px",fontSize:"14px"}}>
         {c.content}
+      </div>
+
+      <div>
+        {deleteDiv}
       </div>
 
     </div>

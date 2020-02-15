@@ -18,7 +18,17 @@ export default class Comment extends Component
     var init_plans = [];//[{id:1,plan_name:"背单词",start:"2017-12-12",end:"2017-12-22"},
     //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
-    var id = this.props.params.id;
+
+    var id = null;
+    if(this.props.params) {
+     id =  this.props.params.id
+    }
+
+    if(this.props.id) {
+      id = this.props.id;
+    }
+
+
     console.log("id",id);
 
     this.state = {
@@ -78,8 +88,9 @@ export default class Comment extends Component
 
       let users = data.users;
       let userMap = this.state.userMap;
-      for(let u in users){
-        userMap[u] = users[u];
+      for(let i = 0;i < users.length;i++){
+        let user = users[i];
+        userMap[user.id] = user;
       }
       that.setState({data: data,userMap:userMap});
 
@@ -118,6 +129,10 @@ export default class Comment extends Component
         return this.commentDiv(c);
     })
 
+    var comments_divs = comments.map(c=>{
+      return this.commentDiv(c);
+    })
+
     return (
 
       <div>
@@ -135,7 +150,8 @@ export default class Comment extends Component
         {/*展示所有评论*/}
         <div>
           {my_comments_divs}
-
+          <hr/>
+          {comments_divs}
         </div>
 
       </div>

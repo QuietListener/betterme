@@ -3,9 +3,11 @@ import config from '../conf/config.json';
 import * as base from "./base.js"
 import _ from "lodash"
 import '../css/app.css';
+import Comment from "./comment.js"
 import {axios} from "./base.js"
 import playPng from "../resource/imgs/play.png";
 import stopPng from "../resource/imgs/stop.png";
+
 
 const BaseHost = "http://localhost:3100"
 const Playing = 1;
@@ -231,6 +233,11 @@ export default class ReadingPage extends Component
             <div style={{padding:"6px",fontSize:"16px", background:"red" ,borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}>
               finish
             </div>
+          </div>
+
+
+          <div>
+            {this.state.id ? <Comment id={this.state.id}></Comment> :null}
           </div>
 
         </div>

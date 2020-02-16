@@ -39,6 +39,7 @@ export default class ReadingPage extends Component
     this.playAudio = this.playAudio.bind(this);
     this.scrollSentence = this.scrollSentence.bind(this);
     this.playSpan = this.playSpan.bind(this);
+    this.finish = this.finish.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
 
@@ -160,6 +161,23 @@ export default class ReadingPage extends Component
     audio.play();
   }
 
+  finish()
+  {
+    var params = {
+      article_id: this.state.id,
+    }
+
+    var url = `${BaseHost}/reading/finish_article.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+  }
 
   load()
   {
@@ -182,6 +200,7 @@ export default class ReadingPage extends Component
   render()
   {
     var article = this.state.data.article || {};
+    var finished = this.state.data.finished || false;
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
     var splits_ = this.state.data.splits || [];
@@ -228,8 +247,10 @@ export default class ReadingPage extends Component
 
 
           <div style={{width:"100%",textAlign:"center",marginBottom:"20px"}}>
-            <div style={{padding:"6px",fontSize:"16px", background:"red" ,borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}>
-              finish
+            <div style={{padding:"6px",fontSize:"16px", background:"red" ,borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}
+                onClick={this.finish}
+            >
+              {finished ? "finished" : "finish"}
             </div>
           </div>
 

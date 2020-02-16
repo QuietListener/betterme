@@ -1,14 +1,16 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
-import Home from './betterme/home.js'
+
 import Article from './betterme/reading/article.js'
 import Articles from './betterme/reading/articles.js'
 import ReadingPage from './betterme/reading/reading_page.js'
 import Comment from "./betterme/reading/comment.js"
 import ArticleGroup from "./betterme/reading/article_group.js"
+import ArticlesChoosePage from  "./betterme/reading/articles_choose_page.js"
+import ReadingMainPage from  "./betterme/reading/main_page.js"
 
 
-
+import Home from './betterme/home.js'
 import PlanDetails from "./betterme/plan_details.js"
 import NewPlan from "./betterme/new_plan.js"
 import Mine from "./betterme/mine.js"
@@ -40,11 +42,15 @@ class App extends Component
 
         <Router  history={hashHistory} >
 
+
+          <Route path="/reading_main" component={ ReadingMainPage}></Route>
           <Route path="/article_group/:id" component={ArticleGroup}></Route>
           <Route path="/reading_page/:id" component={ReadingPage}></Route>
           <Route path="/article/:id" component={Article}></Route>
           <Route path="/comment/:id" component={Comment}></Route>
           <Route path="/articles" component={Articles}></Route>
+          <Route path="/articles_choose_page" component={ArticlesChoosePage}></Route>
+
             {/*<Route path="/" component={Home}></Route>*/}
             <Route path="/mine" component={Mine} />
             <Route path="/plan_details/:id" component={PlanDetails} />

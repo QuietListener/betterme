@@ -77,8 +77,8 @@ export default class CCalendar extends Component
         else
         {
           var dates = i_.date();
-          var style_ = null;
-          var text_styles = {color: "rgb(153, 153, 153)", fontSize: 12};
+          var style_ =null;
+          var text_styles = {color: "rgb(153, 153, 153)", fontSize: 12,margin:"auto",marginTop:"4px"};
           var isEvents = false;
           if (dates <= today.date())
           {
@@ -106,8 +106,8 @@ export default class CCalendar extends Component
             }
             }
 
-            key={index_ * 11112} style={Object.assign({},style_, responsive_style)}>
-            <span key={index_ * 111121} style={text_styles}>{dates}</span>
+            key={index_ * 11112} style={Object.assign({},style_, responsive_style, {textAlign:"center"})}>
+            <div key={index_ * 111121} style={text_styles}>{dates}</div>
           </div>
         }
 
@@ -142,7 +142,7 @@ export default class CCalendar extends Component
 const styles ={
   day: {
     padding: 2,
-    margin: 2,
+    margin: "auto",
     width: 22,
     height: 22,
     justifyContent: "center",

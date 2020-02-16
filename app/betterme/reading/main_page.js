@@ -64,7 +64,7 @@ export default class ReadingMainPage extends Component
 
 
         <div>
-          <CCalendar width={400} today={new Moment()} events={[]} style={{}} onPress={()=>{}} />
+          <CCalendar width={400} today={new Moment()} events={[new Moment()]} style={{}} onPress={()=>{}} />
         </div>
 
       </div>

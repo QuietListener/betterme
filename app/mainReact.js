@@ -5,6 +5,9 @@ import Article from './betterme/reading/article.js'
 import Articles from './betterme/reading/articles.js'
 import ReadingPage from './betterme/reading/reading_page.js'
 import Comment from "./betterme/reading/comment.js"
+import ArticleGroup from "./betterme/reading/article_group.js"
+
+
 
 import PlanDetails from "./betterme/plan_details.js"
 import NewPlan from "./betterme/new_plan.js"
@@ -36,6 +39,8 @@ class App extends Component
         <Provider store={store}>
 
         <Router  history={hashHistory} >
+
+          <Route path="/article_group/:id" component={ArticleGroup}></Route>
           <Route path="/reading_page/:id" component={ReadingPage}></Route>
           <Route path="/article/:id" component={Article}></Route>
           <Route path="/comment/:id" component={Comment}></Route>

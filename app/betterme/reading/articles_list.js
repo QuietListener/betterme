@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import * as base from "../base.js"
 import {axios} from "../base.js"
-import CArticle from "./components/c_article";
-
+import CArticle from "./components/c_article"
 const BaseHost = "http://localhost:3100"
 
 
-export default class ArticlesChoosePage extends Component
+export default class ArticlesList extends Component
 {
 
   constructor(props)
@@ -56,7 +55,7 @@ export default class ArticlesChoosePage extends Component
     }
 
     var id = this.state.id;
-    axios.get(`${BaseHost}/reading/show_articles.json?${appends}`).then((res) => {
+    axios.get(`${BaseHost}/reading/finished_articles.json?${appends}`).then((res) => {
       console.log("res", res);
       that.setState({data: res.data.data});
       console.log(that.state);
@@ -69,38 +68,14 @@ export default class ArticlesChoosePage extends Component
 
   render()
   {
-    var articles = this.state.data.articles || [];
-    var all_tags = this.state.data.all_tags || [];
-    let choosedTagIds = this.state.choosedTagIds  || [];
+    var finished_articles = this.state.data.finished_articles || [];
 
-    console.log("articles", articles);
-
-    var articles_div = articles.map(a => {
-      return <CArticle a={a}/>
-    })
-
-    var tags_div = all_tags.map(t=>{
-
-      let color = ""
-      if(choosedTagIds.indexOf(t.id) >= 0){
-        color = "red";
-      }
-
-      return <div style={{display:"inline-block",padding:"2px",margin:"2px",border:`1px solid ${color}`}}
-                  onClick={()=>this.toggleTag(t.id)}
-      >
-        {t.name}
-      </div>
+    var articles_div = finished_articles.map(a => {
+      return <CArticle a={a} />
     })
 
     return (
       <div>
-
-        <div>
-          {tags_div}
-        </div>
-
-
         <div style={{}}>
           {articles_div}
         </div>

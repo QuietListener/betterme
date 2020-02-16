@@ -8,6 +8,7 @@ import Comment from "./betterme/reading/comment.js"
 import ArticleGroup from "./betterme/reading/article_group.js"
 import ArticlesChoosePage from  "./betterme/reading/articles_choose_page.js"
 import ReadingMainPage from  "./betterme/reading/main_page.js"
+import ArticlesList from  "./betterme/reading/articles_list.js"
 
 
 import Home from './betterme/home.js'
@@ -50,6 +51,8 @@ class App extends Component
           <Route path="/comment/:id" component={Comment}></Route>
           <Route path="/articles" component={Articles}></Route>
           <Route path="/articles_choose_page" component={ArticlesChoosePage}></Route>
+          <Route path="/article_list" component={ArticlesList}></Route>
+
 
             {/*<Route path="/" component={Home}></Route>*/}
             <Route path="/mine" component={Mine} />

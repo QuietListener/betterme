@@ -58,7 +58,8 @@ export default class ReadingMainPage extends Component
           <div>{user.name}</div>
           <div>
             {state.readed_words || 0} words|
-            {state.read_days || 0} days
+            {state.read_days || 0} days |
+            {this.state.data.readed_count || 0} articles
           </div>
         </div>
 

@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import config from '../conf/config.json';
-import * as base from "./base.js"
-import _ from "lodash"
-import '../css/app.css';
+import '../../css/app.css';
 import Comment from "./comment.js"
-import {axios} from "./base.js"
-import playPng from "../resource/imgs/play.png";
-import stopPng from "../resource/imgs/stop.png";
+import {axios} from "../base.js"
+import playPng from "../../resource/imgs/play.png";
+import stopPng from "../../resource/imgs/stop.png";
 
 
 const BaseHost = "http://localhost:3100"

@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
 import Home from './betterme/home.js'
-import Article from './betterme/article.js'
-import Articles from './betterme/articles.js'
-import ReadingPage from './betterme/reading_page.js'
-import PlanDetails from "./betterme/plan_details.js"
-import Comment from "./betterme/comment.js"
+import Article from './betterme/reading/article.js'
+import Articles from './betterme/reading/articles.js'
+import ReadingPage from './betterme/reading/reading_page.js'
+import Comment from "./betterme/reading/comment.js"
 
+import PlanDetails from "./betterme/plan_details.js"
 import NewPlan from "./betterme/new_plan.js"
 import Mine from "./betterme/mine.js"
 import Test from "./betterme/test.js"

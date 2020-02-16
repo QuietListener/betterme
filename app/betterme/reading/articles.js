@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import config from '../conf/config.json';
-import * as base from "./base.js"
-import _ from "lodash"
-import {axios} from "./base.js"
-import { Router, Route, hashHistory } from 'react-router';
+import * as base from "../base.js"
+import {axios} from "../base.js"
 
 const BaseHost = "http://localhost:3100"
 

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import config from '../conf/config.json';
-import * as base from "./base.js"
-import _ from "lodash"
-import '../css/app.css';
-import {axios} from "./base.js"
+import '../../css/app.css';
+import {axios} from "../base.js"
 
 
 const BaseHost = "http://localhost:3100"

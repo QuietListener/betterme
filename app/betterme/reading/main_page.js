@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import * as base from "../base.js"
 import {axios} from "../base.js"
 import CCalendar from "./components/c_calendar.js"
+import css from "./css/ireading.css"
 
 const BaseHost = "http://localhost:3100"
 import Moment from "moment"
+import CSeperator from "./components/c_sperator";
 
 export default class ReadingMainPage extends Component
 {
@@ -48,24 +50,44 @@ export default class ReadingMainPage extends Component
 
   render()
   {
+    if (!this.state.data)
+    {
+      return null;
+    }
+
     var user = this.state.data.user || {};
     var state = this.state.data.state || {};
 
     return (
-      <div>
+      <div style={{padding: "8px"}}>
 
-        <div>
-          <div>{user.name}</div>
-          <div>
-            {state.readed_words || 0} words|
-            {state.read_days || 0} days |
-            {this.state.data.readed_count || 0} articles
+        <div style={{backgroundColor: 'white'}}>
+          <div className={css.bigText} style={{paddingTop:"20px",paddingBottom:"20px",paddingLeft:"8px"}}>{user.name}</div>
+
+
+
+          <div style={{marginTop:"10px",marginBottom:"10px"}}>
+            <div style={inner_style.statistics_item}>
+              <div style={inner_style.statistics_count}>{state.readed_words || 0} </div>
+              <div style={inner_style.statistics_title}> words</div>
+            </div>
+            <div style={inner_style.statistics_item}>
+
+              <div style={inner_style.statistics_count}> {state.read_days || 0}  </div>
+              <div style={inner_style.statistics_title}> days</div>
+            </div>
+            <div style={inner_style.statistics_item}>
+
+              <div style={inner_style.statistics_count}>  {this.state.data.readed_count || 0}  </div>
+              <div style={inner_style.statistics_title}> articles</div>
+            </div>
           </div>
         </div>
 
 
-        <div>
-          <CCalendar width={400} today={new Moment()} events={[new Moment()]} style={{}} onPress={()=>{}} />
+
+        <div style={{textAlign:"center"}}>
+          <CCalendar width={400} today={new Moment()} events={[new Moment()]} style={{}} onPress={() => {}}/>
         </div>
 
       </div>
@@ -74,6 +96,10 @@ export default class ReadingMainPage extends Component
 }
 
 const inner_style = {
+  statistics_item: {width: "33.333%", display: "inline-block",border:"1px solid #e9e4d9"},
+  statistics_count:{fontSize:"20px",fontWeight:"bold",textAlign:"center"},
+  statistics_title:{fontSize:"12px",fontWeight:"normal",textAlign:"center",padding:"4px,0,4px 0"},
+
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},
   box: {"padding": "2px", "margin": "4px"},

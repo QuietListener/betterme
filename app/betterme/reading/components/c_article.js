@@ -1,6 +1,7 @@
 import * as base from "../../base.js"
 import React, {Component} from 'react';
 import Moment from "moment"
+import css from "../css/ireading.css"
 
 export default class CArticle extends Component
 {
@@ -12,11 +13,15 @@ export default class CArticle extends Component
   render()
   {
     let a = this.props.a; //a 是Article
-    return (<div style={{"border": "1px solid", padding: "2px", margin: "4px"}}>
-      <div>{a.title}</div>
-      <div>{a.id} | {a.created_at}
-        <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>
-      </div>
+    let finished  = this.props.finished || false; //是否完成
+
+    let backgroundColor = "";
+    if(finished){
+      backgroundColor = "#5eca59 "
+    }
+    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor, padding: "8px", margin: "4px",width:"96%"}}
+                 onClick={()=>base.goto(`/reading_page/${a.id}`)}>
+      <div className={css.middleText} >{a.title}</div>
     </div>)
   }
 }

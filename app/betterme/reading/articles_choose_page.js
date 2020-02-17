@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import * as base from "../base.js"
 import {axios} from "../base.js"
 import CArticle from "./components/c_article";
-
+import css from "./css/ireading.css"
+import CSeperator from "./components/c_sperator";
 const BaseHost = "http://localhost:3100"
 
 
@@ -81,12 +82,12 @@ export default class ArticlesChoosePage extends Component
 
     var tags_div = all_tags.map(t=>{
 
-      let color = ""
+      let backgroundColor = null;
       if(choosedTagIds.indexOf(t.id) >= 0){
-        color = "red";
+        backgroundColor = "#5eca59";
       }
 
-      return <div style={{display:"inline-block",padding:"2px",margin:"2px",border:`1px solid ${color}`}}
+      return <div className={css.ibtn} style={{display:"inline-block",borderRadius:"0px",margin:"2px",backgroundColor:backgroundColor}}
                   onClick={()=>this.toggleTag(t.id)}
       >
         {t.name}
@@ -94,14 +95,15 @@ export default class ArticlesChoosePage extends Component
     })
 
     return (
-      <div>
+      <div style={{padding:"6px"}}>
 
-        <div>
+        <div style={{margin:"8px"}}>
           {tags_div}
         </div>
 
+        <CSeperator/>
 
-        <div style={{}}>
+        <div style={{margin:"8px"}}>
           {articles_div}
         </div>
 

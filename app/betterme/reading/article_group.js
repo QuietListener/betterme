@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import * as base from "../base.js"
+import css from "./css/ireading.css"
 import {axios} from "../base.js"
+import CSeperator from "./components/c_sperator.js"
+import CArticle from "./components/c_article.js"
 
 const BaseHost = "http://localhost:3100"
 
@@ -56,20 +59,23 @@ export default class ArticleGroup extends Component
     var article = this.state.data.article || {};
     var children = this.state.data.child_articles || [];
 
+    if(!article || !article.id)
+    {
+      return (null);
+    }
     let children_divs = children.map(c=>{
-      return <div style={{padding:"2px"}}>
-        {c.title}
-      </div>
+      return <CArticle a={c} finished={true} />
     });
 
     return (
-      <div style={{}}>
-        <div style={inner_style.headBox}>
-          <div style={{fontSize:"16px",fontWeight:"bold"}}>{article.title}</div>
-          <div style={{fontSize:"14px"}}>{article.author}</div>
-          <div style={{fontSize:"14px"}}>{article.origin_text}</div>
+      <div style={{textAlign:"left"}}>
+        <div style={{padding:"5px"}}>
+          <div className={css.bigText} style={{}}>{article.title}</div>
+          <div className={css.smallText} style={{color:"black",marginTop:"6px"}} >{article.author}</div>
+          <div className={css.smallText}style={{color:"#969ca4 "}}>{article.origin_text}</div>
         </div>
 
+        <CSeperator />
         <div style={{marginTop:"8px",padding:"8px"}}>
           {children_divs}
         </div>
@@ -80,10 +86,4 @@ export default class ArticleGroup extends Component
   }
 }
 
-const inner_style = {
-  headBox:{padding:"8px"},
-  part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
-  input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},
-  box: {"padding": "2px", "margin": "4px"},
-  btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}
-}
+const inner_style={}

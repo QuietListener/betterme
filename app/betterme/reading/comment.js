@@ -121,16 +121,22 @@ export default class Comment extends Component
     let userMap = this.state.userMap;
     let user = userMap[c.user_id] || {}
     let deleteDiv = null;
+    let like_div = null;
 
     if(isMine == true){
       deleteDiv =  <div  className={css.ibtn} style={{fontSize:"12px",backgroundColor:"#969ca4"}} onClick={()=>this.deleteComment(c.id)}>delete</div>;
+    }
+
+    if(!isMine){
+      like_div = <div style={{display:"inline-block",textAlign:"right",width:"36%"}}> <span>like</span></div>
     }
 
     let time = c.created_at.split("T")[0];
     return <div className={css.box1} style={{width:"100%",padding:"8px",margin:"4px",marginBottom:"6px",fontSize:"14px"}}>
       <div>
         <div className={css.smallText} style={{display:"inline-block",width:"60%"}} >{user["name"]||"user"}</div>
-        <div style={{display:"inline-block",textAlign:"right",width:"36%"}}> <span>like</span></div>
+
+        {like_div}
       </div>
 
       <div style={{marginBottom:"8px",fontSize:"14px",marginTop:"4px"}}>

@@ -1,0 +1,20 @@
+
+.ibtn{
+    box-shadow:0px -2px 2px #969ca4;
+    padding:2px;
+    display: inline-block;
+    background-color: #5d5d5d;
+    color:white;
+    border-radius: 4px;
+
+}
+
+
+.box1 {
+    background:white ;
+}
+
+.smallText{
+    color:#969ca4;
+    font-size: 14px;
+}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../css/app.css';
+import css from "./css/ireading.css"
 import {axios} from "../base.js"
 
 const BaseHost = "http://localhost:3100"
@@ -117,27 +117,31 @@ export default class Comment extends Component
     })
   }
 
-  commentDiv(c){
+  commentDiv(c,isMine){
     let userMap = this.state.userMap;
     let user = userMap[c.user_id] || {}
     let deleteDiv = null;
 
-    if(this.props.user_id == user.id){
-      deleteDiv =  <div onClick={()=>this.deleteComment(c.id)}>delete</div>;
+    if(isMine == true){
+      deleteDiv =  <div  className={css.ibtn} style={{fontSize:"12px",backgroundColor:"#969ca4"}} onClick={()=>this.deleteComment(c.id)}>delete</div>;
     }
 
     let time = c.created_at.split("T")[0];
-    return <div style={{width:"100%",marginLeft:"8px",margin:"4px",marginBottom:"20px",fontSize:"14px",borderBottom:"1px solid green"}}>
+    return <div className={css.box1} style={{width:"100%",padding:"8px",margin:"4px",marginBottom:"6px",fontSize:"14px"}}>
       <div>
-      {user["name"]||"user"} {time}
+        <div className={css.smallText} style={{display:"inline-block",width:"60%"}} >{user["name"]||"user"}</div>
+        <div style={{display:"inline-block",textAlign:"right",width:"36%"}}> <span>like</span></div>
       </div>
 
-      <div style={{marginBottom:"8px",fontSize:"14px"}}>
+      <div style={{marginBottom:"8px",fontSize:"14px",marginTop:"4px"}}>
         {c.content}
       </div>
 
-      <div>
-        {deleteDiv}
+      <div >
+        <div style={{display:"inline-block",textAlign:"left",verticalAlign:"top",width:"50%"}}>
+          <span  className={css.smallText}> {time}</span>
+        </div>
+        <div style={{display:"inline-block",textAlign:"right",verticalAlign:"top",width:"49%"}}>{deleteDiv}</div>
       </div>
 
     </div>
@@ -150,11 +154,11 @@ export default class Comment extends Component
     var comments = this.state.data.comments||[];
 
     var my_comments_divs = my_comments.map(c=>{
-        return this.commentDiv(c);
+        return this.commentDiv(c,true);
     })
 
     var comments_divs = comments.map(c=>{
-      return this.commentDiv(c);
+      return this.commentDiv(c,false);
     })
 
     return (
@@ -165,8 +169,8 @@ export default class Comment extends Component
          <div style={inner_style.textBox} onChange={event=>this.handleChange("commentContent",event)}>
            <textarea  style={{width:"100%",height:"100px"}} value={this.state.commentContent} ></textarea>
          </div>
-         <div style={{textAlign:"right"}}>
-              <div style={{margin:"4px"}} onClick={this.submitComment}> submit</div>
+         <div style={{textAlign:"right",marginRight:"2px",marginTop:"6px"}}>
+              <div className={css.ibtn} style={{margin:"4px",fontSize:"14px"}} onClick={this.submitComment}> submit</div>
          </div>
 
         </div>
@@ -174,7 +178,7 @@ export default class Comment extends Component
         {/*展示所有评论*/}
         <div>
           {my_comments_divs}
-          <hr/>
+
           {comments_divs}
         </div>
 

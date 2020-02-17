@@ -33,3 +33,9 @@ h1,h2,h3,h4,h5,h6,p,ul{
 {
     background-color:#638fff;
 }
+
+.btn{
+    box-shadow:4px 4px 4px #969ca4;
+    padding:6px;
+    display: inline-block;
+}

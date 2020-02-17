@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../css/app.css';
+import css from './css/ireading.css';
 import Comment from "./comment.js"
 import {axios} from "../base.js"
 import playPng from "../../resource/imgs/play.png";
@@ -246,8 +246,8 @@ export default class ReadingPage extends Component
           </div>
 
 
-          <div style={{width:"100%",textAlign:"center",marginBottom:"20px"}}>
-            <div style={{padding:"6px",fontSize:"16px", background:"red" ,borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}
+          <div  style={{width:"100%",textAlign:"center",marginBottom:"20px"}}>
+            <div className={css.ibtn} style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}
                 onClick={this.finish}
             >
               {finished ? "finished" : "finish"}

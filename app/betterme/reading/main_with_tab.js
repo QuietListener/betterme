@@ -7,11 +7,14 @@ import Moment from "moment"
 import CSeperator from "./components/c_sperator";
 import ArticlesChoosePage from "./articles_choose_page"
 import MinePage from "./mine_page.js"
+import articlePng from "../../resource/imgs/article.png";
+import userPng from "../../resource/imgs/user.png";
 
 const BaseHost = "http://localhost:3100"
 
 const FlagMine = 1;
 const FlagArticle = 2;
+
 
 export default class MainPageWithTab extends Component
 {
@@ -22,6 +25,11 @@ export default class MainPageWithTab extends Component
     //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
     super(props);
+
+    this.tabMap = {}
+    this.tabMap[FlagArticle] = articlePng;
+    this.tabMap[FlagMine] = userPng;
+
     this.state = {
       data: {},
       flag: FlagArticle
@@ -43,6 +51,8 @@ export default class MainPageWithTab extends Component
   {
     let showView = null;
 
+
+
     let flag = this.state.flag || FlagArticle;
     if(flag == FlagArticle){
       showView =  <ArticlesChoosePage />
@@ -50,7 +60,23 @@ export default class MainPageWithTab extends Component
       showView = <MinePage />
     }
 
-    var hilighted = { background: "black", color : "white"};
+    var hilighted = { backgroundColor: "yellow",};
+    var normal = { backgroundColor: "white"};
+    var tabsView = [];
+   for( let key in this.tabMap){
+     let style = Object.assign(inner_style.tabItem,{borderRight: "0px"});
+     if(key == this.state.flag){
+       style = Object.assign(style, hilighted);
+     }
+
+     let tab = <div style={style}
+          onClick={()=>this.choose(key)}>
+       <img src={this.tabMap[key]} style={{ width: "20px"}}/>
+     </div>
+
+      tabsView.push(tab);
+   }
+
     return (
 
       <div style={{}}>
@@ -59,19 +85,9 @@ export default class MainPageWithTab extends Component
         </div>
 
 
+
         <div style={{position: "absolute", bottom: "0px", width: "100%", height: "40px"}}>
-
-
-          <div style={Object.assign({},inner_style.tabItem,{borderRight: "0px"},flag == FlagArticle?hilighted:{})}
-               onClick={()=>this.choose(FlagArticle)}>
-            <span>Articles</span>
-          </div>
-
-          <div style={Object.assign({}, inner_style.tabItem,flag == FlagMine?hilighted:{})}
-               onClick={()=>this.choose(FlagMine)}>
-            <span>Mine</span>
-          </div>
-
+          {tabsView}
         </div>
       </div>
     );
@@ -90,7 +106,7 @@ const inner_style = {
     fontSize: "10px",
     textAlign: "center",
     width: "49.4%",
-    border: "1px solid"
+    backgroundColor:"red"
   },
 
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},

@@ -7,8 +7,9 @@ import ReadingPage from './betterme/reading/reading_page.js'
 import Comment from "./betterme/reading/comment.js"
 import ArticleGroup from "./betterme/reading/article_group.js"
 import ArticlesChoosePage from "./betterme/reading/articles_choose_page.js"
-import ReadingMainPage from "./betterme/reading/main_page.js"
+import ReadingMinePage from "./betterme/reading/mine_page.js"
 import ArticlesList from "./betterme/reading/articles_list.js"
+import MainPageWithTab from "./betterme/reading/main_with_tab.js"
 
 
 import Home from './betterme/home.js'
@@ -43,7 +44,10 @@ class App extends Component
         <Provider store={store}>
 
           <Router history={hashHistory}>
-            <Route path="/reading_main" component={ReadingMainPage}></Route>
+
+
+            <Route path="/" component={MainPageWithTab}></Route>
+            <Route path="/reading_mine" component={ReadingMinePage}></Route>
             <Route path="/article_group/:id" component={ArticleGroup}></Route>
             <Route path="/reading_page/:id" component={ReadingPage}></Route>
             <Route path="/article/:id" component={Article}></Route>

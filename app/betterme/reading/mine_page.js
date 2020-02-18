@@ -8,7 +8,7 @@ const BaseHost = "http://localhost:3100"
 import Moment from "moment"
 import CSeperator from "./components/c_sperator";
 
-export default class ReadingMainPage extends Component
+export default class ReadingMinePage extends Component
 {
 
   constructor(props)

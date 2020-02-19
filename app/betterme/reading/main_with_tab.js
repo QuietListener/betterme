@@ -35,6 +35,7 @@ export default class MainPageWithTab extends Component
     this.tabMap[FlagArticle] = articlePng;
     this.tabMap[FlagArticleOk] = articleOkPng;
     this.tabMap[FlagMine] = userPng;
+    this.tabFlags = [FlagArticle,FlagArticleOk,FlagMine]
 
     this.state = {
       data: {},
@@ -57,8 +58,6 @@ export default class MainPageWithTab extends Component
   {
     let showView = null;
 
-
-
     let flag = this.state.flag || FlagArticle;
     if(flag == FlagArticle){
       showView =  <ArticlesChoosePage />
@@ -71,7 +70,8 @@ export default class MainPageWithTab extends Component
     var hilighted = { backgroundColor: "yellow",};
     var normal = { backgroundColor: "white"};
     var tabsView = [];
-   for( let key in this.tabMap){
+   for( let i = 0; i < this.tabFlags.length ; i++){
+     let key =  this.tabFlags[i];
      let style = Object.assign(inner_style.tabItem,{borderRight: "0px"});
      if(key == this.state.flag){
        style = Object.assign(style, hilighted);

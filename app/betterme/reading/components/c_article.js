@@ -8,6 +8,16 @@ export default class CArticle extends Component
   constructor(props)
   {
     super(props);
+    this.goto = this.goto.bind(this);
+  }
+
+  goto(a){
+    if(a.parent_id ){
+      base.goto(`/reading_page/${a.id}`)
+    }else{
+      base.goto(`/article_group/${a.id}`)
+    }
+
   }
 
   render()
@@ -20,7 +30,7 @@ export default class CArticle extends Component
       backgroundColor = "#5eca59 "
     }
     return (<div className={css.ibtn} style={{backgroundColor:backgroundColor, padding: "8px", margin: "4px",width:"96%"}}
-                 onClick={()=>base.goto(`/reading_page/${a.id}`)}>
+                 onClick={()=>this.goto(a)}>
       <div className={css.middleText} >{a.title}</div>
     </div>)
   }

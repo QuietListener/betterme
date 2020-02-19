@@ -76,6 +76,7 @@ export default class ArticlesList extends Component
 
     return (
       <div>
+        <div>{this.props.title||""}</div>
         <div style={{}}>
           {articles_div}
         </div>

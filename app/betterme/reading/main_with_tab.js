@@ -7,13 +7,18 @@ import Moment from "moment"
 import CSeperator from "./components/c_sperator";
 import ArticlesChoosePage from "./articles_choose_page"
 import MinePage from "./mine_page.js"
+
+import ArticleList from "./articles_list.js"
+
 import articlePng from "../../resource/imgs/article.png";
 import userPng from "../../resource/imgs/user.png";
+import articleOkPng from "../../resource/imgs/ok.png";
 
 const BaseHost = "http://localhost:3100"
 
 const FlagMine = 1;
 const FlagArticle = 2;
+const FlagArticleOk = 3;
 
 
 export default class MainPageWithTab extends Component
@@ -28,6 +33,7 @@ export default class MainPageWithTab extends Component
 
     this.tabMap = {}
     this.tabMap[FlagArticle] = articlePng;
+    this.tabMap[FlagArticleOk] = articleOkPng;
     this.tabMap[FlagMine] = userPng;
 
     this.state = {
@@ -56,8 +62,10 @@ export default class MainPageWithTab extends Component
     let flag = this.state.flag || FlagArticle;
     if(flag == FlagArticle){
       showView =  <ArticlesChoosePage />
-    }else{
+    }else if (flag == FlagMine){
       showView = <MinePage />
+    }else{
+      showView = <ArticleList title={"Finished articles"}/>
     }
 
     var hilighted = { backgroundColor: "yellow",};
@@ -71,7 +79,9 @@ export default class MainPageWithTab extends Component
 
      let tab = <div style={style}
           onClick={()=>this.choose(key)}>
+
        <img src={this.tabMap[key]} style={{ width: "20px"}}/>
+
      </div>
 
       tabsView.push(tab);
@@ -105,7 +115,7 @@ const inner_style = {
     verticalAlign: "top",
     fontSize: "10px",
     textAlign: "center",
-    width: "49.4%",
+    width: "33.2%",
     backgroundColor:"red"
   },
 

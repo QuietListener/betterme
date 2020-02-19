@@ -77,7 +77,8 @@ export default class ArticlesChoosePage extends Component
     console.log("articles", articles);
 
     var articles_div = articles.map(a => {
-      return <CArticle a={a}/>
+      let aa = a;
+      return <CArticle a={aa}/>
     })
 
     var tags_div = all_tags.map(t=>{

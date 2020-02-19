@@ -4,7 +4,7 @@ import Comment from "./comment.js"
 import {axios} from "../base.js"
 import playPng from "../../resource/imgs/play.png";
 import stopPng from "../../resource/imgs/stop.png";
-
+import CLoading from "./components/c_loading"
 
 const BaseHost = "http://localhost:3100"
 const Playing = 1;
@@ -190,6 +190,7 @@ export default class ReadingPage extends Component
       that.setState({data: res.data.data});
       console.log(that.state);
       // that.load_plans(user.id)
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -199,6 +200,11 @@ export default class ReadingPage extends Component
 
   render()
   {
+
+    if(this.state.loading == true){
+      return (<CLoading />)
+    }
+
     var article = this.state.data.article || {};
     var finished = this.state.data.finished || false;
     var words = this.state.data.words || [];

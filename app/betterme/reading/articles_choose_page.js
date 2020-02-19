@@ -5,6 +5,8 @@ import CArticle from "./components/c_article";
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
 import CLoading from "./components/c_loading.js"
+import CError from "./components/c_error.js"
+
 
 const BaseHost = "http://localhost:3100"
 
@@ -67,7 +69,8 @@ export default class ArticlesChoosePage extends Component
       this.setState({loading: false});
     }).catch(e => {
       console.log(e);
-      this.setState({loading: false});
+
+      this.setState({loadError: true,loading:false});
     })
   }
 
@@ -76,6 +79,9 @@ export default class ArticlesChoosePage extends Component
 
     if(this.state.loading == true){
       return (<CLoading />)
+    }
+    else if(this.state.loadError == true ){
+      return <CError refresh={this.load}/>
     }
 
     var articles = this.state.data.articles || [];

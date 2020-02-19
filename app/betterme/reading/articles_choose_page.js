@@ -4,6 +4,8 @@ import {axios} from "../base.js"
 import CArticle from "./components/c_article";
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
+import CLoading from "./components/c_loading.js"
+
 const BaseHost = "http://localhost:3100"
 
 
@@ -62,6 +64,7 @@ export default class ArticlesChoosePage extends Component
       that.setState({data: res.data.data});
       console.log(that.state);
       // that.load_plans(user.id)
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -70,6 +73,11 @@ export default class ArticlesChoosePage extends Component
 
   render()
   {
+
+    if(this.state.loading == true){
+      return (<CLoading />)
+    }
+
     var articles = this.state.data.articles || [];
     var all_tags = this.state.data.all_tags || [];
     let choosedTagIds = this.state.choosedTagIds  || [];

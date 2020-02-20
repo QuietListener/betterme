@@ -85,6 +85,7 @@ export default class ArticlesChoosePage extends Component
     }
 
     var articles = this.state.data.articles || [];
+    var finished_article_ids = this.state.data.finished_article_ids || [];
     var all_tags = this.state.data.all_tags || [];
     let choosedTagIds = this.state.choosedTagIds  || [];
 
@@ -92,7 +93,8 @@ export default class ArticlesChoosePage extends Component
 
     var articles_div = articles.map(a => {
       let aa = a;
-      return <CArticle a={aa}/>
+      let finished = (finished_article_ids.indexOf(a.id) >= 0)
+      return <CArticle a={aa} finished={finished}/>
     })
 
     var tags_div = all_tags.map(t=>{

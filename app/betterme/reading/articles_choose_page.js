@@ -41,11 +41,13 @@ export default class ArticlesChoosePage extends Component
 
     let index = choosedTagIds.indexOf(id);
     if( index < 0){
+        choosedTagIds = [];
         choosedTagIds.push(id);
     }else{
         choosedTagIds.splice(index,1);
     }
 
+    this.setState({choosedTagIds:choosedTagIds})
     this.load();
   }
 

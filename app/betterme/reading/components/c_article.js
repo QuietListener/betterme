@@ -29,9 +29,14 @@ export default class CArticle extends Component
     if(finished){
       backgroundColor = "#5eca59 "
     }
-    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor, padding: "8px", margin: "4px",width:"96%"}}
+    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor, verticalAlign:"top",fontSize:"12px",padding: "8px", margin: "4px",width:"95%"}}
                  onClick={()=>this.goto(a)}>
-      <div className={css.middleText} >{a.title}</div>
+      <div className={css.middleText} >
+        {a.title}
+      </div>
+      <div>
+        <div className={css.smallText}>Level:{a.level}</div>
+      </div>
     </div>)
   }
 }

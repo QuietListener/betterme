@@ -101,12 +101,12 @@ export default class ArticlesChoosePage extends Component
 
     var tags_div = all_tags.map(t=>{
 
-      let backgroundColor = null;
+      let backgroundColor = "#465c8b";
       if(choosedTagIds.indexOf(t.id) >= 0){
         backgroundColor = "#5eca59";
       }
 
-      return <div className={css.ibtn} style={{display:"inline-block",borderRadius:"0px",margin:"2px",backgroundColor:backgroundColor}}
+      return <div className={css.ibtn} style={{display:"inline-block",borderRadius:"0px",margin:"2px",backgroundColor:backgroundColor,color:"white",borderRadius:"4px"}}
                   onClick={()=>this.toggleTag(t.id)}
       >
         {t.name}

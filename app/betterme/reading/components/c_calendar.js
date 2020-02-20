@@ -82,7 +82,7 @@ export default class CCalendar extends Component
           var isEvents = false;
           if (dates <= today.date())
           {
-            style_ =  Object.assign(styles.day, responsive_style)
+            style_ =  Object.assign(styles.day, responsive_style,{backgroundColor: "white"})
 
             isEvents = (events.filter((item) => {
               return i_.format("YYYYMMDD") === item.format("YYYYMMDD")
@@ -96,7 +96,7 @@ export default class CCalendar extends Component
           }
           else
           {
-            style_ = Object.assign(styles.day, {borderWidth: 0}, responsive_style);
+            style_ = Object.assign(styles.day, {backgroundColor: ""}, responsive_style);
           }
 
           dayView = <div

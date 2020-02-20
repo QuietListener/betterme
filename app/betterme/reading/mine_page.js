@@ -59,14 +59,15 @@ export default class ReadingMinePage extends Component
     var state = this.state.data.state || {};
 
     return (
-      <div style={{padding: "8px"}}>
+      <div style={{padding: "0px"}}>
 
         <div style={{backgroundColor: 'white'}}>
-          <div className={css.bigText} style={{paddingTop:"20px",paddingBottom:"20px",paddingLeft:"8px"}}>{user.name}</div>
+          <div className={css.bigText} style={{paddingTop:"20px",paddingBottom:"20px",paddingLeft:"8px",border:"1px solid #e9e4d9"}}>
+            {user.name}
+            </div>
 
 
-
-          <div style={{marginTop:"10px",marginBottom:"10px"}}>
+          <div style={{marginTop:"0px",marginBottom:"10px"}}>
             <div style={inner_style.statistics_item}>
               <div style={inner_style.statistics_count}>{state.readed_words || 0} </div>
               <div style={inner_style.statistics_title}> words</div>
@@ -86,7 +87,8 @@ export default class ReadingMinePage extends Component
 
 
 
-        <div style={{textAlign:"center"}}>
+
+        <div style={{textAlign:"center",marginTop:"10px"}}>
           <CCalendar width={400} today={new Moment()} events={[new Moment()]} style={{}} onPress={() => {}}/>
         </div>
 

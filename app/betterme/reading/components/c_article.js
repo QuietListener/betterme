@@ -26,16 +26,18 @@ export default class CArticle extends Component
     let finished  = this.props.finished || false; //是否完成
 
     let backgroundColor = "";
+    let color= "black";
     if(finished){
       backgroundColor = "#5eca59 "
+      color="white";
     }
-    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor, verticalAlign:"top",fontSize:"12px",padding: "8px", margin: "4px",width:"95%"}}
+    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "8px", margin: "4px",width:"95%"}}
                  onClick={()=>this.goto(a)}>
-      <div className={css.middleText} >
+      <div className={css.middleText} style={{ color:color,fontSize:"16px",borderBottom:"1px solid white",paddingBottom:"4px"}} >
         {a.title}
       </div>
-      <div>
-        <div className={css.smallText}>Level:{a.level}</div>
+      <div style={{marginTop:"4px"}}>
+        <div className={css.smallText} style={{color:"#465c8b"}}>level:{a.level}</div>
       </div>
     </div>)
   }

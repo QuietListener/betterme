@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import * as base from "../base.js"
 import {axios} from "../base.js"
 import CArticle from "./components/c_article"
+import css from "./css/ireading.css"
+import CSeperator from "./components/c_sperator";
+
 const BaseHost = "http://localhost:3100"
 
 
@@ -76,8 +78,9 @@ export default class ArticlesList extends Component
 
     return (
       <div>
-        <div>{this.props.title||""}</div>
-        <div style={{}}>
+        <div className={css.bigText} style={{padding:"6px"}}>{this.props.title||""}</div>
+        <CSeperator/>
+        <div style={{paddingTop:"4px"}}>
           {articles_div}
         </div>
 

@@ -11,12 +11,12 @@ import ReadingMinePage from "./betterme/reading/mine_page.js"
 import ArticlesList from "./betterme/reading/articles_list.js"
 import MainPageWithTab from "./betterme/reading/main_with_tab.js"
 
-
-import Home from './betterme/home.js'
-import PlanDetails from "./betterme/plan_details.js"
-import NewPlan from "./betterme/new_plan.js"
-import Mine from "./betterme/mine.js"
-import Test from "./betterme/test.js"
+//
+// import Home from './betterme/home.js'
+// import PlanDetails from "./betterme/plan_details.js"
+// import NewPlan from "./betterme/new_plan.js"
+// import Mine from "./betterme/mine.js"
+// import Test from "./betterme/test.js"
 
 import './css/main.css'
 
@@ -56,12 +56,12 @@ class App extends Component
             <Route path="/articles_choose_page" component={ArticlesChoosePage}></Route>
             <Route path="/article_list" component={ArticlesList}></Route>
 
-            {/*<Route path="/" component={Home}></Route>*/}
-            <Route path="/mine" component={Mine}/>
-            <Route path="/plan_details/:id" component={PlanDetails}/>
-            <Route path="/new_plan/:id" component={NewPlan}/>
-            <Route path="/test" component={Test}/>
-            <Route path="/greeter" component={GreeterReact}/>
+            {/*/!*<Route path="/" component={Home}></Route>*!/*/}
+            {/*<Route path="/mine" component={Mine}/>*/}
+            {/*<Route path="/plan_details/:id" component={PlanDetails}/>*/}
+            {/*<Route path="/new_plan/:id" component={NewPlan}/>*/}
+            {/*<Route path="/test" component={Test}/>*/}
+            {/*<Route path="/greeter" component={GreeterReact}/>*/}
           </Router>
         </Provider>
       </MuiThemeProvider>)

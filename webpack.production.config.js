@@ -4,68 +4,70 @@
 /**
  * Created by junjun on 17/8/2.
  */
+process.env.NODE_ENV = 'production'
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ETP = require("extract-text-webpack-plugin");
 
 module.exports={
-    //devtool:'eval-source-map',
-    //entry:__dirname+"/app/main.js", //唯一入口
-    entry: {
-        bundle: __dirname+"/app/mainReact.js",
-      // Since react is installed as a node module, node_modules/react,
-      // we can point to it directly, just like require('react');
-      // 当 React 作为一个 node 模块安装的时候，
-      // 我们可以直接指向它，就比如 require('react')
-      vendors: ['react','moment','axios','lodash','redux','react-redux']
+  //devtool:'eval-source-map',
+  //entry:__dirname+"/app/main.js", //唯一入口
+  entry:__dirname+"/app/mainReact.js", //唯一入口
+  output:{
+    path:__dirname+"/public",
+    filename: "bundle-[hash].js"
+  },
+
+  devServer:{
+    contentBase:"./public",//页面所在目录
+    //colors:true,
+    historyApiFallback:true,//不跳转
+    disableHostCheck: true   // That solved it
+  },
+
+  module:{
+    loaders:[
+      {
+        test: /\.json$/,
+        loader:"json-loader"
       },
-    output:{
-        path:__dirname+"/public",
-        filename: "[name]-[hash].js"
-    },
+      {
+        test:/\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'//在webpack的module部分的loaders里进行配置即可
+      },
+      {
+        test: /\.css$/,
+        //use: [ 'style-loader', 'css-loader' ]
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
 
-    devServer:{
-        contentBase:"./public",//页面所在目录
-        //colors:true,
-        historyApiFallback:true,//不跳转
-        inline:true, //实时刷新,
-        hot: true
-    },
-
-    module:{
-        loaders:[
-            {
-                test: /\.json$/,
-                loader:"json-loader"
-            },
-            {
-                test:/\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'//在webpack的module部分的loaders里进行配置即可
-            },
-            {
-                test: /\.css$/,
-                use: [ 'style-loader?modules', 'css-loader?modules' ]
-                //use: ExtractTextPlugin.extract({
-                //    fallback: "style-loader",
-                //    use: "css-loader"
-                //})
-            }
-        ]
-
-    },
-
-    plugins:[
-        new webpack.HotModuleReplacementPlugin(),//热加载插件
-        //new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.optimize.UglifyJsPlugin(
-        //   {comments: false,        //去掉注释
-        //       compress: {
-        //       warnings: false    //忽略警告,要不然会有一大堆的黄色字体出现……
-        //       }
-        //   }
-        // ),
-        //new ExtractTextPlugin("[name]-[hash].css")
-      //CommonsChunkPlugin提取第三方库单独打包
-      //new webpack.optimize.CommonsChunkPlugin({name:'vendors', filename:'vendors.js'})
+      }
+      ,
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        loader: 'file-loader?hash=sha512&digest=hex&name=[hash].[ext]'
+      }
     ]
+  },
+
+  plugins:[
+    new HtmlWebpackPlugin({
+      template: __dirname + "/app/index_p.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"production"'
+      }
+    }),
+    //根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小，该模块推荐使用
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    //压缩Js文件
+    new webpack.optimize.UglifyJsPlugin(),
+    //new ExtractTextPlugin("[name]-[hash].css")
+    new ExtractTextPlugin("style.css")
+  ]
 }

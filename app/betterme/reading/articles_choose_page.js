@@ -68,7 +68,7 @@ export default class ArticlesChoosePage extends Component
       that.setState({data: res.data.data});
       console.log(that.state);
       // that.load_plans(user.id)
-      this.setState({loading: false});
+      this.setState({loading: false,loadError:false});
     }).catch(e => {
       console.log(e);
 
@@ -93,10 +93,11 @@ export default class ArticlesChoosePage extends Component
 
     console.log("articles", articles);
 
+    let articleWidth = base.width() > 320 ? base.width()/2 - 30:  base.width()-30;
     var articles_div = articles.map(a => {
       let aa = a;
       let finished = (finished_article_ids.indexOf(a.id) >= 0)
-      return <CArticle a={aa} finished={finished}/>
+      return <CArticle a={aa} width={articleWidth} finished={finished}/>
     })
 
     var tags_div = all_tags.map(t=>{

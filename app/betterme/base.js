@@ -13,6 +13,10 @@ export function goto(path)
   history.push(path)
 }
 
+export function width() {
+  return document.body.clientWidth || window.innerWidth;
+}
+
 //---网络库---
 const headers ={
   Cookie: "access_token=7110eda4d09e062aa5e4a390b0a572ac0d2c0220596;"

@@ -50,13 +50,19 @@ export default class ReadingMinePage extends Component
 
   render()
   {
-    if (!this.state.data)
-    {
+    if (!this.state.data) {
       return null;
     }
 
     var user = this.state.data.user || {};
     var state = this.state.data.state || {};
+    var finish_dates_ = this.state.data.finish_dates || [];
+
+    var events = finish_dates_.map(t=> {
+        let tmp = t.split("T")[0];
+        return base.formatDate(tmp);
+      }
+    )
 
     return (
       <div style={{padding: "0px"}}>
@@ -64,8 +70,7 @@ export default class ReadingMinePage extends Component
         <div style={{backgroundColor: 'white'}}>
           <div className={css.bigText} style={{paddingTop:"20px",paddingBottom:"20px",paddingLeft:"8px",border:"1px solid #e9e4d9"}}>
             {user.name}
-            </div>
-
+          </div>
 
           <div style={{marginTop:"0px",marginBottom:"10px"}}>
             <div style={inner_style.statistics_item}>
@@ -89,7 +94,7 @@ export default class ReadingMinePage extends Component
 
 
         <div style={{textAlign:"center",marginTop:"10px"}}>
-          <CCalendar width={400} today={new Moment()} events={[new Moment()]} style={{}} onPress={() => {}}/>
+          <CCalendar width={400} today={new Moment()} events={events} style={{}} onPress={() => {}}/>
         </div>
 
       </div>

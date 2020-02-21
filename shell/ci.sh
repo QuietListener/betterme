@@ -1,1 +1,1 @@
-scp -r ../public/* www@alimeta:/home/www/static/pk/reading/
+scp ../public/* www@alimeta:/home/www/static/pk/reading

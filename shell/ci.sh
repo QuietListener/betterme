@@ -1,0 +1,1 @@
+scp -r ../public/* www@alimeta:/home/www/static/pk/reading/

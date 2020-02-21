@@ -8,8 +8,8 @@ import CLoading from "./components/c_loading.js"
 import CError from "./components/c_error.js"
 
 
-const BaseHost = "http://localhost:3100"
 
+const BaseHost = "https://pk.coderlong.com"
 
 export default class ArticlesChoosePage extends Component
 {

@@ -14,7 +14,8 @@ import articlePng from "../../resource/imgs/article.png";
 import userPng from "../../resource/imgs/user.png";
 import articleOkPng from "../../resource/imgs/ok.png";
 
-const BaseHost = "http://localhost:3100"
+
+const BaseHost = "https://pk.coderlong.com"
 
 const FlagMine = 1;
 const FlagArticle = 2;

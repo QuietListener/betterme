@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import css from "./css/ireading.css"
 import {axios} from "../base.js"
 
-const BaseHost = "http://localhost:3100"
+
+const BaseHost = "https://pk.coderlong.com"
 
 
 export default class Comment extends Component

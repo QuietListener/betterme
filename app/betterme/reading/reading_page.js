@@ -6,7 +6,8 @@ import playPng from "../../resource/imgs/play.png";
 import stopPng from "../../resource/imgs/stop.png";
 import CLoading from "./components/c_loading"
 
-const BaseHost = "http://localhost:3100"
+
+const BaseHost = "https://pk.coderlong.com"
 const Playing = 1;
 const Stopped = 2;
 
@@ -267,7 +268,8 @@ export default class ReadingPage extends Component
 
         </div>
 
-        <div style={{display: "block", height: "60px", overflow: "scroll",backgroundColor:"#f2f2f2"}}>
+
+        <div style={{display: "block", height: "60px", overflow: "scroll",backgroundColor:"#f2f2f2",position:"fixed",bottom:0,width:"100%"}}>
 
           <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
             Your browser does not support this audio format.

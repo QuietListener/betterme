@@ -5,7 +5,8 @@ import {axios} from "../base.js"
 import CSeperator from "./components/c_sperator.js"
 import CArticle from "./components/c_article.js"
 
-const BaseHost = "http://localhost:3100"
+
+const BaseHost = "https://pk.coderlong.com"
 
 
 export default class ArticleGroup extends Component

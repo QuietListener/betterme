@@ -3,7 +3,7 @@ import '../../css/app.css';
 import {axios} from "../base.js"
 
 
-const BaseHost = "http://localhost:3100"
+const BaseHost = "https://pk.coderlong.com" 
 
 
 export default class Article extends Component

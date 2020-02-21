@@ -4,7 +4,8 @@ import {axios} from "../base.js"
 import CCalendar from "./components/c_calendar.js"
 import css from "./css/ireading.css"
 
-const BaseHost = "http://localhost:3100"
+
+const BaseHost = "https://pk.coderlong.com"
 import Moment from "moment"
 import CSeperator from "./components/c_sperator";
 

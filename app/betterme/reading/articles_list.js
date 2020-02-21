@@ -4,7 +4,8 @@ import CArticle from "./components/c_article"
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
 
-const BaseHost = "http://localhost:3100"
+
+const BaseHost = "https://pk.coderlong.com"
 
 
 export default class ArticlesList extends Component

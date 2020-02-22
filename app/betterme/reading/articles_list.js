@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {axios} from "../base.js"
+import * as base from "../base.js"
 import CArticle from "./components/c_article"
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
 
 
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 
 
 export default class ArticlesList extends Component

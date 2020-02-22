@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import '../../css/app.css';
+import * as base from "../base.js"
 import {axios} from "../base.js"
 
 
-const BaseHost = "https://pk.coderlong.com" 
+const BaseHost = base.BaseHostIreading();
 
 
 export default class Article extends Component

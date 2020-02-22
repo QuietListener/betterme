@@ -15,7 +15,7 @@ import userPng from "../../resource/imgs/user.png";
 import articleOkPng from "../../resource/imgs/ok.png";
 
 
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 
 const FlagMine = 1;
 const FlagArticle = 2;

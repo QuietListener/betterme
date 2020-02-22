@@ -46,13 +46,16 @@ class App extends Component
           <Router history={hashHistory}>
 
 
+            <Route path="/article/:id" component={Article}></Route>
+            <Route path="/articles" component={Articles}></Route>
+
             <Route path="/" component={MainPageWithTab}></Route>
             <Route path="/reading_mine" component={ReadingMinePage}></Route>
             <Route path="/article_group/:id" component={ArticleGroup}></Route>
             <Route path="/reading_page/:id" component={ReadingPage}></Route>
-            <Route path="/article/:id" component={Article}></Route>
+
             <Route path="/comment/:id" component={Comment}></Route>
-            <Route path="/articles" component={Articles}></Route>
+
             <Route path="/articles_choose_page" component={ArticlesChoosePage}></Route>
             <Route path="/article_list" component={ArticlesList}></Route>
 

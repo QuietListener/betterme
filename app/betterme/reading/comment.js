@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import css from "./css/ireading.css"
 import {axios} from "../base.js"
+import * as base from "../base.js"
+import crossPng from "../../resource/imgs/cross.png"
 
-
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 
 
 export default class Comment extends Component
@@ -125,10 +126,13 @@ export default class Comment extends Component
     let like_div = null;
 
     if(isMine == true){
-      deleteDiv =  <div  className={css.ibtn} style={{fontSize:"12px",backgroundColor:"#969ca4"}} onClick={()=>this.deleteComment(c.id)}>delete</div>;
+      deleteDiv =  <div  className={css.ibtn} style={{fontSize:"12px",backgroundColor:"#969ca4"}} onClick={()=>this.deleteComment(c.id)}>
+        <img src={crossPng} width={12}/>
+      </div>;
     }
 
-    if(!isMine){
+    //先不启用
+    if(!isMine && false){
       like_div = <div style={{display:"inline-block",textAlign:"right",width:"36%"}}> <span>like</span></div>
     }
 

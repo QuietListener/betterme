@@ -7,8 +7,8 @@
 process.env.NODE_ENV = 'production'
 var webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-var ETP = require("extract-text-webpack-plugin");
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ETP = require("extract-text-webpack-plugin");
 
 module.exports={
   //devtool:'eval-source-map',
@@ -39,12 +39,7 @@ module.exports={
       },
       {
         test: /\.css$/,
-        //use: [ 'style-loader', 'css-loader' ]
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
-
+        use: ['style-loader?modules', 'css-loader?modules']
       }
       ,
       {
@@ -66,8 +61,8 @@ module.exports={
     //根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小，该模块推荐使用
     new webpack.optimize.OccurrenceOrderPlugin(),
     //压缩Js文件
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin()
     //new ExtractTextPlugin("[name]-[hash].css")
-    new ExtractTextPlugin("style.css")
+    //new ExtractTextPlugin("style.css")
   ]
 }

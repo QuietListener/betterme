@@ -3,7 +3,7 @@ import * as base from "../base.js"
 import {axios} from "../base.js"
 
 
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 
 
 export default class Articles extends Component
@@ -16,13 +16,15 @@ export default class Articles extends Component
 
     super(props);
     this.state = {
-      data: {}
+      data: {},
+      modified:{}
     };
 
     this.load = this.load.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.saveArticle = this.saveArticle.bind(this);
     this.split = this.split.bind(this);
+    this.modify = this.modify.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -59,12 +61,14 @@ export default class Articles extends Component
     })
   }
 
-  saveArticle(author,title, text)
+  saveArticle(id,author,title, text,audio)
   {
     var params = {
+      id: id,
       text: text,
       author: author,
       title: title,
+      audio:audio
     }
 
     var url = `${BaseHost}/reading/create_article.json`;
@@ -99,6 +103,16 @@ export default class Articles extends Component
 
   }
 
+  modify(a){
+    this.setState({
+      id: a.id,
+      author: a.author,
+      title: a.title,
+      audio: a.audio_normal,
+      text: a.origin_text,
+    })
+  }
+
   render()
   {
 
@@ -111,30 +125,60 @@ export default class Articles extends Component
         <div>{a.id} | {a.created_at}
            <div style={inner_style.btn} onClick={()=>this.split(a.id)}>split</div>
            <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>
+          <div style={inner_style.btn}  onClick={()=>this.modify(a)}>modify</div>
         </div>
 
       </div>
     })
 
+    let modified = this.state.modified;
     return (
       <div style={{}}>
 
         {articles_div}
 
+        <div style={{padding:"4px",margin:"6px",color:"white",backgroundColor:"black"} } onClick={()=>this.modify({})}> clear modify</div>
+
 
         <div>
           <div style={inner_style.box}>
+            <label>id:</label>
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("id", event)
+            }}
+                   value={this.state.id}
+            ></input>
+
+          </div>
+
+
+
+          <div style={inner_style.box}>
             <label>title:</label>
+
             <input style={{width: "100%"}} onChange={(event) => {
               this.handleChange("title", event)
-            }}></input>
+            }}
+                   value={this.state.title}
+            ></input>
           </div>
 
           <div style={inner_style.box}>
             <label>author:</label>
             <input style={{width: "100%"}} onChange={(event) => {
               this.handleChange("author", event)
-            }}></input>
+            }}
+                   value={this.state.author}
+            ></input>
+          </div>
+
+          <div style={inner_style.box}>
+            <label>audio:</label>
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("audio", event)
+            }}
+                   value={this.state.audio}
+            ></input>
           </div>
 
           <div style={inner_style.box}><label>content:</label>
@@ -142,11 +186,13 @@ export default class Articles extends Component
                       onChange={(event) => {
                         this.handleChange("text", event)
                       }}
-                      rows={14}></textArea>
+                      rows={14}
+                      value={this.state.text}
+            ></textArea>
           </div>
 
           <div style={{border: "1px solid", textAlign: "center"}} onClick={()=>{
-            this.saveArticle(this.state.author,this.state.title,this.state.text)
+            this.saveArticle(this.state.id,this.state.author,this.state.title,this.state.text,this.state.audio)
           }}>save</div>
         </div>
 

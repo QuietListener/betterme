@@ -5,7 +5,7 @@ import CCalendar from "./components/c_calendar.js"
 import css from "./css/ireading.css"
 
 
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 import Moment from "moment"
 import CSeperator from "./components/c_sperator";
 

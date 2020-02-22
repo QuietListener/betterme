@@ -6,7 +6,7 @@ import CSeperator from "./components/c_sperator.js"
 import CArticle from "./components/c_article.js"
 
 
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 
 
 export default class ArticleGroup extends Component

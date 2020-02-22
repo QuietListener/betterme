@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import css from './css/ireading.css';
 import Comment from "./comment.js"
 import {axios} from "../base.js"
+import * as base from "../base.js"
 import playPng from "../../resource/imgs/play.png";
 import stopPng from "../../resource/imgs/stop.png";
 import CLoading from "./components/c_loading"
 
 
-const BaseHost = "https://pk.coderlong.com"
+const BaseHost = base.BaseHostIreading();
 const Playing = 1;
 const Stopped = 2;
 
@@ -224,7 +225,7 @@ export default class ReadingPage extends Component
       let s_word_divs = words.filter((w) => {
         return w.order >= start && w.order <= end;
       }).map(w => {
-        return <div style={{display: "inline-block", margin: "2px"}}>{w.text}</div>
+        return <div style={{display: "inline-block", margin: "2px",fontSize:"14px"}}>{w.text}</div>
       })
 
 
@@ -238,6 +239,7 @@ export default class ReadingPage extends Component
         <div style={{display: "inline-block"}}></div>
       </div>
     })
+
 
 
     return (
@@ -254,7 +256,8 @@ export default class ReadingPage extends Component
 
 
           <div  style={{width:"100%",textAlign:"center",marginBottom:"20px"}}>
-            <div className={css.ibtn} style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto"}}
+            <div className={css.ibtn}
+                 style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"green":''}`,color:`${finished?"white":''}`}}
                 onClick={this.finish}
             >
               {finished ? "finished" : "finish"}
@@ -262,7 +265,7 @@ export default class ReadingPage extends Component
           </div>
 
 
-          <div>
+          <div style={{marginBottom:"80px"}}>
             {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id}></Comment> :null}
           </div>
 

@@ -4,6 +4,11 @@ import moment from "moment"
 export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
 export const BaseHost = "http://localhost:3000"
+export function BaseHostIreading() {
+  //return "http://localhost:3100"
+  return "https://pk.coderlong.com"
+}
+
 //export const BaseHost = `http://www.coderlong.com`
 export const IMG_BASE = `${BaseHost}/upload/`
 
@@ -19,7 +24,7 @@ export function width() {
 
 //---网络库---
 const headers ={
-  Cookie: "access_token=7110eda4d09e062aa5e4a390b0a572ac0d2c0220596;"
+  //Cookie: "access_token=7110eda4d09e062aa5e4a390b0a572ac0d2c0220596;"
 }
 
 const UserAgent = "oniu_0.1/1.0.2";
@@ -27,7 +32,7 @@ const HttpTimeout = 10000//毫秒
 
 import axios_ from "axios"
 const instance = axios_.create({timeout: HttpTimeout,headers:headers});
-instance.defaults.headers.common["User-Agent"] = UserAgent;
+//instance.defaults.headers.common["User-Agent"] = UserAgent;
 instance.defaults.withCredentials = true
 
 export const axios = instance

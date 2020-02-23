@@ -339,8 +339,8 @@ export default class Article extends Component
 
     return (
 
-      <div>
-      <div style={{display:"block",height:"80%",overflow:"scroll"}}>
+      <div style={{height:"100%"}}>
+      <div style={{display:"block",height:"80%",maxHeight:"440px",overflow:"scroll",marginBottom:"20px"}}>
         <div style={inner_style.part}>{words_divs}</div>
 
 
@@ -389,7 +389,7 @@ export default class Article extends Component
 
 
 
-        <div style={{display:"block",height:"18%",overflow:"scroll"}}>
+        <div style={{display:"block",height:"200px",background:"white", height:"250px",width:"100%",bottom:0,overflow:"scroll"}}>
 
           <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%"}}>
             Your browser does not support this audio format.

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as base from "../base.js"
 import {axios} from "../base.js"
+import CModal from "../../components/c_modal";
 
 
 const BaseHost = base.BaseHostIreading();
@@ -132,6 +133,8 @@ export default class Articles extends Component
     })
 
     let modified = this.state.modified;
+
+
     return (
       <div style={{}}>
 

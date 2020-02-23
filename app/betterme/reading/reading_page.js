@@ -6,7 +6,7 @@ import * as base from "../base.js"
 import playPng from "../../resource/imgs/play.png";
 import stopPng from "../../resource/imgs/stop.png";
 import CLoading from "./components/c_loading"
-
+import CModal from "./components/c_modal"
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
@@ -42,6 +42,12 @@ export default class ReadingPage extends Component
     this.scrollSentence = this.scrollSentence.bind(this);
     this.playSpan = this.playSpan.bind(this);
     this.finish = this.finish.bind(this);
+    this.showMean = this.showMean.bind(this);
+    this.closeWordModal = this.closeWordModal.bind(this);
+    this.collectWord = this.collectWord.bind(this);
+    this.unCollectWord = this.unCollectWord.bind(this);
+    this.getCollectWordsIds = this.getCollectWordsIds.bind(this);
+
     this.audioRef = new Object();
     this.timeoutPlay = null;
 
@@ -105,6 +111,7 @@ export default class ReadingPage extends Component
             return;
           }
 
+          console.log("--shouldScrollTo",shouldScrollTo);
           sentenceScrollDiv.scrollTo(0, shouldScrollTo - 30);
           return;
         }
@@ -196,23 +203,88 @@ export default class ReadingPage extends Component
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
+    });
+
+    this.getCollectWordsIds();
+  }
+
+
+  showMean(word){
+    console.log(word);
+    this.setState({to_check_word:word})
+
+  }
+
+  closeWordModal(){
+    this.setState({to_check_word:null})
+  }
+
+
+  collectWord(w){
+    var params = {
+      word_id: w.id,
+    }
+
+    var url = `${BaseHost}/reading/collect_word.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
     })
   }
 
+  unCollectWord(w){
+    var params = {
+      word_id: w.id,
+    }
+
+    var url = `${BaseHost}/reading/uncollect_word.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+  }
+
+  getCollectWordsIds(){
+
+    var that = this;
+    axios.get(`${BaseHost}/reading/get_collect_word_ids.json`).then((res) => {
+      console.log("res", res);
+      that.setState({collect_word_ids: res.data.word_ids});
+      console.log(that.state);
+      // that.load_plans(user.id)
+      this.setState({loading: false});
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+    })
+  }
 
   render()
   {
 
-    if(this.state.loading == true){
-      return (<CLoading />)
-    }
+    // if(this.state.loading == true){
+    //   return (<CLoading />)
+    // }
 
     var article = this.state.data.article || {};
     var finished = this.state.data.finished || false;
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
     var splits_ = this.state.data.splits || [];
+    var collect_word_ids = this.state.collect_word_ids || [];
+
     var maxOrder = -1;
+
 
 
     var sentence_divs = sentences.map((s, index) => {
@@ -225,7 +297,18 @@ export default class ReadingPage extends Component
       let s_word_divs = words.filter((w) => {
         return w.order >= start && w.order <= end;
       }).map(w => {
-        return <div style={{display: "inline-block", margin: "2px",fontSize:"14px"}}>{w.text}</div>
+
+        let collected = collect_word_ids.indexOf(w.id) >= 0;
+        let backgroundColor = "";
+        let color = "";
+        if(collected){
+          backgroundColor = "black";
+          color = "white";
+        }
+
+        return <div style={{display: "inline-block", padding: "2px",margin:"2px",fontSize:"14px",backgroundColor:backgroundColor,color:color}}
+                    onClick={()=>this.showMean(w)}
+        >{w.text}</div>
       })
 
 
@@ -242,10 +325,39 @@ export default class ReadingPage extends Component
 
 
 
+    let wordModal = null;
+    let to_check_word = this.state.to_check_word
+    if(to_check_word) {
+      let collected = collect_word_ids.indexOf(to_check_word.id) >= 0;
+
+      wordModal = <CModal close={this.closeWordModal}>
+        <div style={{textAlign:"left",marginTop:"30px",position:"relative"}}>
+          <div style={{position:"absolute",top:10,right:30}}
+               onClick={()=>{
+                  if(collected == false){
+                    this.collectWord(to_check_word)
+                  }else{
+                    this.unCollectWord(to_check_word)
+                  }
+               }}>
+
+            {collected?"remove":"collect"}
+          </div>
+          <div>{this.state.to_check_word.text}</div>
+          <div>
+
+          </div>
+          </div>
+      </CModal>
+    }
+
+
     return (
 
       <div>
-        <div style={{display: "block", height: "90%", overflow: "scroll",minHeight:"400px"}} ref={"sentenceScrollDiv"}>
+        {wordModal}
+
+        <div style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px"}}  ref={"sentenceScrollDiv"}>
           <div style={{fontSize:"18px",fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
             {article.title}
           </div>
@@ -255,7 +367,7 @@ export default class ReadingPage extends Component
           </div>
 
 
-          <div  style={{width:"100%",textAlign:"center",marginBottom:"20px"}}>
+          <div  style={{width:"100%",textAlign:"center",marginBottom:"40px",marginTop:"40px"}}>
             <div className={css.ibtn}
                  style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"green":''}`,color:`${finished?"white":''}`}}
                 onClick={this.finish}

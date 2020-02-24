@@ -51,7 +51,9 @@ module.exports={
 
   plugins:[
     new HtmlWebpackPlugin({
-      template: __dirname + "/app/index_p.tmpl.html"//new 一个这个插件的实例，并传入相关的参数
+      title:"test",
+      template: __dirname + "/app/index_p.tmpl.html",//new 一个这个插件的实例，并传入相关的参数
+      filename: __dirname + '/public/index1.html'
     }),
     new webpack.DefinePlugin({
       'process.env': {

@@ -438,7 +438,7 @@ export default class ReadingPage extends Component
 
           <div  style={{width:"100%",textAlign:"center",marginBottom:"40px",marginTop:"40px"}}>
             <div className={css.ibtn}
-                 style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"green":''}`,color:`${finished?"white":''}`}}
+                 style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"#5eca50":''}`,color:`${finished?"white":''}`}}
                 onClick={this.finish}
             >
               {finished ? <img width={24} src={ok1Png}/> : "finish"}

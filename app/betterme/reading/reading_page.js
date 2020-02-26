@@ -7,7 +7,9 @@ import playPng from "../../resource/imgs/play.png";
 import stopPng from "../../resource/imgs/stop.png";
 import CLoading from "./components/c_loading"
 import crossPng from "../../resource/imgs/cross.png"
-import CModal from "./components/c_modal"
+import speakerPng from "../../resource/imgs/speaker.png"
+import likePng from "../../resource/imgs/like.png"
+import notlikePng from "../../resource/imgs/notlike.png"
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
@@ -59,9 +61,9 @@ export default class ReadingPage extends Component
   {
     this.load();
     document.addEventListener("keydown", this.onKeyDown)
-    this.interval = setInterval(() => {
-      this.scrollSentence();
-    }, 500);
+    // this.interval = setInterval(() => {
+    //   this.scrollSentence();
+    // }, 500);
   }
 
 
@@ -227,6 +229,7 @@ export default class ReadingPage extends Component
   }
 
   closeWordModal(){
+    console.log("--closeWordModal")
     this.setState({to_check_word:null,to_check_word: null})
   }
 
@@ -240,11 +243,9 @@ export default class ReadingPage extends Component
     console.log(url);
     axios.post(url, params).then((res) => {
       console.log("res", res);
-      this.load();
+      this.getCollectWordsIds();
     }).catch(e => {
       console.log(e);
-      this.setState({loading: false});
-      this.load();
     })
   }
 
@@ -257,11 +258,9 @@ export default class ReadingPage extends Component
     console.log(url);
     axios.post(url, params).then((res) => {
       console.log("res", res);
-      this.load();
+      this.getCollectWordsIds();
     }).catch(e => {
       console.log(e);
-      this.setState({loading: false});
-      this.load();
     })
   }
 
@@ -351,7 +350,7 @@ export default class ReadingPage extends Component
       {
         showViewMean = <div style={{textAlign: "left", marginTop: "10px",minHeight:"100px", position: "relative",padding:"20px"}}>
 
-          <div style={{position: "absolute", top: 10, right: 30}}
+          <div style={{position: "absolute", top: 40, right: 30}}
                onClick={() => {
                  if (collected == false)
                  {
@@ -362,17 +361,20 @@ export default class ReadingPage extends Component
                  }
                }}>
 
-            {collected ? "remove" : "collect"}
+             <img width={18} src={collected ? likePng : notlikePng} />
           </div>
 
           <div style={{fontSize:"18px",fontWeight:"bold"}}>
             <div style={{display:"inline-block",verticalAlign:"top",width:"60%"}}> {this.state.to_check_word.text}</div>
-
           </div>
           <div className={css.middleText}>
-            {word.accent}
-            <audio ref={"audio_en"} src={word.audio_en} />
-            <span onClick={()=>{this.refs["audio_en"].play();}}>play</span>
+            <div className={[css.box]}>{word.accent}</div>
+            <div  className={[css.box]} style={{marginLeft:"20px"}}>
+              <audio ref={"audio_en"} src={word.audio_en} />
+              <div onClick={()=>{this.refs["audio_en"].play();}}>
+                <img src={speakerPng} width={18}></img>
+              </div>
+            </div>
           </div>
           <div className={css.middleText}>{word.mean}</div>
           <div>
@@ -387,16 +389,18 @@ export default class ReadingPage extends Component
       let top = ref.offsetTop+20;
       let left = ref.offsetLeft - boxWidth/2;
       if(left < 0) left = 0;
-      console.log("base.width()",base.width())
-      console.log("left",left);
+      //console.log("base.width()",base.width())
+      //console.log("left",left);
 
       if(left+boxWidth+2 >= base.width()){
         left = base.width()-boxWidth;
       }
 
-      wordModal = <div style={{position:"absolute",top:top,left:left, minHeight:"100px",width:boxWidth,zIndex:100,background:"white"}} onClick={this.closeWordModal}>
-        <div style={{position:"absolute",top:0,right:0}} onClick={this.closeWordModal}>
-          <img   src={crossPng} width={18} style={{margin:"4px"}}></img>
+      wordModal = <div style={{position:"absolute",top:top,left:left, minHeight:"100px",width:boxWidth,zIndex:100,background:"white"}} >
+        <div style={{position:"absolute",top:2,right:0, textAlign:"center",width:"20px",height:"20px"}}
+             onClick={()=>{this.closeWordModal();}}
+        >
+          <img   src={crossPng} width={16} style={{}}></img>
         </div>
 
         {showViewMean}

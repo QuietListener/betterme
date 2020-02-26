@@ -211,12 +211,20 @@ export default class ReadingPage extends Component
 
   showMean(word){
     console.log(word);
-    this.setState({to_check_word:word})
+    var that = this;
+    axios.get(`${BaseHost}/reading/dict?word=${word.text}`).then((res) => {
+      console.log("res", res);
+      that.setState({loading: false,to_check_word_mean:res.data});
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false, to_check_word_mean:null});
+    });
 
+    this.setState({to_check_word:word})
   }
 
   closeWordModal(){
-    this.setState({to_check_word:null})
+    this.setState({to_check_word:null,to_check_word: null})
   }
 
 
@@ -327,7 +335,11 @@ export default class ReadingPage extends Component
 
     let wordModal = null;
     let to_check_word = this.state.to_check_word
+    let to_check_word_mean = this.state.to_check_word_mean ||{};
+
     if(to_check_word) {
+      let word = to_check_word_mean["word"] ||{};
+      console.log("word",word);
       let collected = collect_word_ids.indexOf(to_check_word.id) >= 0;
 
       wordModal = <CModal close={this.closeWordModal}>
@@ -344,6 +356,9 @@ export default class ReadingPage extends Component
             {collected?"remove":"collect"}
           </div>
           <div>{this.state.to_check_word.text}</div>
+          <div>{word.accent}</div>
+          <div>{word.mean}</div>
+          <div>{word.audio_en}</div>
           <div>
 
           </div>

@@ -126,7 +126,7 @@ export default class Comment extends Component
     let like_div = null;
 
     if(isMine == true){
-      deleteDiv =  <div  className={css.ibtn} style={{fontSize:"12px",backgroundColor:"#969ca4"}} onClick={()=>this.deleteComment(c.id)}>
+      deleteDiv =  <div  className={css.box} style={{fontSize:"12px"}} onClick={()=>this.deleteComment(c.id)}>
         <img src={crossPng} width={12}/>
       </div>;
     }
@@ -181,7 +181,7 @@ export default class Comment extends Component
            <textarea  style={{width:"100%",height:"100px"}} value={this.state.commentContent} ></textarea>
          </div>
          <div style={{textAlign:"right",marginRight:"2px",marginTop:"6px"}}>
-              <div className={css.ibtn} style={{margin:"4px",fontSize:"14px"}} onClick={this.submitComment}> submit</div>
+              <div className={css.ibtn} style={{margin:"4px",fontSize:"14px"}} onClick={this.submitComment}> comment </div>
          </div>
 
         </div>

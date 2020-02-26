@@ -10,6 +10,8 @@ import crossPng from "../../resource/imgs/cross.png"
 import speakerPng from "../../resource/imgs/speaker.png"
 import likePng from "../../resource/imgs/like.png"
 import notlikePng from "../../resource/imgs/notlike.png"
+import arrayLeftPng from "../../resource/imgs/array_left.png"
+import arrayRightPng from "../../resource/imgs/array_right.png"
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
@@ -350,7 +352,7 @@ export default class ReadingPage extends Component
       {
         showViewMean = <div style={{textAlign: "left", marginTop: "10px",minHeight:"100px", position: "relative",padding:"20px"}}>
 
-          <div style={{position: "absolute", top: 40, right: 30}}
+          <div style={{position: "absolute", top: 40, right: 4}}
                onClick={() => {
                  if (collected == false)
                  {
@@ -440,7 +442,7 @@ export default class ReadingPage extends Component
         </div>
 
 
-        <div style={{display: "block", height: "60px", overflow: "scroll",backgroundColor:"#f2f2f2",position:"fixed",bottom:0,width:"100%"}}>
+        <div style={{display: "block", height: "46px",boxShadow:"0px -2px 2px #e5e5e5", overflow: "scroll",backgroundColor:"#f2f2f2",position:"fixed",bottom:0,width:"100%"}}>
 
           <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
             Your browser does not support this audio format.
@@ -456,6 +458,7 @@ export default class ReadingPage extends Component
 
 
               <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"10px"}} onClick={()=>{this.playSpan(-5)}}>
+                <img width={12} src={arrayLeftPng}/>
                 5s
               </div>
 
@@ -467,6 +470,7 @@ export default class ReadingPage extends Component
 
               <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"10px"}} onClick={()=>{this.playSpan(5)}}>
                 5s
+                <img width={12} src={arrayRightPng}/>
               </div>
             </div>
 

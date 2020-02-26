@@ -4,7 +4,8 @@ import css from "./css/ireading.css"
 import {axios} from "../base.js"
 import CSeperator from "./components/c_sperator.js"
 import CArticle from "./components/c_article.js"
-
+import readedPng from "../../resource/imgs/readed.png"
+import levelPng from "../../resource/imgs/level.png"
 
 const BaseHost = base.BaseHostIreading();
 
@@ -68,11 +69,27 @@ export default class ArticleGroup extends Component
       return <CArticle a={c} finished={true} />
     });
 
+    let img = "https://imagev2.xmcdn.com/group60/M0A/3F/E4/wKgLb1zWy-miCIJLAAAow7cctg8198.jpg!op_type=3&columns=144&rows=144&magick=webp";
     return (
       <div style={{textAlign:"left"}}>
-        <div style={{padding:"5px" ,boxShadow:"0px 2px 2px #e5e5e5",paddingBottom:"6px"}}>
-          <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
-          <div className={css.smallText} style={{color:"black",marginTop:"4px",fontWeight:"bold"}} >{article.author}</div>
+        <div style={{padding:"4px"}}>
+            <div className={css.box}>
+              <img src={img}  style={{width:"70px",borderRadius:"4px"}}/>
+            </div>
+          <div className={css.box} style={{width:base.width()-10-70,paddingLeft:"6px"}}>
+            <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
+            <div className={css.smallText} style={{color:"black",marginTop:"4px"}} >{article.author}</div>
+
+            <div className={css.middleText} style={{fontSize:"14px",paddingBottom:"4px"}} >
+              <div className={[css.box]}>  {article.level||1}<img width={12} src={levelPng} /> </div>
+              <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div style={{boxShadow:"0px 2px 2px #e5e5e5",padding:"4px"}}>
           <div className={css.smallText}style={{color:"#969ca4",marginTop:"10px"}}>{article.origin_text}</div>
         </div>
 

@@ -6,6 +6,7 @@ import * as base from "../base.js"
 import playPng from "../../resource/imgs/play.png";
 import stopPng from "../../resource/imgs/stop.png";
 import CLoading from "./components/c_loading"
+import crossPng from "../../resource/imgs/cross.png"
 import CModal from "./components/c_modal"
 
 const BaseHost = base.BaseHostIreading();
@@ -212,12 +213,14 @@ export default class ReadingPage extends Component
   showMean(word){
     console.log(word);
     var that = this;
+    that.setState({loadingMean: true, to_check_word_mean: null});
+
     axios.get(`${BaseHost}/reading/dict?word=${word.text}`).then((res) => {
       console.log("res", res);
-      that.setState({loading: false,to_check_word_mean:res.data});
+      that.setState({loadingMean: false,to_check_word_mean:res.data});
     }).catch(e => {
       console.log(e);
-      this.setState({loading: false, to_check_word_mean:null});
+      this.setState({loadingMean: false, to_check_word_mean:null});
     });
 
     this.setState({to_check_word:word})
@@ -314,7 +317,7 @@ export default class ReadingPage extends Component
           color = "white";
         }
 
-        return <div style={{display: "inline-block", padding: "2px",margin:"2px",fontSize:"14px",backgroundColor:backgroundColor,color:color}}
+        return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: "2px",margin:"2px",fontSize:"14px",backgroundColor:backgroundColor,color:color}}
                     onClick={()=>this.showMean(w)}
         >{w.text}</div>
       })
@@ -336,34 +339,68 @@ export default class ReadingPage extends Component
     let wordModal = null;
     let to_check_word = this.state.to_check_word
     let to_check_word_mean = this.state.to_check_word_mean ||{};
-
+    let loadingMean = this.state.loadingMean;
     if(to_check_word) {
       let word = to_check_word_mean["word"] ||{};
       console.log("word",word);
       let collected = collect_word_ids.indexOf(to_check_word.id) >= 0;
+      let showViewMean = null;
+      if(loadingMean == true){
+        showViewMean = <CLoading/>
+      }else
+      {
+        showViewMean = <div style={{textAlign: "left", marginTop: "10px",minHeight:"100px", position: "relative",padding:"20px"}}>
 
-      wordModal = <CModal close={this.closeWordModal}>
-        <div style={{textAlign:"left",marginTop:"30px",position:"relative"}}>
-          <div style={{position:"absolute",top:10,right:30}}
-               onClick={()=>{
-                  if(collected == false){
-                    this.collectWord(to_check_word)
-                  }else{
-                    this.unCollectWord(to_check_word)
-                  }
+          <div style={{position: "absolute", top: 10, right: 30}}
+               onClick={() => {
+                 if (collected == false)
+                 {
+                   this.collectWord(to_check_word)
+                 } else
+                 {
+                   this.unCollectWord(to_check_word)
+                 }
                }}>
 
-            {collected?"remove":"collect"}
+            {collected ? "remove" : "collect"}
           </div>
-          <div>{this.state.to_check_word.text}</div>
-          <div>{word.accent}</div>
-          <div>{word.mean}</div>
-          <div>{word.audio_en}</div>
-          <div>
+
+          <div style={{fontSize:"18px",fontWeight:"bold"}}>
+            <div style={{display:"inline-block",verticalAlign:"top",width:"60%"}}> {this.state.to_check_word.text}</div>
 
           </div>
+          <div className={css.middleText}>
+            {word.accent}
+            <audio ref={"audio_en"} src={word.audio_en} />
+            <span onClick={()=>{this.refs["audio_en"].play();}}>play</span>
           </div>
-      </CModal>
+          <div className={css.middleText}>{word.mean}</div>
+          <div>
+          </div>
+        </div>;
+      }
+
+      let refName = `word_${to_check_word.id}`;
+      let ref = this.refs[refName];
+
+      let boxWidth = 260;
+      let top = ref.offsetTop+20;
+      let left = ref.offsetLeft - boxWidth/2;
+      if(left < 0) left = 0;
+      console.log("base.width()",base.width())
+      console.log("left",left);
+
+      if(left+boxWidth+2 >= base.width()){
+        left = base.width()-boxWidth;
+      }
+
+      wordModal = <div style={{position:"absolute",top:top,left:left, minHeight:"100px",width:boxWidth,zIndex:100,background:"white"}} onClick={this.closeWordModal}>
+        <div style={{position:"absolute",top:0,right:0}} onClick={this.closeWordModal}>
+          <img   src={crossPng} width={18} style={{margin:"4px"}}></img>
+        </div>
+
+        {showViewMean}
+      </div>
     }
 
 

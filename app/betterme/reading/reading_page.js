@@ -12,6 +12,7 @@ import likePng from "../../resource/imgs/like.png"
 import notlikePng from "../../resource/imgs/notlike.png"
 import arrayLeftPng from "../../resource/imgs/array_left.png"
 import arrayRightPng from "../../resource/imgs/array_right.png"
+import ok1Png from "../../resource/imgs/ok1.png"
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
@@ -39,7 +40,8 @@ export default class ReadingPage extends Component
       audio_splits: [],
       playingSentence: -1,//正在播放哪个,
       progress: 0.0,
-      playState: Stopped
+      playState: Stopped,
+      startAt:new Date()
     };
 
     this.load = this.load.bind(this);
@@ -177,6 +179,15 @@ export default class ReadingPage extends Component
 
   finish()
   {
+
+    let now = new Date();
+    let span = now.getMilliseconds() - this.state.startAt.getMilliseconds();
+    if(span < 30*1000){
+
+      alert("you read too fast!")
+      return;
+    }
+
     var params = {
       article_id: this.state.id,
     }
@@ -430,7 +441,7 @@ export default class ReadingPage extends Component
                  style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"green":''}`,color:`${finished?"white":''}`}}
                 onClick={this.finish}
             >
-              {finished ? "finished" : "finish"}
+              {finished ? <img width={24} src={ok1Png}/> : "finish"}
             </div>
           </div>
 

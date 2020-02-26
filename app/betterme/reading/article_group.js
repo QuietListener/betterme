@@ -70,13 +70,13 @@ export default class ArticleGroup extends Component
 
     return (
       <div style={{textAlign:"left"}}>
-        <div style={{padding:"5px"}}>
-          <div className={css.bigText} style={{}}>{article.title}</div>
-          <div className={css.smallText} style={{color:"black",marginTop:"6px"}} >{article.author}</div>
-          <div className={css.smallText}style={{color:"#969ca4 "}}>{article.origin_text}</div>
+        <div style={{padding:"5px" ,boxShadow:"0px 2px 2px #e5e5e5",paddingBottom:"6px"}}>
+          <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
+          <div className={css.smallText} style={{color:"black",marginTop:"4px",fontWeight:"bold"}} >{article.author}</div>
+          <div className={css.smallText}style={{color:"#969ca4",marginTop:"10px"}}>{article.origin_text}</div>
         </div>
 
-        <CSeperator />
+
         <div style={{marginTop:"8px",padding:"8px"}}>
           {children_divs}
         </div>

@@ -2,6 +2,9 @@ import * as base from "../../base.js"
 import React, {Component} from 'react';
 import Moment from "moment"
 import css from "../css/ireading.css"
+import readedPng from "../../../resource/imgs/readed.png"
+import levelPng from "../../../resource/imgs/level.png"
+
 
 export default class CArticle extends Component
 {
@@ -31,7 +34,7 @@ export default class CArticle extends Component
     let height = width + 50;
 
     if(finished){
-      backgroundColor = "#5eca59 "
+      backgroundColor = "#5eca50 "
       color="white";
     }
     return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "2px", margin: "4px",width:`96%`,height:`76px`}}
@@ -49,7 +52,8 @@ export default class CArticle extends Component
 
 
         <div className={css.middleText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          level:{a.level}   {100} listen
+          <div className={[css.box]}>  {a.level||1}<img width={12} src={levelPng} /> </div>
+          <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
         </div>
 
       </div>

@@ -132,6 +132,17 @@ export default class ReadingPage extends Component
   }
 
 
+  play(audio){
+    audio.play();//audio.play();// 这个就是播放
+    this.setState({playState:Playing})
+  }
+
+  pause(audio)
+  {
+    audio.pause();// 这个就是暂停
+    this.setState({playState: Stopped});
+  }
+
   troggle(audio)
   {
     if (audio !== null)
@@ -140,12 +151,10 @@ export default class ReadingPage extends Component
       //alert(audio.paused);
       if (audio.paused)
       {
-        audio.play();//audio.play();// 这个就是播放
-        this.setState({playState:Playing})
+        this.play(audio);
       } else
       {
-        audio.pause();// 这个就是暂停
-        this.setState({playState:Stopped});
+        this.pause(audio);
       }
     }
   }
@@ -239,6 +248,8 @@ export default class ReadingPage extends Component
     });
 
     this.setState({to_check_word:word})
+    var audio = this.refs.audioRef;
+    this.pause(audio);
   }
 
   closeWordModal(){
@@ -329,7 +340,14 @@ export default class ReadingPage extends Component
           color = "white";
         }
 
-        return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: "2px",margin:"2px",fontSize:"14px",backgroundColor:backgroundColor,color:color}}
+        let padding= 2;
+        let margin = 1;
+        if([".","?","!","\"",","].indexOf(w.text) >= 0){
+          padding = 0;
+          margin = 0;
+        }
+
+        return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: `${padding}px`,margin:`${margin}px`,fontSize:"14px",backgroundColor:backgroundColor,color:color,borderRadius:"2px"}}
 
                     onClick={(event)=>{
                       try
@@ -339,7 +357,9 @@ export default class ReadingPage extends Component
                       }catch(e){
                         console.error(e);
                       }
-                      this.showMean(w);}}
+                      this.showMean(w);
+
+                    }}
         >{w.text}</div>
       })
 
@@ -370,7 +390,7 @@ export default class ReadingPage extends Component
         showViewMean = <CLoading/>
       }else
       {
-        showViewMean = <div style={{textAlign: "left", marginTop: "10px",minHeight:"100px", position: "relative",padding:"20px"}}>
+        showViewMean = <div style={{textAlign: "left", marginTop: "4px",minHeight:"100px", position: "relative",padding:"4px"}}>
 
           <div style={{position: "absolute", top: 0, right: 4}}
                onClick={() => {
@@ -424,13 +444,14 @@ export default class ReadingPage extends Component
     }
 
 
+    var audio = this.refs.audioRef;
+
     return (
 
       <div>
         {wordModal}
 
         <div  onClick={(event)=>{
-          event.nativeEvent.stopImmediatePropagation();
           this.closeWordModal();
         }}
           style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px"}}  ref={"sentenceScrollDiv"}>
@@ -481,7 +502,7 @@ export default class ReadingPage extends Component
               </div>
 
               <div style={{width:"30px",height:"30px",borderRadius:"15px",position:"relative",padding:"5px",margin:"auto",display:"inline-block",verticalAlign:"top"}}
-                  onClick={() => {var audio = this.refs.audioRef;this.troggle(audio);}}>
+                  onClick={() => {this.troggle(audio);}}>
                 <img src={this.state.playState == Playing ? stopPng : playPng} style={{ width: "20px"}}/>
               </div>
 

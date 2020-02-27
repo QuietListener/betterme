@@ -65,9 +65,9 @@ export default class ReadingPage extends Component
   {
     this.load();
     document.addEventListener("keydown", this.onKeyDown)
-    // this.interval = setInterval(() => {
-    //   this.scrollSentence();
-    // }, 500);
+    this.interval = setInterval(() => {
+      this.scrollSentence();
+    }, 500);
   }
 
 
@@ -330,7 +330,16 @@ export default class ReadingPage extends Component
         }
 
         return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: "2px",margin:"2px",fontSize:"14px",backgroundColor:backgroundColor,color:color}}
-                    onClick={()=>this.showMean(w)}
+
+                    onClick={(event)=>{
+                      try
+                      {
+                        event.stopPropagation();
+                        event.nativeEvent.stopImmediatePropagation();
+                      }catch(e){
+                        console.error(e);
+                      }
+                      this.showMean(w);}}
         >{w.text}</div>
       })
 
@@ -342,7 +351,7 @@ export default class ReadingPage extends Component
       return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`} ref={`s_s_${s.id}`}
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
-        <div style={{display: "inline-block"}}></div>
+        <div style={{display: "inline-block"}} ></div>
       </div>
     })
 
@@ -363,7 +372,7 @@ export default class ReadingPage extends Component
       {
         showViewMean = <div style={{textAlign: "left", marginTop: "10px",minHeight:"100px", position: "relative",padding:"20px"}}>
 
-          <div style={{position: "absolute", top: 40, right: 4}}
+          <div style={{position: "absolute", top: 0, right: 4}}
                onClick={() => {
                  if (collected == false)
                  {
@@ -410,12 +419,6 @@ export default class ReadingPage extends Component
       }
 
       wordModal = <div style={{position:"absolute",top:top,left:left, minHeight:"100px",width:boxWidth,zIndex:100,background:"white"}} >
-        <div style={{position:"absolute",top:2,right:0, textAlign:"center",width:"20px",height:"20px"}}
-             onClick={()=>{this.closeWordModal();}}
-        >
-          <img   src={crossPng} width={16} style={{}}></img>
-        </div>
-
         {showViewMean}
       </div>
     }
@@ -426,7 +429,11 @@ export default class ReadingPage extends Component
       <div>
         {wordModal}
 
-        <div style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px"}}  ref={"sentenceScrollDiv"}>
+        <div  onClick={(event)=>{
+          event.nativeEvent.stopImmediatePropagation();
+          this.closeWordModal();
+        }}
+          style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px"}}  ref={"sentenceScrollDiv"}>
           <div style={{fontSize:"18px",fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
             {article.title}
           </div>

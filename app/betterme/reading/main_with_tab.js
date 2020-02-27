@@ -68,7 +68,7 @@ export default class MainPageWithTab extends Component
       showView = <ArticleList title={"Finished articles"}/>
     }
 
-    var hilighted = { backgroundColor: "yellow",};
+    var hilighted = {};
     var normal = { backgroundColor: "white"};
     var tabsView = [];
    for( let i = 0; i < this.tabFlags.length ; i++){
@@ -91,7 +91,7 @@ export default class MainPageWithTab extends Component
     return (
 
       <div style={{}}>
-        <div>
+        <div style={{paddingBottom:"70px"}}>
           {showView}
         </div>
 
@@ -117,7 +117,8 @@ const inner_style = {
     fontSize: "10px",
     textAlign: "center",
     width: "33.2%",
-    backgroundColor:"red"
+    backgroundColor:"white",
+    boxShadow:"0px -2px 2px #e5e5e5"
   },
 
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},

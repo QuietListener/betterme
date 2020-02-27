@@ -43,3 +43,13 @@
     font-size: 18px;
     font-weight: bold;
 }
+
+.color_blue{
+    color:rgb(71, 175, 255);
+}
+.color_green{
+    color:rgb(94, 202, 80);
+}
+.background_green{
+    background-color: rgb(94, 202, 80);
+}

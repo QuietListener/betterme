@@ -68,7 +68,7 @@ export default class ReadingMinePage extends Component
     return (
       <div style={{padding: "0px"}}>
 
-        <div style={{backgroundColor: 'white'}}>
+        <div className={[css.background_green]}>
           <div className={css.bigText} style={{paddingTop:"20px",paddingBottom:"20px",paddingLeft:"8px",border:"1px solid #e9e4d9"}}>
             {user.name}
           </div>
@@ -104,9 +104,9 @@ export default class ReadingMinePage extends Component
 }
 
 const inner_style = {
-  statistics_item: {width: "33.333%", display: "inline-block",border:"1px solid #e9e4d9"},
+  statistics_item: {width: "33.333%", display: "inline-block",border:"1px solid #e9e4d9",padding:"8px"},
   statistics_count:{fontSize:"20px",fontWeight:"bold",textAlign:"center"},
-  statistics_title:{fontSize:"12px",fontWeight:"normal",textAlign:"center",padding:"4px,0,4px 0"},
+  statistics_title:{fontSize:"12px",color:"#f2f2f2", fontWeight:"normal",textAlign:"center",padding:"4px,0,4px 0"},
 
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},

@@ -11,9 +11,11 @@ import MinePage from "./mine_page.js"
 import ArticleList from "./articles_list.js"
 
 import articlePng from "../../resource/imgs/article.png";
-import userPng from "../../resource/imgs/user.png";
-import articleOkPng from "../../resource/imgs/ok.png";
-
+import articlePngHilight from "../../resource/imgs/article_hilight.png";
+import userPng from "../../resource/imgs/user_.png";
+import userPngHilight from "../../resource/imgs/user_hilight.png";
+import finishedPng from "../../resource/imgs/finished_.png";
+import finishedPngHilight from "../../resource/imgs/finished_hilight.png";
 
 const BaseHost = base.BaseHostIreading();
 
@@ -33,9 +35,9 @@ export default class MainPageWithTab extends Component
     super(props);
 
     this.tabMap = {}
-    this.tabMap[FlagArticle] = articlePng;
-    this.tabMap[FlagArticleOk] = articleOkPng;
-    this.tabMap[FlagMine] = userPng;
+    this.tabMap[FlagArticle] = {normal:articlePng,hilight:articlePngHilight};
+    this.tabMap[FlagArticleOk] = {normal:finishedPng,hilight:finishedPngHilight};
+    this.tabMap[FlagMine] =  {normal:userPng,hilight:userPngHilight};;
     this.tabFlags = [FlagArticle,FlagArticleOk,FlagMine]
 
     this.state = {
@@ -69,19 +71,19 @@ export default class MainPageWithTab extends Component
     }
 
     var hilighted = {};
-    var normal = { backgroundColor: "white"};
     var tabsView = [];
    for( let i = 0; i < this.tabFlags.length ; i++){
      let key =  this.tabFlags[i];
      let style = Object.assign(inner_style.tabItem,{borderRight: "0px"});
+     let hilight = false;
      if(key == this.state.flag){
-       style = Object.assign(style, hilighted);
+       hilight = true;
      }
 
      let tab = <div style={style}
           onClick={()=>this.choose(key)}>
 
-       <img src={this.tabMap[key]} style={{ width: "20px"}}/>
+       <img src={hilight? this.tabMap[key]["hilight"]: this.tabMap[key]["normal"]} style={{ width: "20px"}}/>
 
      </div>
 

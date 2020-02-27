@@ -31,23 +31,29 @@ export default class CArticle extends Component
     let backgroundColor = "";
     let color= "black";
     let width = this.props.width;
-    let height = width + 50;
+    //let height = width + 50;
 
     if(finished){
       backgroundColor = "#5eca50 "
       color="white";
     }
-    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "2px", margin: "4px",width:`96%`,height:`76px`}}
+
+    let imgWidth = 0.2*base.width();
+    let infoWidth = base.width()-imgWidth-40;
+    let height =  imgWidth*4/3;
+
+    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px", margin: "4px",width:`100%`,height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
-      <div  style={{textAlign:"left",display:"inline-block",width:"70px",verticalAlign:"top"}}>
-        <img src={img}  style={{width:"70px",borderRadius:"4px"}}/>
+      <div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>
+        <img src={img}  style={{width:`${imgWidth}px`,height:`${height}px`,borderRadius:"4px"}}/>
       </div>
 
-      <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:"60%",verticalAlign:"top",position:"relative",height:"70px"}}>
+      <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
-        <div className={css.middleText} style={{overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px",height:"45px"}} >
-          {a.title}
+        <div className={css.middleText} style={{overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
+          <p className={css.middleText} style={{fontWeight:"bold"}}>{a.title}</p>
+          <p className={css.middleText}>{a.author}</p>
         </div>
 
 

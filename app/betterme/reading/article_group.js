@@ -69,23 +69,27 @@ export default class ArticleGroup extends Component
       return <CArticle a={c} finished={true} />
     });
 
-    let img = "https://imagev2.xmcdn.com/group60/M0A/3F/E4/wKgLb1zWy-miCIJLAAAow7cctg8198.jpg!op_type=3&columns=144&rows=144&magick=webp";
+    let img = "https://imagev2.xmcdn.com/group60/M0A/3F/E4/wKgLb1zWy-miCIJLAAAow7cctg8198.jpg!op_type=3&columns=144&rows=144&magick=webp"
+
+    let imgWidth = base.width()*0.2;
+    let infoWidth = base.width() - imgWidth - 10;
+    let height = imgWidth*4/3;
     return (
       <div style={{textAlign:"left"}}>
         <div style={{padding:"4px"}}>
-            <div className={css.box}>
-              <img src={img}  style={{width:"70px",borderRadius:"4px"}}/>
-            </div>
-          <div className={css.box} style={{width:base.width()-10-70,paddingLeft:"6px"}}>
-            <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
-            <div className={css.smallText} style={{color:"black",marginTop:"4px"}} >{article.author}</div>
 
-            <div className={css.middleText} style={{fontSize:"14px",paddingBottom:"4px"}} >
-              <div className={[css.box]}>  {article.level||1}<img width={12} src={levelPng} /> </div>
-              <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
-            </div>
+            <img src={img}  className={css.box} style={{width:`${imgWidth}px`,height:`${height}px`,borderRadius:"4px"}}/>
 
-          </div>
+            <div className={css.box} style={{width:`${infoWidth}px`,height:`${height}px`,paddingLeft:"2px",position:"relative"}}>
+              <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
+              <div className={css.smallText} style={{color:"black",marginTop:"4px"}} >{article.author}</div>
+
+              <div className={css.middleText} style={{fontSize:"14px",paddingBottom:"4px",position:"absolute",bottom:0}} >
+                <div className={[css.box]}>  {article.level||1}<img width={12} src={levelPng} /> </div>
+                <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
+              </div>
+
+            </div>
 
         </div>
 

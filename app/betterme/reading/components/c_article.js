@@ -39,6 +39,9 @@ export default class CArticle extends Component
     }
 
     let imgWidth = 0.2*base.width();
+    if(imgWidth > 70){
+      imgWidth = 70;
+    }
     let infoWidth = base.width()-imgWidth-40;
     let height =  imgWidth*4/3;
 

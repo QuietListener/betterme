@@ -237,6 +237,10 @@ export default class ReadingPage extends Component
   showMean(word){
     console.log(word);
     var that = this;
+    if(this.state.to_check_word_mean != null){
+      this.setState({loadingMean: false,to_check_word_mean:null});
+    }
+
     that.setState({loadingMean: true, to_check_word_mean: null});
 
     axios.get(`${BaseHost}/reading/dict?word=${word.text}`).then((res) => {

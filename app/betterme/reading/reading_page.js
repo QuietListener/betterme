@@ -239,6 +239,7 @@ export default class ReadingPage extends Component
     var that = this;
     if(this.state.to_check_word_mean != null){
       this.setState({loadingMean: false,to_check_word_mean:null});
+      return;
     }
 
     that.setState({loadingMean: true, to_check_word_mean: null});

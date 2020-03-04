@@ -13,6 +13,7 @@ import notlikePng from "../../resource/imgs/notlike.png"
 import arrayLeftPng from "../../resource/imgs/array_left.png"
 import arrayRightPng from "../../resource/imgs/array_right.png"
 import ok1Png from "../../resource/imgs/ok1.png"
+import CToast from "./components/c_toast";
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
@@ -41,7 +42,8 @@ export default class ReadingPage extends Component
       playingSentence: -1,//正在播放哪个,
       progress: 0.0,
       playState: Stopped,
-      startAt:new Date()
+      startAt:new Date(),
+      showModelTooFast:false
     };
 
     this.load = this.load.bind(this);
@@ -54,6 +56,8 @@ export default class ReadingPage extends Component
     this.collectWord = this.collectWord.bind(this);
     this.unCollectWord = this.unCollectWord.bind(this);
     this.getCollectWordsIds = this.getCollectWordsIds.bind(this);
+    this.showTooFastModal = this.showTooFastModal.bind(this);
+    this.hideTooFastModal = this.hideTooFastModal.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -186,14 +190,21 @@ export default class ReadingPage extends Component
     audio.play();
   }
 
+  showTooFastModal(){
+    this.setState({showModelTooFast:true});
+  }
+
+  hideTooFastModal(){
+    this.setState({showModelTooFast:false});
+  }
+
   finish()
   {
 
     let now = new Date();
     let span = now.getMilliseconds() - this.state.startAt.getMilliseconds();
     if(span < 30*1000){
-
-      alert("you read too fast!")
+      this.showTooFastModal();
       return;
     }
 
@@ -449,12 +460,17 @@ export default class ReadingPage extends Component
     }
 
 
+    var toastView = <CToast hide={this.hideTooFastModal}>
+      <div style={{color:"white"}}>你太快了吧</div>
+    </CToast>
+
     var audio = this.refs.audioRef;
 
     return (
 
       <div>
         {wordModal}
+        {this.state.showModelTooFast ? toastView:null}
 
         <div  onClick={(event)=>{
           this.closeWordModal();

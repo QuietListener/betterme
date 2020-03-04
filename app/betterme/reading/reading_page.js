@@ -42,10 +42,10 @@ export default class ReadingPage extends Component
       playingSentence: -1,//正在播放哪个,
       progress: 0.0,
       playState: Stopped,
-      startAt:new Date(),
       showModelTooFast:false
     };
 
+    this.startAt = new Date();
     this.load = this.load.bind(this);
     this.playAudio = this.playAudio.bind(this);
     this.scrollSentence = this.scrollSentence.bind(this);
@@ -202,8 +202,11 @@ export default class ReadingPage extends Component
   {
 
     let now = new Date();
-    let span = now.getMilliseconds() - this.state.startAt.getMilliseconds();
-    if(span < 30*1000){
+    let span = now.getTime() - this.startAt.getTime();
+    console.log(" this.startAt", this.startAt.getTime());
+    console.log(" now", now.getTime());
+    console.log("span:",span);
+    if(span < 20*1000){
       this.showTooFastModal();
       return;
     }

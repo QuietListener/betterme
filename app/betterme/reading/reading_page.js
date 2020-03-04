@@ -251,8 +251,8 @@ export default class ReadingPage extends Component
   showMean(word){
     console.log(word);
     var that = this;
-    if(this.state.to_check_word_mean != null){
-      this.setState({loadingMean: false,to_check_word_mean:null});
+    if(this.state.to_check_word_mean != null || this.state.to_check_word != null){
+      this.closeWordModal();
       return;
     }
 
@@ -273,7 +273,7 @@ export default class ReadingPage extends Component
 
   closeWordModal(){
     console.log("--closeWordModal")
-    this.setState({to_check_word:null,to_check_word: null})
+    this.setState({to_check_word:null,to_check_word_mean: null})
   }
 
 
@@ -464,7 +464,7 @@ export default class ReadingPage extends Component
 
 
     var toastView = <CToast hide={this.hideTooFastModal}>
-      <div style={{color:"white"}}>你太快了吧</div>
+      <div style={{color:"white"}}>you are too fast~</div>
     </CToast>
 
     var audio = this.refs.audioRef;

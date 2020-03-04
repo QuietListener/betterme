@@ -65,8 +65,11 @@ export default class ArticleGroup extends Component
     {
       return (null);
     }
+
+    var finished_article_ids = this.state.data.finished_article_ids || [];
     let children_divs = children.map(c=>{
-      return <CArticle a={c} finished={true} />
+      let finished = finished_article_ids.indexOf(c.id+"")
+      return <CArticle a={c} finished={finished} />
     });
 
     let img = "https://imagev2.xmcdn.com/group60/M0A/3F/E4/wKgLb1zWy-miCIJLAAAow7cctg8198.jpg!op_type=3&columns=144&rows=144&magick=webp"

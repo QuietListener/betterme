@@ -6,6 +6,8 @@ import {axios} from "../base.js"
 
 const BaseHost = base.BaseHostIreading();
 
+const SplitSentence = 1;
+const WordGroup = 2;
 
 export default class Article extends Component
 {
@@ -25,7 +27,8 @@ export default class Article extends Component
       start: -1,
       end: -1,
       which: "start",
-      audio_splits: []
+      audio_splits: [],
+      mode:WordGroup,
     };
 
     this.load = this.load.bind(this);
@@ -38,6 +41,7 @@ export default class Article extends Component
     this.removeAudioSplit = this.removeAudioSplit.bind(this);
     this.saveSplitAudio = this.saveSplitAudio.bind(this);
     this.playAudio = this.playAudio.bind(this);
+    this.troogle_word_group = this.troogle_word_group.bind(this);
 
     this.audioRef = new Object();
 
@@ -230,6 +234,19 @@ export default class Article extends Component
   }
 
 
+  troogle_word_group(word_group_id){
+    var id = this.state.id;
+    axios.get(`${BaseHost}/reading/troogle_phrase.json?article_id=${id}&id=${word_group_id}`).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      alert(e.message);
+      this.setState({loading: false});
+    })
+  }
+
+
   render()
   {
     var article = this.state.data.article || {};
@@ -350,8 +367,76 @@ export default class Article extends Component
       </div>
     })
 
+    let split_sentence_div =   <div>
+
+      {sentence_divs}
+
+      <div>
+        <div style={{
+          display: "inline-block",
+          margin: "10px"
+        }}>
+          句子Id:<input ref={"sId"}/>
+        </div>
+
+        <div style={{
+          display: "inline-block",
+          border: this.state.which == "start" ? "1px solid" : "0px",
+          margin: "10px"
+        }}
+             onClick={() => this.click("start")}>
+          start:{this.state.start}
+        </div>
+
+        <div
+          style={{display: "inline-block", border: this.state.which == "end" ? "1px solid" : "0px", margin: "10px"}}
+          onClick={() => this.click("end")}>
+          end:{this.state.end}
+        </div>
+
+        <div style={{
+          display: "inline-block",
+          border: "1px solid ",
+          background: "black",
+          padding: "2px",
+          color: "white"
+        }}
+             onClick={this.saveSentence}>
+          save
+        </div>
+
+    </div>
 
 
+    </div>
+
+
+
+
+    let unique = []
+    let word_group_items = word_groups.map(item=>{
+      if(unique.indexOf(item.text) >= 0)
+      {
+        return null;
+      }
+      else
+      {
+        unique.push(item.text);
+
+        let color = "black"
+        if(item.enabled == true || item.enabled == 1){
+          color = "red";
+        }
+
+        return <p onClick={()=>this.troogle_word_group(item.id)} style={{color:color}}>
+          {item.text} : {item.mean_cn}
+        </p>
+      }
+    });
+
+    let word_group_div=<div>
+      {word_group_items}
+    </div>
     return (
 
       <div style={{height:"100%"}}>
@@ -360,43 +445,8 @@ export default class Article extends Component
 
 
         <div style={inner_style.part}>
-          {sentence_divs}
 
-          <div>
-            <div style={{
-              display: "inline-block",
-              margin: "10px"
-            }}>
-              句子Id:<input ref={"sId"}/>
-            </div>
-
-            <div style={{
-              display: "inline-block",
-              border: this.state.which == "start" ? "1px solid" : "0px",
-              margin: "10px"
-            }}
-                 onClick={() => this.click("start")}>
-              start:{this.state.start}
-            </div>
-
-            <div
-              style={{display: "inline-block", border: this.state.which == "end" ? "1px solid" : "0px", margin: "10px"}}
-              onClick={() => this.click("end")}>
-              end:{this.state.end}
-            </div>
-
-            <div style={{
-              display: "inline-block",
-              border: "1px solid ",
-              background: "black",
-              padding: "2px",
-              color: "white"
-            }}
-                 onClick={this.saveSentence}>
-              save
-            </div>
-
-          </div>
+          {this.state.mode == SplitSentence ? split_sentence_div : word_group_div}
 
 
         </div>

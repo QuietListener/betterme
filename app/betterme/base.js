@@ -28,7 +28,7 @@ const headers ={
 }
 
 const UserAgent = "oniu_0.1/1.0.2";
-const HttpTimeout = 10000//毫秒
+const HttpTimeout = 18000//毫秒
 
 import axios_ from "axios"
 const instance = axios_.create({timeout: HttpTimeout,headers:headers});

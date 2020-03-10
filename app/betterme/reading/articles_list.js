@@ -82,7 +82,7 @@ export default class ArticlesList extends Component
       <div>
         <div className={css.bigText} style={{padding:"6px"}}>{this.props.title||""}</div>
         <CSeperator/>
-        <div style={{paddingTop:"4px"}}>
+        <div style={{}}>
           {articles_div}
         </div>
 

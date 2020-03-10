@@ -236,11 +236,21 @@ export default class Article extends Component
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
     var splits = this.state.data.splits || [];
+    var word_groups = this.state.data.word_groups || [];
     var end_word_orders = sentences.map(t=>t.end_word_order);
     var start_word_orders = sentences.map(t=>t.start_word_order);
     var maxOrder = -1;
 
 
+
+    let phase_map = {}
+    for(let i = 0; i < word_groups.length; i++){
+      let wg = word_groups[i];
+      let ids = wg.word_ids.split(",")
+      for(let j = 0; j < ids.length; j++){
+        phase_map[ids[j]] = wg;
+      }
+    }
 
     var splitsObjs = this.state.audio_splits.map(ss=>{return {point:ss};});
     var splits_ = splits.concat(splitsObjs);
@@ -319,6 +329,11 @@ export default class Article extends Component
     var words_divs = words.map(w => {
       let background = w.order <= maxOrder ? "green" : "black";
 
+      let border = ""
+      if(phase_map[w.id] != null) {
+        border="2px solid black";
+      }
+
       if(end_word_orders.indexOf(w.order) >=0){
         background="red";
       }else if(start_word_orders.indexOf(w.order) >= 0){
@@ -328,7 +343,7 @@ export default class Article extends Component
       //console.log(maxOrder + ":" + w.order + ":" + color);
 
       return <div
-        style={{display: "inline-block", margin: "2px", color:"white",background:background}}
+        style={{display: "inline-block", margin: "2px", color:"white",background:background,border:border}}
         onClick={() => this.choose(w.order)}>
         <div>{w.text}</div>
         <div>{w.order}</div>

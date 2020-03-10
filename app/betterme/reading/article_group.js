@@ -68,7 +68,7 @@ export default class ArticleGroup extends Component
 
     var finished_article_ids = this.state.data.finished_article_ids || [];
     let children_divs = children.map(c=>{
-      let finished = finished_article_ids.indexOf(c.id+"")
+      let finished = (finished_article_ids.indexOf(c.id+"") >= 0);
       return <CArticle a={c} finished={finished} />
     });
 

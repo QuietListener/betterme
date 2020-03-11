@@ -80,8 +80,8 @@ export default class ArticlesList extends Component
 
     return (
       <div>
-        <div className={css.smallText} style={{padding:"2px"}}>{this.props.title||""}</div>
-        <CSeperator/>
+        <div className={css.middleText} style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
+       
         <div style={{}}>
           {articles_div}
         </div>

@@ -28,6 +28,11 @@
 }
 
 .smallText{
+    color:black;
+    font-size: 12px;
+}
+
+.smallTextGray{
     color:#969ca4;
     font-size: 12px;
 }

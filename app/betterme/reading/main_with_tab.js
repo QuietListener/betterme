@@ -67,7 +67,7 @@ export default class MainPageWithTab extends Component
     }else if (flag == FlagMine){
       showView = <MinePage />
     }else{
-      showView = <ArticleList title={"Finished articles"}/>
+      showView = <ArticleList title={"finished articles"}/>
     }
 
     var hilighted = {};

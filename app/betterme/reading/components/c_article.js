@@ -60,7 +60,7 @@ export default class CArticle extends Component
         </div>
 
 
-        <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"16px",paddingBottom:"4px"}} >
+        <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"14px",paddingBottom:"4px"}} >
           <div className={[css.box]}>  {a.level||1}<img width={12} src={levelPng} /> </div>
           <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
         </div>

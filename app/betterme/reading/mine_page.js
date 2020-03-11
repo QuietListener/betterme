@@ -80,9 +80,14 @@ export default class ReadingMinePage extends Component
     return (
       <div style={{padding: "0px"}}>
 
-        <div className={[css.background_green]}>
+        <div>
           <div className={css.bigText}
-               style={{paddingTop: "20px", paddingBottom: "20px", paddingLeft: "8px", border: "1px solid #e9e4d9"}}>
+               style={{paddingTop: "20px", 
+                      paddingBottom: "20px",
+                      paddingLeft: "8px",
+                      border: "1px solid #e9e4d9",
+                      background: 'linear-gradient(to bottom, #5ECA50, #f2f2f2)'
+                      }}>
             {user.name}
 
             <div style={{position: "absolute", top: "6px", right: "6px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px"}}
@@ -119,7 +124,7 @@ export default class ReadingMinePage extends Component
         </div>
 
 
-        <div className={[css.background_green]} style={{textAlign:"center",width:"100%",margin:"6px",padding:"10px"}}
+        <div className={[css.background_green]} style={{textAlign:"center",width:"100%",margin:"0px",padding:"10px"}}
              onClick={()=>base.goto("/collected_words")}>
           collected words
           </div>  
@@ -133,7 +138,7 @@ const inner_style = {
   statistics_count: {fontSize: "20px", fontWeight: "bold", textAlign: "center"},
   statistics_title: {
     fontSize: "12px",
-    color: "#f2f2f2",
+    color: "black",
     fontWeight: "normal",
     textAlign: "center",
     padding: "4px,0,4px 0"

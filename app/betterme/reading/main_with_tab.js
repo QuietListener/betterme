@@ -92,8 +92,8 @@ export default class MainPageWithTab extends Component
 
     return (
 
-      <div style={{}}>
-        <div style={{paddingBottom:"70px"}}>
+      <div>
+        <div style={{paddingBottom:"70px",height:"98%"}}>
           {showView}
         </div>
 

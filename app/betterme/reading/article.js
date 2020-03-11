@@ -28,7 +28,8 @@ export default class Article extends Component
       end: -1,
       which: "start",
       audio_splits: [],
-      mode:WordGroup,
+      mode:SplitSentence,
+      troogle_ids:[]
     };
 
     this.load = this.load.bind(this);
@@ -42,6 +43,7 @@ export default class Article extends Component
     this.saveSplitAudio = this.saveSplitAudio.bind(this);
     this.playAudio = this.playAudio.bind(this);
     this.troogle_word_group = this.troogle_word_group.bind(this);
+    this.choose_word_group = this.choose_word_group.bind(this);
 
     this.audioRef = new Object();
 
@@ -233,18 +235,37 @@ export default class Article extends Component
 
   }
 
-
-  troogle_word_group(word_group_id){
+  troogle_word_group(){
     var id = this.state.id;
-    console.log("troogle_word_group:"+word_group_id);
-    axios.get(`${BaseHost}/reading/troogle_phrase.json?article_id=${id}&id=${word_group_id}`).then((res) => {
+    let troogle_ids = this.state.troogle_ids || [];
+    let word_group_ids =  troogle_ids.join(",");
+
+    axios.get(`${BaseHost}/reading/troogle_phrase.json?article_id=${id}&ids=${word_group_ids}`).then((res) => {
       console.log("res", res);
       this.load();
+      this.setState({troogle_ids:[]});
     }).catch(e => {
       console.log(e);
       alert(e.message);
       this.setState({loading: false});
     })
+  }
+
+
+  choose_word_group(word_group_id){
+    var id = this.state.id;
+    console.log("troogle_word_group:"+word_group_id);
+    let troogle_ids = this.state.troogle_ids || [];
+
+    let idx = troogle_ids.indexOf(word_group_id);
+
+    if(idx >= 0 ){
+        troogle_ids.splice(idx,1);
+    }else{
+      troogle_ids.push(word_group_id);
+    }
+   
+    this.setState({troogle_ids:troogle_ids});
   }
 
 
@@ -344,6 +365,8 @@ export default class Article extends Component
     })
 
 
+    let color=["red","green"]
+    let count_ = 0;
     var words_divs = words.map(w => {
       let border = w.order <= maxOrder ? "1px solid green" : "1px solid black";
 
@@ -370,9 +393,7 @@ export default class Article extends Component
     })
 
     let split_sentence_div =   <div>
-
       {sentence_divs}
-
       <div>
         <div style={{
           display: "inline-block",
@@ -408,14 +429,10 @@ export default class Article extends Component
         </div>
 
     </div>
-
-
     </div>
 
-
-
-
     let unique = []
+    let troogle_ids = this.state.troogle_ids || [];
     let word_group_items = word_groups.map(item=>{
       if(unique.indexOf(item.text) >= 0)
       {
@@ -430,18 +447,33 @@ export default class Article extends Component
           color = "red";
         }
 
-        return <p onClick={()=>this.troogle_word_group(item.id)} style={{color:color}}>
+        let border = ""
+        if(troogle_ids.indexOf(item.id) >= 0){
+          border = "1px solid"
+        }
+        return <p onClick={()=>this.choose_word_group(item.id)} style={{color:color,border:border}}>
           {item.text} : {item.mean_cn}
         </p>
       }
     });
 
     let word_group_div=<div>
+
+      <div onClick={this.troogle_word_group} style={{backgroundColor:"black",color:"white",padding:"4px",margin:"4px"}}>troogle</div>
       {word_group_items}
     </div>
-    return (
 
+
+   
+    return (
       <div style={{height:"100%"}}>
+
+      <div style={{position:"fixed",right:10,top:20,padding:"6px",backgroundColor:"black",color:"white"}}
+                                onClick={()=>{this.setState({mode: (this.state.mode == SplitSentence ? WordGroup: SplitSentence)})}}>
+            {this.state.mode == SplitSentence ? "s":"wg" }
+      </div>
+
+
       <div style={{display:"block",height:"80%",maxHeight:"440px",overflow:"scroll",marginBottom:"20px"}}>
         <div style={inner_style.part}>{words_divs}</div>
 

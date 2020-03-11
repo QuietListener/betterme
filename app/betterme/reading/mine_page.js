@@ -118,6 +118,11 @@ export default class ReadingMinePage extends Component
           }}/>
         </div>
 
+
+        <div className={css.shadowBox} style={{textAlign:"center",width:"100%",margin:"6px",padding:"10px",backgroundColor:"yellow"}}
+             onClick={()=>base.goto("/collected_words")}>
+          collected words
+          </div>  
       </div>
     );
   }

@@ -97,8 +97,6 @@ export default class MainPageWithTab extends Component
           {showView}
         </div>
 
-
-
         <div style={{position: "fixed", bottom: "0px", width: "100%", height: "40px",textAlign:"center"}}>
           {tabsView}
         </div>

@@ -80,13 +80,12 @@ export default class ReadingMinePage extends Component
     return (
       <div style={{padding: "0px"}}>
 
-        <div>
+        <div style={{background: 'linear-gradient(to bottom, #5ECA50, #f2f2f2)'}}>
           <div className={css.bigText}
                style={{paddingTop: "20px", 
                       paddingBottom: "20px",
                       paddingLeft: "8px",
-                      border: "1px solid #e9e4d9",
-                      background: 'linear-gradient(to bottom, #5ECA50, #f2f2f2)'
+                      border: "1px solid #e9e4d9"
                       }}>
             {user.name}
 

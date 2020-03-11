@@ -54,13 +54,13 @@ export default class CArticle extends Component
 
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
-        <div className={css.middleText} style={{overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          <p className={css.middleText} style={{fontWeight:"bold"}}>{a.title}</p>
-          <p className={css.middleText}>{a.author}</p>
+        <div className={css.smallText} style={{color:"black",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
+          <p className={css.smallText} style={{color:"black",fontWeight:"bold"}}>{a.title}</p>
+          <p className={css.smallText}>{a.author}</p>
         </div>
 
 
-        <div className={css.middleText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"16px",paddingBottom:"4px"}} >
+        <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"16px",paddingBottom:"4px"}} >
           <div className={[css.box]}>  {a.level||1}<img width={12} src={levelPng} /> </div>
           <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
         </div>

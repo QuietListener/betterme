@@ -49,13 +49,21 @@ export default class CollectedWords extends Component
 
   render()
   {
-    let words = this.state.data || [];
-
+  
+    var word_infos = {};
+    let collect_words = {}
+    if(this.state.data){
+      collect_words = this.state.data.collected_words || {};
+      word_infos = this.state.data.word_infos || {};
+    }
     let words_div = [];
-    for(let key in words){
-        let word = words[key];
-        let div_ = <div  style={{margin:"4px"}}>
-          {word.text}
+    for(let key in collect_words){
+        let word = collect_words[key];
+        let word_info = word_infos[key];
+
+        let div_ = <div  style={{margin:"4px",marginBottom:"8px"}}>
+          {word.text} <span className={css.smallText}>{word_info.accent} </span>
+          <p className={css.smallText}>{word_info.mean_cn.replace("[","").replace("]","")}</p>
         </div> 
         words_div.push(div_)
     }

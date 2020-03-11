@@ -334,12 +334,14 @@ export default class ReadingPage extends Component
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
     var splits_ = this.state.data.splits || [];
-    var collect_words = this.state.collect_words || [];
+    var collect_words = [];
+    var word_infos = [];
+    if(this.state.collect_words){
+      collect_words = this.state.collect_words.collected_words || {};
+      word_infos = this.state.collect_words.word_infos || {};
+    }
 
     var maxOrder = -1;
-
-
-
     var sentence_divs = sentences.map((s, index) => {
 
       let start = s.start_word_order;
@@ -403,7 +405,7 @@ export default class ReadingPage extends Component
     if(to_check_word) {
       let word = to_check_word_mean["word"] ||{};
       console.log("word",word);
-      let collected = (collect_words[to_check_word.text]!=null)
+      let collected = (collect_words[to_check_word.text] != null)
       let showViewMean = null;
       if(loadingMean == true){
         showViewMean = <CLoading/>

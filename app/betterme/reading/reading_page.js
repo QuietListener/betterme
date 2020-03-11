@@ -310,9 +310,9 @@ export default class ReadingPage extends Component
   getCollectWordsIds(){
 
     var that = this;
-    axios.get(`${BaseHost}/reading/get_collect_word_ids.json`).then((res) => {
+    axios.get(`${BaseHost}/reading/collected_words.json`).then((res) => {
       console.log("res", res);
-      that.setState({collect_word_ids: res.data.word_ids});
+      that.setState({collect_words: res.data.data});
       console.log(that.state);
       // that.load_plans(user.id)
       this.setState({loading: false});
@@ -334,7 +334,7 @@ export default class ReadingPage extends Component
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
     var splits_ = this.state.data.splits || [];
-    var collect_word_ids = this.state.collect_word_ids || [];
+    var collect_words = this.state.collect_words || [];
 
     var maxOrder = -1;
 
@@ -351,7 +351,7 @@ export default class ReadingPage extends Component
         return w.order >= start && w.order <= end;
       }).map(w => {
 
-        let collected = collect_word_ids.indexOf(w.id) >= 0;
+        let collected = (collect_words[w.text] != null)
         let backgroundColor = "";
         let color = "";
         if(collected){
@@ -403,7 +403,7 @@ export default class ReadingPage extends Component
     if(to_check_word) {
       let word = to_check_word_mean["word"] ||{};
       console.log("word",word);
-      let collected = collect_word_ids.indexOf(to_check_word.id) >= 0;
+      let collected = (collect_words[to_check_word.text]!=null)
       let showViewMean = null;
       if(loadingMean == true){
         showViewMean = <CLoading/>

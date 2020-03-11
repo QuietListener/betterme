@@ -236,6 +236,7 @@ export default class Article extends Component
 
   troogle_word_group(word_group_id){
     var id = this.state.id;
+    console.log("troogle_word_group:"+word_group_id);
     axios.get(`${BaseHost}/reading/troogle_phrase.json?article_id=${id}&id=${word_group_id}`).then((res) => {
       console.log("res", res);
       this.load();
@@ -344,23 +345,24 @@ export default class Article extends Component
 
 
     var words_divs = words.map(w => {
-      let background = w.order <= maxOrder ? "green" : "black";
+      let border = w.order <= maxOrder ? "1px solid green" : "1px solid black";
 
-      let border = ""
+      let color = "black"
+      let background = ""
       if(phase_map[w.id] != null) {
-        border="2px solid black";
+        background="red";
+        color="white"
       }
 
       if(end_word_orders.indexOf(w.order) >=0){
-        background="red";
+        border="3px solid yellow";
       }else if(start_word_orders.indexOf(w.order) >= 0){
-        background="blue";
+        border="3px solid blue";
       }
 
       //console.log(maxOrder + ":" + w.order + ":" + color);
-
       return <div
-        style={{display: "inline-block", margin: "2px", color:"white",background:background,border:border}}
+        style={{ display: "inline-block", margin: "2px", color:color,background:background,border:border}}
         onClick={() => this.choose(w.order)}>
         <div>{w.text}</div>
         <div>{w.order}</div>

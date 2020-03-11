@@ -373,7 +373,12 @@ export default class Article extends Component
       let color = "black"
       let background = ""
       if(phase_map[w.id] != null) {
-        background="red";
+        if(phase_map[w.id].enabled == true){
+          background="red";
+        }else{
+          background="gray"
+        }
+        
         color="white"
       }
 

@@ -83,7 +83,7 @@ export default class MainPageWithTab extends Component
      let tab = <div style={style}
           onClick={()=>this.choose(key)}>
 
-       <img src={hilight? this.tabMap[key]["hilight"]: this.tabMap[key]["normal"]} style={{ width: "20px"}}/>
+       <img src={hilight? this.tabMap[key]["hilight"]: this.tabMap[key]["normal"]} height={20} style={{ height: "20px"}}/>
 
      </div>
 
@@ -97,7 +97,7 @@ export default class MainPageWithTab extends Component
           {showView}
         </div>
 
-        <div style={{position: "fixed", bottom: "0px", width: "100%", height: "40px",textAlign:"center"}}>
+        <div style={{position: "fixed", bottom: "0px", width: "100%", height: "50px",textAlign:"center"}}>
           {tabsView}
         </div>
       </div>
@@ -111,8 +111,8 @@ const inner_style = {
   statistics_title: {fontSize: "12px", fontWeight: "normal", textAlign: "center", padding: "4px,0,4px 0"},
   tabItem: {
     display: "inline-block",
-    height: "40px",
-    paddingTop: "10px",
+    height: "50px",
+    paddingTop: "15px",
     verticalAlign: "top",
     fontSize: "10px",
     textAlign: "center",

@@ -40,12 +40,14 @@ export default class ArticlesChoosePage extends Component
     let choosedTagIds = this.state.choosedTagIds  || [];
 
     let index = choosedTagIds.indexOf(id);
-    if( index < 0){
-        choosedTagIds = [];
-        choosedTagIds.push(id);
-    }else{
-        choosedTagIds.splice(index,1);
-    }
+    // if( index < 0){
+    //     choosedTagIds = [];
+    //     choosedTagIds.push(id);
+    // }else{
+    //     choosedTagIds.splice(index,1);
+    // }
+
+    choosedTagIds = [id];
 
     this.setState({choosedTagIds:choosedTagIds})
     this.load();
@@ -102,14 +104,15 @@ export default class ArticlesChoosePage extends Component
 
     var tags_div = all_tags.map(t=>{
 
-      let backgroundColor = "white";
       let color ="black";
+      let fontWeight = "";
+      let borderBottom = ""
       if(choosedTagIds.indexOf(t.id) >= 0){
-        backgroundColor = "#5eca59";
-        color = "white";
+        borderBottom = "2px solid";
+        fontWeight = "bold"
       }
 
-      return <div className={css.ibtn} style={{display:"inline-block",fontWeight:"bold",borderRadius:"0px",margin:"2px",backgroundColor:backgroundColor,color:color,borderRadius:"4px"}}
+      return <div  style={{display:"inline-block",fontSize:"12px",marginRight:"6px",fontWeight:"bold",borderRadius:"0px",margin:"2px",borderBottom:borderBottom,fontWeight:fontWeight}}
                   onClick={()=>this.toggleTag(t.id)}
       >
         {t.name}

@@ -85,7 +85,7 @@ export default class ReadingMinePage extends Component
                style={{paddingTop: "20px", paddingBottom: "20px", paddingLeft: "8px", border: "1px solid #e9e4d9"}}>
             {user.name}
 
-            <div style={{position: "absolute", top: "4px", right: "4px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px"}}
+            <div style={{position: "absolute", top: "6px", right: "6px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px"}}
                  onClick={() => {
                    this.logout()
                  }}
@@ -119,7 +119,7 @@ export default class ReadingMinePage extends Component
         </div>
 
 
-        <div className={css.shadowBox} style={{textAlign:"center",width:"100%",margin:"6px",padding:"10px",backgroundColor:"yellow"}}
+        <div className={[css.background_green]} style={{textAlign:"center",width:"100%",margin:"6px",padding:"10px"}}
              onClick={()=>base.goto("/collected_words")}>
           collected words
           </div>  

@@ -90,9 +90,10 @@ export default class MainPageWithTab extends Component
 
     return (
 
-      <div style={{height:"100%"}}>
+      <div className={css.tabContentDiv} style={{height:"100%",overflow: "hidden"}}>
+        <div style={{paddingBottom:"60px"}} >
         {showView}
-
+        </div>
         <div style={{position: "fixed", zIndex:10000,bottom: "0px", width:"100%", minHeight: "50px",textAlign:"center"}}>
           {tabsView}
         </div>

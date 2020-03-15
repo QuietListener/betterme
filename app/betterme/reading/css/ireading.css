@@ -58,3 +58,11 @@
 .background_green{
     background-color: #5ECA50;
 }
+
+.tabContentDiv{
+    overflow: hidden;
+}
+
+.tabContentDiv::-webkit-scrollbar {
+    width: 0 !important
+}

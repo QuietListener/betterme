@@ -451,12 +451,12 @@ export default class ReadingPage extends Component
       let boxWidth = 260;
       let top = ref.offsetTop+20;
       let left = ref.offsetLeft - boxWidth/2;
-      if(left < 0) left = 0;
+      if(left < 0) left = 6;
       //console.log("base.width()",base.width())
       //console.log("left",left);
 
       if(left+boxWidth+2 >= base.width()){
-        left = base.width()-boxWidth;
+        left = base.width()-boxWidth-6;
       }
 
       wordModal = <div style={{position:"absolute",top:top,left:left, minHeight:"100px",width:boxWidth,zIndex:100,background:"white"}} >

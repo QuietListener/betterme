@@ -112,7 +112,7 @@ export default class ArticlesChoosePage extends Component
         fontWeight = "bold"
       }
 
-      return <div  style={{display:"inline-block",fontSize:"12px",marginRight:"6px",fontWeight:"bold",borderRadius:"0px",margin:"2px",borderBottom:borderBottom,fontWeight:fontWeight}}
+      return <div  style={{display:"inline-block",fontSize:"12px",fontWeight:"bold",borderRadius:"0px",margin:"2px", marginRight:"20px", borderBottom:borderBottom,fontWeight:fontWeight}}
                   onClick={()=>this.toggleTag(t.id)}
       >
         {t.name}

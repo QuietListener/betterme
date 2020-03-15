@@ -61,16 +61,18 @@ export default class CollectedWords extends Component
         let word = collect_words[key];
         let word_info = word_infos[key]||{};
 
+        let mean_cn = word_info.mean_cn ? word_info.mean_cn.replace("[","").replace("]","") : "";
+
         let div_ = <div  style={{marginBottom:"8px",backgroundColor:"white",padding:"4px"}}>
           {word.text} <span className={css.smallText}>{word_info.accent} </span>
-          <p className={css.smallText}>{word_info.mean_cn.replace("[","").replace("]","")}</p>
+          <p className={css.smallText}>{mean_cn}</p>
         </div> 
         words_div.push(div_)
     }
 
     return (
       <div>
-        <div className={css.bigText} style={{padding:"6px"}}>{this.props.title||""}</div>
+        <div className={css.bigText} style={{padding:"14px"}}>{this.props.title||""}</div>
           {words_div}
       </div>
     );

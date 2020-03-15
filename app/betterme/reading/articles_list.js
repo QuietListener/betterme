@@ -88,10 +88,3 @@ export default class ArticlesList extends Component
     );
   }
 }
-
-const inner_style = {
-  part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
-  input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},
-  box: {"padding": "2px", "margin": "4px"},
-  btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}
-}

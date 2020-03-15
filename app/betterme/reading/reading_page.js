@@ -413,7 +413,7 @@ export default class ReadingPage extends Component
       {
         showViewMean = <div style={{textAlign: "left", marginTop: "4px",minHeight:"100px", position: "relative",padding:"4px"}}>
 
-          <div style={{position: "absolute", top: 0, right: 4}}
+          <div style={{position: "absolute", padding:"6px",top: 0, right: 4}}
                onClick={() => {
                  if (collected == false)
                  {
@@ -522,7 +522,7 @@ export default class ReadingPage extends Component
             <div style={{textAlign: "center",position:"relative"}}>
 
 
-              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"10px"}} onClick={()=>{this.playSpan(-5)}}>
+              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"25px"}} onClick={()=>{this.playSpan(-5)}}>
                 <img width={12} src={arrayLeftPng}/>
                 5s
               </div>
@@ -533,7 +533,7 @@ export default class ReadingPage extends Component
               </div>
 
 
-              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"10px"}} onClick={()=>{this.playSpan(5)}}>
+              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"25px"}} onClick={()=>{this.playSpan(5)}}>
                 5s
                 <img width={12} src={arrayRightPng}/>
               </div>

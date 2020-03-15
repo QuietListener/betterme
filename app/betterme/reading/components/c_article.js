@@ -45,7 +45,7 @@ export default class CArticle extends Component
     let infoWidth = base.width()-imgWidth-40;
     let height =  imgWidth*4/3;
 
-    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px", margin: "4px",width:`99%`,height:`${height}px`}}
+    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
       <div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>

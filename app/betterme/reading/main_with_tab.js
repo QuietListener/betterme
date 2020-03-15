@@ -37,7 +37,7 @@ export default class MainPageWithTab extends Component
     this.tabMap = {}
     this.tabMap[FlagArticle] = {normal:articlePng,hilight:articlePngHilight};
     this.tabMap[FlagArticleOk] = {normal:finishedPng,hilight:finishedPngHilight};
-    this.tabMap[FlagMine] =  {normal:userPng,hilight:userPngHilight};;
+    this.tabMap[FlagMine] =  {normal:userPng,hilight:userPngHilight};
     this.tabFlags = [FlagArticle,FlagArticleOk,FlagMine]
 
     this.state = {
@@ -82,7 +82,7 @@ export default class MainPageWithTab extends Component
 
      let tab = <div style={style}
           onClick={()=>this.choose(key)}>
-       <img src={hilight? this.tabMap[key]["hilight"]: this.tabMap[key]["normal"]} height={20}/>
+       <img src={hilight? this.tabMap[key]["hilight"]: this.tabMap[key]["normal"]} width={20} height={20}/>
      </div>
 
       tabsView.push(tab);
@@ -90,10 +90,10 @@ export default class MainPageWithTab extends Component
 
     return (
 
-      <div>  
+      <div style={{height:"100%"}}>
         {showView}
-    
-        <div style={{position: "fixed", zIndex:10000,bottom: "0px", width: "100%", minHeight: "50px",textAlign:"center"}}>
+
+        <div style={{position: "fixed", zIndex:10000,bottom: "0px", width:"100%", minHeight: "50px",textAlign:"center"}}>
           {tabsView}
         </div>
       </div>

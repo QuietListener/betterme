@@ -50,6 +50,7 @@ export default class ArticlesChoosePage extends Component
     choosedTagIds = [id];
 
     this.setState({choosedTagIds:choosedTagIds})
+    console.log("choosedTagIds",choosedTagIds);
     this.load();
   }
 
@@ -60,12 +61,18 @@ export default class ArticlesChoosePage extends Component
 
     let tag_ids = this.state.choosedTagIds||[];
     let appends = "";
-    for(let i = 0; i < tag_ids; i++){
-      appends+=`t_ids[]=${tag_ids[i]}&`;
+    console.log("tag_ids",tag_ids);
+    for(let i = 0; i < tag_ids.length; i++){
+      if(tag_ids[i]) {
+        appends += `t_ids[]=${tag_ids[i]}&`;
+      }
     }
 
     var id = this.state.id;
-    axios.get(`${BaseHost}/reading/show_articles.json?${appends}`).then((res) => {
+    var url__ = `${BaseHost}/reading/show_articles.json?${appends}`;
+    console.log("url__",url__);
+
+    axios.get(url__).then((res) => {
       console.log("res", res);
       that.setState({data: res.data.data});
       console.log(that.state);
@@ -112,9 +119,9 @@ export default class ArticlesChoosePage extends Component
         fontWeight = "bold"
       }
 
-      return <div  style={{display:"inline-block",fontSize:"12px",fontWeight:"bold",borderRadius:"0px",margin:"2px", marginRight:"20px", borderBottom:borderBottom,fontWeight:fontWeight}}
-                  onClick={()=>this.toggleTag(t.id)}
-      >
+      let tag_id = t.id;
+      return <div  style={{display:"inline-block", fontSize:"12px",borderRadius:"0px",margin:"2px", marginRight:"20px", borderBottom:borderBottom, fontWeight:fontWeight }}
+                  onClick={()=>this.toggleTag(tag_id)} >
         {t.name}
       </div>
     })

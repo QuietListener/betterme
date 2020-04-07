@@ -27,7 +27,7 @@ export default class CArticle extends Component
   {
     let a = this.props.a; //a 是Article
     let finished  = this.props.finished || false; //是否完成
-    let img = "https://imagev2.xmcdn.com/group60/M0A/3F/E4/wKgLb1zWy-miCIJLAAAow7cctg8198.jpg!op_type=3&columns=144&rows=144&magick=webp";
+    let img = "https://www.lavafox.com/images/movieImg/48df0ca5-a8d6-4a60-82da-7437be8f97d4.jpg";
     let backgroundColor = "";
     let color= "black";
     let width = this.props.width;
@@ -45,7 +45,7 @@ export default class CArticle extends Component
     let infoWidth = base.width()-imgWidth-40;
     let height =  imgWidth*4/3;
 
-    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",height:`${height}px`}}
+    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
       <div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>

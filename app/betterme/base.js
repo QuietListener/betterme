@@ -66,6 +66,9 @@ export function today()
   return moment().format("YYYY-MM-DD");
 }
 
+export function trimStr(str){
+  return str.replace(/\"/g,"").replace(/”/g,"");
+}
 
 export const COLOR={
   blue:"rgb(0, 188, 212)",

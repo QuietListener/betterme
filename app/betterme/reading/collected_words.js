@@ -4,6 +4,7 @@ import * as base from "../base.js"
 import CArticle from "./components/c_article"
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
+import speakerPng from "../../resource/imgs/speaker.png";
 
 const BaseHost = base.BaseHostIreading();
 
@@ -63,9 +64,21 @@ export default class CollectedWords extends Component
 
         let mean_cn = word_info.mean_cn ? word_info.mean_cn.replace("[","").replace("]","") : "";
 
-        let div_ = <div  style={{marginBottom:"8px",backgroundColor:"white",padding:"4px"}}>
-          {word.text} <span className={css.smallText}>{word_info.accent} </span>
-          <p className={css.smallText}>{mean_cn}</p>
+        let div_ = <div  style={{paddingBottom:"8px",backgroundColor:"white",padding:"4px"}}>
+         <p>
+           <span style={{fontSize:"20px",color:"black",fontWeight:"bold"}}>{word.text}</span>
+           <span style={{color:"gray",marginLeft:"10px",fontSize:"12px"}}>{word_info.accent} </span>
+
+           <div  className={[css.box]} style={{position:"absolute",right:"20px"}}>
+             <audio ref={"audio_en"} src={word.audio_en} />
+             <div onClick={()=>{this.refs["audio_en"].play();}}>
+               <img src={speakerPng} width={16}></img>
+             </div>
+           </div>
+
+         </p>
+          <p className={css.smallText} style={{marginTop:"8px"}}>{base.trimStr(mean_cn)}</p>
+          <CSeperator/>
         </div> 
         words_div.push(div_)
     }

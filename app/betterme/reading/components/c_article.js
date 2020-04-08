@@ -49,7 +49,7 @@ export default class CArticle extends Component
                  onClick={()=>this.goto(a)}>
 
       <div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>
-        <img src={img}  style={{width:`${imgWidth}px`,height:`${height}px`,borderRadius:"4px"}}/>
+        <img src={img}  style={{width:`${imgWidth}px`,height:`${height-4}px`,borderRadius:"4px"}}/>
       </div>
 
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>

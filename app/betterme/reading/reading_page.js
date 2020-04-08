@@ -495,7 +495,7 @@ export default class ReadingPage extends Component
                  style={{padding:"6px",paddingTop:"10px",paddingBottom:"10px",fontSize:"16px", fontWeight:"bold",borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"#5eca50":''}`,color:`${finished?"white":''}`}}
                 onClick={this.finish}
             >
-              {finished ? <img width={24} src={ok1Png}/> : "FINISH"}
+              {finished ? "FINISHED" : "FINISH"}
             </div>
           </div>
 

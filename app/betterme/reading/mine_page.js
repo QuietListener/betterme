@@ -80,7 +80,7 @@ export default class ReadingMinePage extends Component
     return (
       <div style={{padding: "0px"}}>
 
-        <div style={{background: 'linear-gradient(to bottom, #5ECA50, #f2f2f2)'}}>
+        <div style={{background: 'linear-gradient(to bottom, gray, #ffffff)'}}>
           <div className={css.bigText}
                style={{paddingTop: "20px", 
                       paddingBottom: "20px",
@@ -123,9 +123,9 @@ export default class ReadingMinePage extends Component
         </div>
 
 
-        <div className={[css.background_green]} style={{textAlign:"center",width:"100%",margin:"0px",padding:"10px"}}
+        <div style={{textAlign:"center",marginTop:"10px", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold"}}
              onClick={()=>base.goto("/collected_words")}>
-          collected words
+          Collected Words
           </div>  
       </div>
     );

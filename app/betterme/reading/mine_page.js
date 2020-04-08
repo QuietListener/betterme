@@ -89,7 +89,7 @@ export default class ReadingMinePage extends Component
                       }}>
             {user.name}
 
-            <div style={{position: "absolute", top: "6px", right: "6px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px"}}
+            <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}
                  onClick={() => {
                    this.logout()
                  }}
@@ -122,8 +122,9 @@ export default class ReadingMinePage extends Component
           }}/>
         </div>
 
+        <CSeperator />
 
-        <div style={{textAlign:"center",marginTop:"10px", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold"}}
+        <div style={{marginTop:"20px",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold"}}
              onClick={()=>base.goto("/collected_words")}>
           Collected Words
           </div>  

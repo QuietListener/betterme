@@ -152,7 +152,7 @@ const styles ={
     borderColor: "rgb(71, 175, 255)"
   },
   hilight_day: {
-    backgroundColor: "rgb(71, 175, 255)",
+    backgroundColor: "gray",
   },
 
   empty_day: {

@@ -28,13 +28,13 @@ export default class CArticle extends Component
     let a = this.props.a; //a 是Article
     let finished  = this.props.finished || false; //是否完成
     let img = "https://www.lavafox.com/images/movieImg/48df0ca5-a8d6-4a60-82da-7437be8f97d4.jpg";
-    let backgroundColor = "";
+    let backgroundColor = "rgb(211,211,211,0.2)";
     let color= "black";
     let width = this.props.width;
     //let height = width + 50;
 
     if(finished){
-      backgroundColor = "#5eca50 "
+      //backgroundColor = "#5eca50 "
       color="white";
     }
 
@@ -54,15 +54,16 @@ export default class CArticle extends Component
 
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
-        <div className={css.smallText} style={{color:"black",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          <p className={css.smallText} style={{color:"black",fontWeight:"bold"}}>{a.title}</p>
-          <p className={css.smallText}>{a.author}</p>
+        <div className={css.smallText} style={{overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
+          <p className={css.smallText} style={{color:"black",fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{a.title}</p>
+          <p className={css.smallText} style={{color:"gray",marginTop:"10px"}}>{a.author}</p>
         </div>
 
 
         <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"14px",paddingBottom:"4px"}} >
-          <div className={[css.box]}>  {a.level||1}<img width={12} src={levelPng} /> </div>
-          <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
+          <div className={[css.box]} style={{color:"#2F4F4F"}}> <img width={12} src={levelPng} />  {a.level||1} </div>
+          <div className={[css.box]} style={{marginLeft:"10px",color:"#2F4F4F"}}> <img width={12} src={readedPng}/>  {100}</div>
+          {finished? <div className={[css.box]} style={{position:"fixed",color:"#2F4F4F",fontWeight:"bold",fontSize:"12px", right:"20px"}}> FINISHED</div> : null}
         </div>
 
       </div>

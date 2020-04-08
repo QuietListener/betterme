@@ -84,15 +84,15 @@ export default class ArticleGroup extends Component
       <div style={{textAlign:"left"}}>
         <div style={{padding:"4px"}}>
 
-            <img src={img}  className={css.box} style={{width:`${imgWidth}px`,height:`${height}px`,borderRadius:"4px"}}/>
+            <img src={img}  className={css.box} style={{borderRadius:"4px",width:`${imgWidth}px`,height:`${height}px`}}/>
 
-            <div className={css.box} style={{width:`${infoWidth}px`,height:`${height}px`,paddingLeft:"2px",position:"relative"}}>
+            <div className={css.box} style={{width:`${infoWidth}px`,height:`${height}px`,paddingLeft:"8px",position:"relative"}}>
               <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
-              <div className={css.smallText} style={{color:"black",marginTop:"4px"}} >{article.author}</div>
+              <div className={css.smallText} style={{color:"gray",marginTop:"4px"}} >{article.author}</div>
 
               <div className={css.middleText} style={{fontSize:"14px",paddingBottom:"4px",position:"absolute",bottom:0}} >
-                <div className={[css.box]}>  {article.level||1}<img width={12} src={levelPng} /> </div>
-                <div className={[css.box]} style={{marginLeft:"6px"}}> {100} <img width={12} src={readedPng}/></div>
+                <div className={[css.box]} style={{color:"#2F4F4F"}}>  <img width={12} src={levelPng} /> {article.level||1} </div>
+                <div className={[css.box]} style={{color:"#2F4F4F",marginLeft:"10px"}}> <img width={12} src={readedPng}/>  {100} </div>
               </div>
 
             </div>

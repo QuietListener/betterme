@@ -492,10 +492,10 @@ export default class ReadingPage extends Component
 
           <div  style={{width:"100%",textAlign:"center",marginBottom:"40px",marginTop:"40px"}}>
             <div className={css.ibtn}
-                 style={{padding:"6px",fontSize:"16px", borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"#5eca50":''}`,color:`${finished?"white":''}`}}
+                 style={{padding:"6px",paddingTop:"10px",paddingBottom:"10px",fontSize:"16px", fontWeight:"bold",borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"#5eca50":''}`,color:`${finished?"white":''}`}}
                 onClick={this.finish}
             >
-              {finished ? <img width={24} src={ok1Png}/> : "finish"}
+              {finished ? <img width={24} src={ok1Png}/> : "FINISH"}
             </div>
           </div>
 
@@ -515,15 +515,15 @@ export default class ReadingPage extends Component
 
           <div style={{textAlign: "center",marginTop:"5px"}}>
 
-            <div style={{width: "100%", textAlign: "left", verticalAlign: "top"}}>
-              <div style={{width: `${this.state.progress * 100}%`, height: "1px", background: "green"}}></div>
+            <div style={{width: "100%", textAlign: "left", verticalAlign: "top",marginTop:"-4px"}}>
+              <div style={{width: `${this.state.progress * 100}%`, height: "4px", background: "green"}}></div>
             </div>
 
             <div style={{textAlign: "center",position:"relative"}}>
 
 
-              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"25px"}} onClick={()=>{this.playSpan(-5)}}>
-                <img width={12} src={arrayLeftPng}/>
+              <div style={{fontSize:"16px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"30px"}} onClick={()=>{this.playSpan(-5)}}>
+                <img width={14} src={arrayLeftPng}/>
                 5s
               </div>
 
@@ -533,9 +533,9 @@ export default class ReadingPage extends Component
               </div>
 
 
-              <div style={{fontSize:"14px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"25px"}} onClick={()=>{this.playSpan(5)}}>
+              <div style={{fontSize:"16px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"30px"}} onClick={()=>{this.playSpan(5)}}>
                 5s
-                <img width={12} src={arrayRightPng}/>
+                <img width={14} src={arrayRightPng}/>
               </div>
             </div>
 

@@ -411,7 +411,7 @@ export default class ReadingPage extends Component
         showViewMean = <CLoading/>
       }else
       {
-        showViewMean = <div style={{textAlign: "left", marginTop: "4px",minHeight:"100px", position: "relative",padding:"4px"}}>
+        showViewMean = <div style={{textAlign: "left", marginTop: "4px",minHeight:"100px", position: "relative",padding:"4px",border:"1px solid #f2f2f2"}}>
 
           <div style={{position: "absolute", padding:"6px",top: 0, right: 4}}
                onClick={() => {

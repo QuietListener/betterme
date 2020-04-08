@@ -1,1 +1,1 @@
-scp ../public/* www@alimeta:/home/www/static/pk/reading
+scp  -P 28498  ../public/* www@144.34.177.59:/home/www/static/pk/reading

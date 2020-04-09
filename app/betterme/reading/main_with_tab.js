@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import * as base from "../base.js"
 import {axios} from "../base.js"
 import CCalendar from "./components/c_calendar.js"
@@ -23,8 +24,9 @@ const FlagMine = 1;
 const FlagArticle = 2;
 const FlagArticleOk = 3;
 
+import {test} from "../redux/actions/actions"
 
-export default class MainPageWithTab extends Component
+class MainPageWithTab_ extends Component
 {
 
   constructor(props)
@@ -51,6 +53,7 @@ export default class MainPageWithTab extends Component
 
   componentDidMount()
   {
+    this.props.dispatch(test("aaa"))
   }
 
   choose(id){
@@ -123,3 +126,5 @@ const inner_style = {
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top", "padding": "2px", "margin": "4px", border: "1px solid"}
 }
+const MainPageWithTab = connect((state)=>{return {state:state}})(MainPageWithTab_)
+export default MainPageWithTab;

@@ -66,7 +66,7 @@ export default class CollectedWords extends Component
 
         let div_ = <div  style={{paddingBottom:"8px",backgroundColor:"white",padding:"4px"}}>
          <p>
-           <span style={{fontSize:"20px",color:"black",fontWeight:"bold"}}>{word.text}</span>
+           <span style={{fontSize:"18px",color:"black",fontWeight:"bold"}}>{word.text}</span>
            <span style={{color:"gray",marginLeft:"10px",fontSize:"12px"}}>{word_info.accent} </span>
 
            <div  className={[css.box]} style={{position:"absolute",right:"20px"}}>
@@ -84,7 +84,7 @@ export default class CollectedWords extends Component
     }
 
     return (
-      <div>
+      <div style={{padding:"10px"}}>
         <div className={css.bigText} style={{padding:"14px"}}>{this.props.title||""}</div>
           {words_div}
       </div>

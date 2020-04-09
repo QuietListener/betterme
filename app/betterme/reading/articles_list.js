@@ -79,7 +79,7 @@ export default class ArticlesList extends Component
     })
 
     return (
-      <div>
+      <div style={{padding:"12px"}}>
         {/* <div className={css.middleText}
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}

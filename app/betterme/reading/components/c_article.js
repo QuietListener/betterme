@@ -30,7 +30,7 @@ export default class CArticle extends Component
     let img = "https://www.lavafox.com/images/movieImg/48df0ca5-a8d6-4a60-82da-7437be8f97d4.jpg";
     let backgroundColor = "rgb(211,211,211,0.2)";
     let color= "black";
-    let width = this.props.width;
+    let width = this.props.width || base.width();
     //let height = width + 50;
 
     if(finished){
@@ -38,11 +38,12 @@ export default class CArticle extends Component
       color="white";
     }
 
-    let imgWidth = 0.2*base.width();
+
+    let imgWidth = 0.2*width;
     if(imgWidth > 70){
       imgWidth = 70;
     }
-    let infoWidth = base.width()-imgWidth-40;
+    let infoWidth = width-imgWidth-40;
     let height =  imgWidth*4/3;
 
     return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
@@ -54,7 +55,7 @@ export default class CArticle extends Component
 
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
-        <div className={css.smallText} style={{overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
+        <div className={css.smallText} style={{paddingTop:"4px",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
           <p className={css.smallText} style={{color:"black",fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{a.title}</p>
           <p className={css.smallText} style={{color:"gray",marginTop:"10px"}}>{a.author}</p>
         </div>

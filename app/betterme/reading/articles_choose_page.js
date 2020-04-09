@@ -102,7 +102,7 @@ export default class ArticlesChoosePage extends Component
 
     console.log("articles", articles);
 
-    let articleWidth = base.width() > 320 ? base.width()/2 - 30:  base.width()-30;
+    let articleWidth = base.width()-40;
     var articles_div = articles.map(a => {
       let aa = a;
       let finished = (finished_article_ids.indexOf(a.id) >= 0)
@@ -120,20 +120,20 @@ export default class ArticlesChoosePage extends Component
       }
 
       let tag_id = t.id;
-      return <div  style={{display:"inline-block", fontSize:"12px",borderRadius:"0px",margin:"2px", marginRight:"20px", borderBottom:borderBottom, fontWeight:fontWeight }}
+      return <div  style={{display:"inline-block", padding:"4px",fontSize:"12px",borderRadius:"0px",margin:"2px", marginLeft:"8px", borderBottom:borderBottom, fontWeight:fontWeight }}
                   onClick={()=>this.toggleTag(tag_id)} >
         {t.name}
       </div>
     })
 
     return (
-      <div style={{padding:"6px"}}>
+      <div style={{}}>
 
-        <div  style={{boxShadow:"0px 2px 2px #e5e5e5",padding:"8px"}}>
+        <div  style={{boxShadow:"0px 2px 2px #e5e5e5",padding:"10px 0px 10px 0px"}}>
           {tags_div}
         </div>
 
-        <div style={{margin:"8px"}}>
+        <div style={{margin:"12px"}}>
           {articles_div}
         </div>
 

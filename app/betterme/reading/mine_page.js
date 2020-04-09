@@ -85,7 +85,8 @@ export default class ReadingMinePage extends Component
                style={{paddingTop: "20px", 
                       paddingBottom: "20px",
                       paddingLeft: "8px",
-                      border: "1px solid #e9e4d9"
+                      border: "1px solid #e9e4d9",
+                      minHeight:"70px"
                       }}>
             {user.name}
 

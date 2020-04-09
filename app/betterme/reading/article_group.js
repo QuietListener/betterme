@@ -78,11 +78,11 @@ export default class ArticleGroup extends Component
     if(imgWidth > 120){
       imgWidth = 120;
     }
-    let infoWidth = base.width() - imgWidth - 10;
+    let infoWidth = base.width() - imgWidth - 20;
     let height = imgWidth*4/3;
     return (
       <div style={{textAlign:"left"}}>
-        <div style={{padding:"4px"}}>
+        <div style={{padding:"10px 10px 2px 10px"}}>
 
             <img src={img}  className={css.box} style={{borderRadius:"4px",width:`${imgWidth}px`,height:`${height}px`}}/>
 
@@ -99,12 +99,12 @@ export default class ArticleGroup extends Component
 
         </div>
 
-        <div style={{boxShadow:"0px 2px 2px #e5e5e5",padding:"4px"}}>
+        <div style={{boxShadow:"0px 2px 2px #e5e5e5",padding:"4px 12px 4px 12px"}}>
           <div className={css.smallText}style={{color:"#969ca4",marginTop:"10px"}}>{article.origin_text}</div>
         </div>
 
 
-        <div style={{marginTop:"8px",padding:"8px"}}>
+        <div style={{marginTop:"8px",padding:"12px"}}>
           {children_divs}
         </div>
 

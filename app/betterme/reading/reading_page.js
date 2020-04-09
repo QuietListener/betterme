@@ -14,12 +14,14 @@ import arrayLeftPng from "../../resource/imgs/array_left.png"
 import arrayRightPng from "../../resource/imgs/array_right.png"
 import ok1Png from "../../resource/imgs/ok1.png"
 import CToast from "./components/c_toast";
+import {connect} from "react-redux";
+import {get_all_articles, get_all_finished_articles} from "../redux/actions/actions";
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
 const Stopped = 2;
 
-export default class ReadingPage extends Component
+ class ReadingPage_ extends Component
 {
 
   constructor(props)
@@ -217,9 +219,14 @@ export default class ReadingPage extends Component
 
     var url = `${BaseHost}/reading/finish_article.json`;
     console.log(url);
+    var that = this;
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
+
+      that.props.dispatch(get_all_finished_articles());
+      that.props.dispatch(get_all_articles());
+
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -551,3 +558,12 @@ const inner_style = {
   part: {display: "inline-block", verticalAlign: "top", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
 }
+
+
+const mapStateToProps = state => {
+  return {
+    redux_data: state,
+  }
+}
+const ReadingPage = connect(mapStateToProps)(ReadingPage_)
+export default ReadingPage;

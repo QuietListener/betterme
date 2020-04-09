@@ -144,7 +144,7 @@ class ArticlesChoosePage__ extends Component
       }
 
       let tag_id = t.id;
-      return <div key={"tag_id__"+tag_id} style={{display:"inline-block", padding:"4px",fontSize:"12px",borderRadius:"0px",margin:"2px", marginLeft:"8px", borderBottom:borderBottom, fontWeight:fontWeight }}
+      return <div key={"tag_id__"+tag_id} style={{display:"inline-block", padding:"2px",fontSize:"15px",borderRadius:"0px",margin:"2px", marginLeft:"6px", borderBottom:borderBottom, fontWeight:fontWeight }}
                   onClick={()=>this.toggleTag(tag_id)} >
         {t.name}
       </div>

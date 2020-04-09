@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import * as base from "../base.js"
-import {axios} from "../base.js"
+import {axios,URLS} from "../base.js"
 import CArticle from "./components/c_article";
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
 import CLoading from "./components/c_loading.js"
 import CError from "./components/c_error.js"
-
+import {get_all_articles, UPDATE_DATA_STATUS} from "../redux/actions/actions"
 import {Articles} from "../redux/actions/actions"
 
 const BaseHost = base.BaseHostIreading();
@@ -33,7 +33,6 @@ class ArticlesChoosePage__ extends Component
 
   componentDidMount()
   {
-    this.load();
     document.addEventListener("keydown", this.onKeyDown)
   }
 
@@ -52,11 +51,11 @@ class ArticlesChoosePage__ extends Component
 
     this.setState({choosedTagIds:choosedTagIds})
     console.log("choosedTagIds",choosedTagIds);
-    this.load();
   }
 
   load()
   {
+    this.props.dispatch(get_all_articles());
     // var that = this;
     // this.setState({loading: true});
     //
@@ -89,27 +88,49 @@ class ArticlesChoosePage__ extends Component
   render()
   {
 
-    if(this.state.loading == true){
+    var articles_data_state = this.props.redux_data.reading[URLS.all_articles.name]||{};
+    var status = articles_data_state["status"] || UPDATE_DATA_STATUS.LOADING;
+
+    if(status == UPDATE_DATA_STATUS.LOADING){
       return (<CLoading />)
     }
-    else if(this.state.loadError == true ){
+    else if(status == UPDATE_DATA_STATUS.FAILED ){
       return <CError refresh={this.load}/>
     }
 
-    var articles_data_ = this.props.redux_data.reading[Articles]||{};
+    var articles_data_ =  {};
+    if( articles_data_state["data"]){
+      articles_data_ = articles_data_state["data"]["data"];
+    }
+
     console.log("articles_data_",articles_data_);
-    var articles = articles_data_.articles || [];
+    var articles_ = articles_data_.articles || [];
     var finished_article_ids = articles_data_.finished_article_ids || [];
     var all_tags = articles_data_.all_tags || [];
+    var tag_2_articles = articles_data_.tag_2_articles || {};
     let choosedTagIds = this.state.choosedTagIds  || [];
 
+    var articles = []
+    if(choosedTagIds.length<=0){
+      articles = articles_;
+    }else{
+      let tag_id = choosedTagIds[0];
+      let choosed_article_ids = tag_2_articles[tag_id]||[];
+      console.log("choosed_article_ids",choosed_article_ids);
+      for(let j = 0; j < articles_.length; j++){
+        let aa = articles_[j];
+        if(choosed_article_ids.indexOf(aa.id) >=0){
+          articles.push(aa);
+        }
+      }
+    }
     console.log("articles", articles);
 
     let articleWidth = base.width()-40;
     var articles_div = articles.map(a => {
       let aa = a;
       let finished = (finished_article_ids.indexOf(a.id) >= 0)
-      return <CArticle a={aa} width={articleWidth} finished={finished}/>
+      return <CArticle a={aa} width={articleWidth} finished={finished}  key={"article_id__"+aa.id}/>
     })
 
     var tags_div = all_tags.map(t=>{
@@ -123,7 +144,7 @@ class ArticlesChoosePage__ extends Component
       }
 
       let tag_id = t.id;
-      return <div  style={{display:"inline-block", padding:"4px",fontSize:"12px",borderRadius:"0px",margin:"2px", marginLeft:"8px", borderBottom:borderBottom, fontWeight:fontWeight }}
+      return <div key={"tag_id__"+tag_id} style={{display:"inline-block", padding:"4px",fontSize:"12px",borderRadius:"0px",margin:"2px", marginLeft:"8px", borderBottom:borderBottom, fontWeight:fontWeight }}
                   onClick={()=>this.toggleTag(tag_id)} >
         {t.name}
       </div>

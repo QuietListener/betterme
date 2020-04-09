@@ -21,8 +21,8 @@ import CollectedWords from  "./betterme/reading/collected_words.js"
 import './css/main.css'
 
 import {Router, Route, hashHistory} from 'react-router';
-import {createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk';
+import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import reducers from "./betterme/redux/reducers/reducers.js"
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -32,8 +32,7 @@ import GreeterReact from "./GreeterReact.js"
 import logger from 'redux-logger'
 
 const store = createStore(
-  reducers,
-  applyMiddleware(thunk,logger)
+  reducers, applyMiddleware(thunk,logger)
 )
 
 class App extends Component

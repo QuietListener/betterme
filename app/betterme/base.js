@@ -103,3 +103,19 @@ export function scrollAnimation(currentY, targetY,elem) {
     }
   }, 1)
 }
+
+
+export function timestamp()
+{
+  return Date.parse(new Date());
+}
+export const URLS = {
+  all_articles: {
+    url: () => `${BaseHostIreading()}/reading/show_articles.json?timestamp=${timestamp()}`,
+    name: 'all_articles'
+  },
+  finished_articles: {
+    url: () => `${BaseHostIreading()}/reading/finished_articles.json?timestamp=${timestamp()}`,
+    name: 'finished_articles'
+  },
+}

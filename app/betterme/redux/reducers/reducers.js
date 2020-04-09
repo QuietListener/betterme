@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import {TEST,Articles} from "../actions/actions.js"
+import {TEST, CLEAR_ALL_DATA,UPDATE_DATA_STATE,UPDATE_DATA_STATUS} from "../actions/actions.js"
 
 export function rtest(state = {}, action) {
     console.log("action",action);
@@ -10,21 +10,58 @@ export function rtest(state = {}, action) {
     return state;
 }
 
-export function reading(state = {}, action) {
-    console.log("action",action);
-    if(action.type == Articles) {
-        state = Object.assign({},state);
-        state[Articles] = action.payload;
-    }
-    return state;
-}
 
+
+
+function update_state(state={},action)
+{
+    if(action.type == UPDATE_DATA_STATE)
+    {
+        var {name,url,status,data,e} = action.text;
+
+        if(name == null)
+        {
+            console.error("update_state error",action);
+            return state;
+        }
+
+        if(name == CLEAR_ALL_DATA)
+        {
+            return {};
+        }
+
+        if(state[name] == null)
+        {
+            state[name] = {};
+        }
+
+        if(status == UPDATE_DATA_STATUS.SUCCEED)
+        {
+            state[name] = {url,status,data,e}
+        }
+        else if(status == UPDATE_DATA_STATUS.FAILED || status == UPDATE_DATA_STATUS.LOADING )
+        {
+            state[name][`url`] = url;
+            state[name][`status`] = status;
+            state[name][`e`] = e;
+        }
+        else if(status == UPDATE_DATA_STATUS.INIT)
+        {
+            state[name] = {};
+        }
+
+        return Object.assign({},state);
+    }
+
+    return state;
+
+}
 
 
 
 const reducers = combineReducers({
     rtest,
-    reading
+    reading:update_state
 })
 
 export default reducers;

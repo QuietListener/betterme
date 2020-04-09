@@ -24,7 +24,7 @@ const FlagMine = 1;
 const FlagArticle = 2;
 const FlagArticleOk = 3;
 
-import {test,get_all_articles} from "../redux/actions/actions"
+import {test,get_all_articles,get_all_finished_articles} from "../redux/actions/actions"
 
 class MainPageWithTab_ extends Component
 {
@@ -54,8 +54,18 @@ class MainPageWithTab_ extends Component
   componentDidMount()
   {
     this.props.dispatch(test("aaa"))
-    var url__ = `${BaseHost}/reading/show_articles.json`;
-    this.props.dispatch(get_all_articles(url__));
+
+
+    try {
+      this.props.dispatch(get_all_articles());
+    }catch (e) {
+      console.error(e);
+    }
+    try {
+      this.props.dispatch(get_all_finished_articles());
+    }catch (e) {
+      console.error(e);
+    }
   }
 
   choose(id){
@@ -68,11 +78,11 @@ class MainPageWithTab_ extends Component
 
     let flag = this.state.flag || FlagArticle;
     if(flag == FlagArticle){
-      showView =  <ArticlesChoosePage />
+      showView =  <ArticlesChoosePage key={12121}/>
     }else if (flag == FlagMine){
-      showView = <MinePage />
+      showView = <MinePage  key={121213} />
     }else{
-      showView = <ArticleList title={"finished articles"}/>
+      showView = <ArticleList title={"finished articles"}  key={121214}/>
     }
 
     console.log("this.props.redux_data",this.props.redux_data);

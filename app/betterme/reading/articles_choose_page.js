@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import * as base from "../base.js"
 import {axios} from "../base.js"
 import CArticle from "./components/c_article";
@@ -7,11 +8,11 @@ import CSeperator from "./components/c_sperator";
 import CLoading from "./components/c_loading.js"
 import CError from "./components/c_error.js"
 
-
+import {Articles} from "../redux/actions/actions"
 
 const BaseHost = base.BaseHostIreading();
 
-export default class ArticlesChoosePage extends Component
+class ArticlesChoosePage__ extends Component
 {
 
   constructor(props)
@@ -56,33 +57,33 @@ export default class ArticlesChoosePage extends Component
 
   load()
   {
-    var that = this;
-    this.setState({loading: true});
-
-    let tag_ids = this.state.choosedTagIds||[];
-    let appends = "";
-    console.log("tag_ids",tag_ids);
-    for(let i = 0; i < tag_ids.length; i++){
-      if(tag_ids[i]) {
-        appends += `t_ids[]=${tag_ids[i]}&`;
-      }
-    }
-
-    var id = this.state.id;
-    var url__ = `${BaseHost}/reading/show_articles.json?${appends}`;
-    console.log("url__",url__);
-
-    axios.get(url__).then((res) => {
-      console.log("res", res);
-      that.setState({data: res.data.data});
-      console.log(that.state);
-      // that.load_plans(user.id)
-      this.setState({loading: false,loadError:false});
-    }).catch(e => {
-      console.log(e);
-
-      this.setState({loadError: true,loading:false});
-    })
+    // var that = this;
+    // this.setState({loading: true});
+    //
+    // let tag_ids = this.state.choosedTagIds||[];
+    // let appends = "";
+    // console.log("tag_ids",tag_ids);
+    // for(let i = 0; i < tag_ids.length; i++){
+    //   if(tag_ids[i]) {
+    //     appends += `t_ids[]=${tag_ids[i]}&`;
+    //   }
+    // }
+    //
+    // var id = this.state.id;
+    // var url__ = `${BaseHost}/reading/show_articles.json?${appends}`;
+    // console.log("url__",url__);
+    //
+    // axios.get(url__).then((res) => {
+    //   console.log("res", res);
+    //   that.setState({data: res.data.data});
+    //   console.log(that.state);
+    //   // that.load_plans(user.id)
+    //   this.setState({loading: false,loadError:false});
+    // }).catch(e => {
+    //   console.log(e);
+    //
+    //   this.setState({loadError: true,loading:false});
+    // })
   }
 
   render()
@@ -95,9 +96,11 @@ export default class ArticlesChoosePage extends Component
       return <CError refresh={this.load}/>
     }
 
-    var articles = this.state.data.articles || [];
-    var finished_article_ids = this.state.data.finished_article_ids || [];
-    var all_tags = this.state.data.all_tags || [];
+    var articles_data_ = this.props.redux_data.reading[Articles]||{};
+    console.log("articles_data_",articles_data_);
+    var articles = articles_data_.articles || [];
+    var finished_article_ids = articles_data_.finished_article_ids || [];
+    var all_tags = articles_data_.all_tags || [];
     let choosedTagIds = this.state.choosedTagIds  || [];
 
     console.log("articles", articles);
@@ -148,3 +151,12 @@ const inner_style = {
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}
 }
+
+
+const mapStateToProps = state => {
+  return {
+    redux_data: state,
+  }
+}
+const ArticlesChoosePage = connect(mapStateToProps)(ArticlesChoosePage__)
+export default ArticlesChoosePage;

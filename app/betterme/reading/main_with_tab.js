@@ -24,7 +24,7 @@ const FlagMine = 1;
 const FlagArticle = 2;
 const FlagArticleOk = 3;
 
-import {test} from "../redux/actions/actions"
+import {test,get_all_articles} from "../redux/actions/actions"
 
 class MainPageWithTab_ extends Component
 {
@@ -54,6 +54,8 @@ class MainPageWithTab_ extends Component
   componentDidMount()
   {
     this.props.dispatch(test("aaa"))
+    var url__ = `${BaseHost}/reading/show_articles.json`;
+    this.props.dispatch(get_all_articles(url__));
   }
 
   choose(id){
@@ -72,6 +74,8 @@ class MainPageWithTab_ extends Component
     }else{
       showView = <ArticleList title={"finished articles"}/>
     }
+
+    console.log("this.props.redux_data",this.props.redux_data);
 
     var hilighted = {};
     var tabsView = [];
@@ -126,5 +130,11 @@ const inner_style = {
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top", "padding": "2px", "margin": "4px", border: "1px solid"}
 }
-const MainPageWithTab = connect((state)=>{return {state:state}})(MainPageWithTab_)
+
+const mapStateToProps = state => {
+  return {
+    redux_data: state,
+  }
+}
+const MainPageWithTab = connect(mapStateToProps)(MainPageWithTab_)
 export default MainPageWithTab;

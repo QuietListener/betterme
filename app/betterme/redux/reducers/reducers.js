@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import {TEST} from "../actions/actions.js"
+import {TEST,Articles} from "../actions/actions.js"
 
 export function rtest(state = {}, action) {
     console.log("action",action);
@@ -10,10 +10,21 @@ export function rtest(state = {}, action) {
     return state;
 }
 
+export function reading(state = {}, action) {
+    console.log("action",action);
+    if(action.type == Articles) {
+        state = Object.assign({},state);
+        state[Articles] = action.payload;
+    }
+    return state;
+}
+
+
 
 
 const reducers = combineReducers({
-  rtest
+    rtest,
+    reading
 })
 
 export default reducers;

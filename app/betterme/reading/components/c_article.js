@@ -27,7 +27,7 @@ export default class CArticle extends Component
   {
     let a = this.props.a; //a 是Article
     let finished  = this.props.finished || false; //是否完成
-    let img = "https://www.lavafox.com/images/movieImg/48df0ca5-a8d6-4a60-82da-7437be8f97d4.jpg";
+    let img = a.img;
     let backgroundColor = "rgb(211,211,211,0.2)";
     let color= "black";
     let width = this.props.width || base.width();

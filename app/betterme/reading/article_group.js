@@ -72,7 +72,7 @@ export default class ArticleGroup extends Component
       return <CArticle a={c} finished={finished} />
     });
 
-    let img = "https://imagev2.xmcdn.com/group60/M0A/3F/E4/wKgLb1zWy-miCIJLAAAow7cctg8198.jpg!op_type=3&columns=144&rows=144&magick=webp"
+    let img = article.img;
 
     let imgWidth = base.width()*0.2;
     if(imgWidth > 120){

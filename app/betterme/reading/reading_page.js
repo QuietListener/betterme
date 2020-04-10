@@ -362,9 +362,9 @@ const Stopped = 2;
 
         let collected = (collect_words[w.text] != null)
         let backgroundColor = "";
-        let color = "";
+        let color = "#494949";
         if(collected){
-          backgroundColor = "black";
+          backgroundColor = "#494949";
           color = "white";
         }
 

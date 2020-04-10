@@ -5,7 +5,7 @@
     font-size: 14px;
     display: inline-block;
     background-color: #e5e5e5;
-    color:black;
+    color:#494949;
     border-radius: 4px;
     vertical-align: top;
 }
@@ -24,11 +24,12 @@
 }
 
 .box1 {
+    color:#494949;
     background:white ;
 }
 
 .smallText{
-    color:black;
+    color:#494949;
     font-size: 12px;
 }
 
@@ -39,12 +40,12 @@
 
 
 .middleText{
-    color:black;
+    color:#494949;
     font-size: 14px;
 }
 
 .bigText{
-    color:black;
+    color:#494949;
     font-size: 18px;
     font-weight: bold;
 }

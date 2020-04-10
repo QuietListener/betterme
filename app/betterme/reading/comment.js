@@ -176,7 +176,7 @@ export default class Comment extends Component
 
       <div>
         {/*评论框*/}
-        <div style={{marginBottom:"40px"}}>
+        <div style={{marginBottom:"40px",marginLeft:"10px",marginRight:"10px"}}>
          <div style={inner_style.textBox} onChange={event=>this.handleChange("commentContent",event)}>
            <textarea  placeholder={"say something"} style={{width:"100%",height:"100px",border:"1px solid #f2f2f2",borderRadius:"4px"}} value={this.state.commentContent} ></textarea>
          </div>

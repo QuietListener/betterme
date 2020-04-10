@@ -62,14 +62,16 @@ export default class Articles extends Component
     })
   }
 
-  saveArticle(id,author,title, text,audio)
+  saveArticle(id,author,title, text,audio,img,parent_id)
   {
     var params = {
       id: id,
       text: text,
       author: author,
+      img:img,
       title: title,
-      audio:audio
+      audio:audio,
+      parent_id:parent_id
     }
 
     var url = `${BaseHost}/reading/create_article.json`;
@@ -109,9 +111,22 @@ export default class Articles extends Component
       id: a.id,
       author: a.author,
       title: a.title,
+      img:a.img,
       audio: a.audio_normal,
       text: a.origin_text,
     })
+  }
+
+  renderArticle(a){
+    return <div style={{"border": "1px solid #f2f2f2", padding: "2px", margin: "4px"}}>
+      <div>{a.title}</div>
+      <div>{a.id} | {a.created_at}
+        <div style={inner_style.btn} onClick={()=>this.split(a.id)}>split</div>
+        <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>
+        <div style={inner_style.btn}  onClick={()=>this.modify(a)}>modify</div>
+      </div>
+
+    </div>
   }
 
   render()
@@ -120,16 +135,20 @@ export default class Articles extends Component
     var articles = this.state.data.articles || [];
     console.log("articles", articles);
 
-    var articles_div = articles.map(a => {
-      return <div style={{"border": "1px solid", padding: "2px", margin: "4px"}}>
-        <div>{a.title}</div>
-        <div>{a.id} | {a.created_at}
-           <div style={inner_style.btn} onClick={()=>this.split(a.id)}>split</div>
-           <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>
-          <div style={inner_style.btn}  onClick={()=>this.modify(a)}>modify</div>
-        </div>
+    let parentArticles = articles.filter(a=> (a.parent_id == null || a.parent_id =="") )
 
-      </div>
+
+    var articles_div = parentArticles.map(a => {
+
+      let child_articles = articles.filter(aa=>aa.parent_id == a.id);
+      let child_articles_div = child_articles.map(aa_=> this.renderArticle(aa_));
+      let parent_article_div = this.renderArticle(a);
+       return  <div style={{marginBottom:"10px",backgroundColor:"#f2f2f2"}}>
+         {parent_article_div}
+         <div style={{marginLeft:"20px"}}>
+           {child_articles_div}
+         </div>
+        </div>
     })
 
     let modified = this.state.modified;
@@ -154,6 +173,15 @@ export default class Articles extends Component
 
           </div>
 
+          <div style={inner_style.box}>
+            <label>parent_id:</label>
+
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("parent_id", event)
+            }}
+                   value={this.state.parent_id}
+            ></input>
+          </div>
 
 
           <div style={inner_style.box}>
@@ -184,6 +212,16 @@ export default class Articles extends Component
             ></input>
           </div>
 
+          <div style={inner_style.box}>
+            <label>img:</label>
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("img", event)
+            }}
+                   value={this.state.img}
+            ></input>
+          </div>
+
+
           <div style={inner_style.box}><label>content:</label>
             <textArea style={{width: "100%"}}
                       onChange={(event) => {
@@ -195,7 +233,7 @@ export default class Articles extends Component
           </div>
 
           <div style={{border: "1px solid", textAlign: "center"}} onClick={()=>{
-            this.saveArticle(this.state.id,this.state.author,this.state.title,this.state.text,this.state.audio)
+            this.saveArticle(this.state.id,this.state.author,this.state.title,this.state.text,this.state.audio,this.state.img,this.state.parent_id)
           }}>save</div>
         </div>
 

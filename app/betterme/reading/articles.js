@@ -62,7 +62,7 @@ export default class Articles extends Component
     })
   }
 
-  saveArticle(id,author,title, text,audio,img,parent_id)
+  saveArticle(id,author,title, text,audio,img,parent_id,tag_id)
   {
     var params = {
       id: id,
@@ -71,7 +71,8 @@ export default class Articles extends Component
       img:img,
       title: title,
       audio:audio,
-      parent_id:parent_id
+      parent_id:parent_id,
+      tag_id:tag_id
     }
 
     var url = `${BaseHost}/reading/create_article.json`;
@@ -106,24 +107,28 @@ export default class Articles extends Component
 
   }
 
-  modify(a){
+  modify(a,tag_id){
     this.setState({
       id: a.id,
       author: a.author,
+      tag_id:tag_id,
       title: a.title,
       img:a.img,
+      parent_id:a.parent_id,
       audio: a.audio_normal,
       text: a.origin_text,
     })
   }
 
-  renderArticle(a){
+  renderArticle(a,tag){
+    var tag_id = tag?tag.id:null;
     return <div style={{"border": "1px solid #f2f2f2", padding: "2px", margin: "4px"}}>
-      <div>{a.title}</div>
+      <p>{a.title}</p>
+      {tag?<div>tag: {tag.name}({tag.id})</div>:null}
       <div>{a.id} | {a.created_at}
         <div style={inner_style.btn} onClick={()=>this.split(a.id)}>split</div>
         <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>
-        <div style={inner_style.btn}  onClick={()=>this.modify(a)}>modify</div>
+        <div style={inner_style.btn}  onClick={()=>this.modify(a,tag_id)}>modify</div>
       </div>
 
     </div>
@@ -133,16 +138,37 @@ export default class Articles extends Component
   {
 
     var articles = this.state.data.articles || [];
+    var tags = this.state.data.tags || [];
+    var tag2articles = this.state.data.tag2articles || [];
+    var tagsMap = {};
+    for(let i =0; i < tags.length; i++){
+      let tag = tags[i];
+      tagsMap[tag.id] = tag;
+    }
+    var article2tagMap = {};
+    for(let i =0; i < tag2articles.length; i++){
+      let tag2article = tag2articles[i];
+      article2tagMap[tag2article.article_id] = tag2article.reading_tag_id;
+    }
+
+    let tags_div = tags.map(t=>{
+      return <span style={{padding:"4px"}}>{t.name}({t.id})</span>
+    });
+
     console.log("articles", articles);
 
     let parentArticles = articles.filter(a=> (a.parent_id == null || a.parent_id =="") )
 
-
     var articles_div = parentArticles.map(a => {
 
       let child_articles = articles.filter(aa=>aa.parent_id == a.id);
+
       let child_articles_div = child_articles.map(aa_=> this.renderArticle(aa_));
-      let parent_article_div = this.renderArticle(a);
+
+      let tag_id = article2tagMap[a.id];
+      let tag = tagsMap[tag_id];
+      let parent_article_div = this.renderArticle(a,tag);
+
        return  <div style={{marginBottom:"10px",backgroundColor:"#f2f2f2"}}>
          {parent_article_div}
          <div style={{marginLeft:"20px"}}>
@@ -157,6 +183,7 @@ export default class Articles extends Component
     return (
       <div style={{}}>
 
+        {tags_div}
         {articles_div}
 
         <div style={{padding:"4px",margin:"6px",color:"white",backgroundColor:"black"} } onClick={()=>this.modify({})}> clear modify</div>
@@ -180,6 +207,16 @@ export default class Articles extends Component
               this.handleChange("parent_id", event)
             }}
                    value={this.state.parent_id}
+            ></input>
+          </div>
+
+          <div style={inner_style.box}>
+            <label>tag_id:</label>
+
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("tag_id", event)
+            }}
+                   value={this.state.tag_id}
             ></input>
           </div>
 
@@ -233,7 +270,7 @@ export default class Articles extends Component
           </div>
 
           <div style={{border: "1px solid", textAlign: "center"}} onClick={()=>{
-            this.saveArticle(this.state.id,this.state.author,this.state.title,this.state.text,this.state.audio,this.state.img,this.state.parent_id)
+            this.saveArticle(this.state.id,this.state.author,this.state.title,this.state.text,this.state.audio,this.state.img,this.state.parent_id,this.state.tag_id)
           }}>save</div>
         </div>
 

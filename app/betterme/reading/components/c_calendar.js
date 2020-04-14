@@ -80,9 +80,10 @@ export default class CCalendar extends Component
           var style_ =null;
           var text_styles = {color: "rgb(153, 153, 153)", fontSize: 12,margin:"auto",marginTop:"4px"};
           var isEvents = false;
+
           if (dates <= today.date())
           {
-            style_ =  Object.assign(styles.day, responsive_style,{backgroundColor: "white"})
+            style_ =  Object.assign(styles.day, responsive_style,{backgroundColor: "#f2f2f2"})
 
             isEvents = (events.filter((item) => {
               return i_.format("YYYYMMDD") === item.format("YYYYMMDD")

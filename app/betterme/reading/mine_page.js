@@ -8,6 +8,10 @@ import css from "./css/ireading.css"
 const BaseHost = base.BaseHostIreading();
 import Moment from "moment"
 import CSeperator from "./components/c_sperator";
+import stopPng from "../../resource/imgs/stop.png";
+import playPng from "../../resource/imgs/play.png";
+import arrayLeftPng from "../../resource/imgs/array_left.png"
+import arrayRightPng from "../../resource/imgs/array_right.png"
 
 export default class ReadingMinePage extends Component
 {
@@ -19,19 +23,38 @@ export default class ReadingMinePage extends Component
 
     super(props);
     this.state = {
-      data: {}
+      data: {},
+      date:new Moment(),
     };
 
     this.load = this.load.bind(this);
     this.logout = this.logout.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
-
+    this.preMonth = this.preMonth.bind(this);
+    this.nextMonth = this.nextMonth.bind(this);
   }
 
   componentDidMount()
   {
     this.load();
+  }
+
+  preMonth(){
+
+    var date = this.state.date;
+    var preMonth = date.month(date.month() - 1).endOf('month');
+    this.setState({date:preMonth});
+  }
+
+  nextMonth(){
+    var now = new Moment();
+    var date = this.state.date;
+    var nextMonth = date.month(date.month() + 1).endOf('month');
+    if(nextMonth > now){
+      nextMonth = now;
+    }
+    this.setState({date:nextMonth})
   }
 
   load()
@@ -69,6 +92,7 @@ export default class ReadingMinePage extends Component
 
     var user = this.state.data.user || {};
     var state = this.state.data.state || {};
+    var date = this.state.date;
     var finish_dates_ = this.state.data.finish_dates || [];
 
     var events = finish_dates_.map(t => {
@@ -118,8 +142,23 @@ export default class ReadingMinePage extends Component
         </div>
 
 
-        <div style={{textAlign: "center", marginTop: "10px"}}>
-          <CCalendar width={400} today={new Moment()} events={events} style={{}} onPress={() => {
+        <div style={{textAlign: "center", marginTop: "20px"}}>
+          <div style={{textAlign: "center",position:"relative"}}>
+
+            <div style={{fontSize:"16px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"20px"}} onClick={()=>{this.preMonth()}}>
+              <img width={14} src={arrayLeftPng}/>
+            </div>
+
+            <div style={{width:"200px",height:"30px",position:"relative",padding:"5px",color:base.COLOR.gray1,margin:"auto",display:"inline-block",verticalAlign:"top"}}>
+             {date?date.format("YYYY-MM"):null}
+            </div>
+
+            <div style={{fontSize:"16px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"2px"}} onClick={()=>{this.nextMonth()}}>
+              <img width={14} src={arrayRightPng}/>
+            </div>
+          </div>
+
+          <CCalendar width={400} today={date} events={events} style={{}} onPress={() => {
           }}/>
         </div>
 

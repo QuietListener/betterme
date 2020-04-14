@@ -332,9 +332,9 @@ const Stopped = 2;
   render()
   {
 
-    // if(this.state.loading == true){
-    //   return (<CLoading />)
-    // }
+    if(this.state.loading == true){
+      return (<CLoading />)
+    }
 
     var article = this.state.data.article || {};
     var finished = this.state.data.finished || false;

@@ -362,9 +362,9 @@ const Stopped = 2;
 
         let collected = (collect_words[w.text] != null)
         let backgroundColor = "";
-        let color = "#494949";
+        let color = "";
         if(collected){
-          backgroundColor = "#494949";
+          backgroundColor = base.COLOR.gray1;
           color = "white";
         }
 
@@ -395,7 +395,7 @@ const Stopped = 2;
       let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
       let end_audio_ = index < splits_.length ? splits_[index]["point"] : 1000000;
 
-      let color = this.state.playingSentence == s.id ? "green" : "black";
+      let color = this.state.playingSentence == s.id ? "green" : "#494949";
       return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`} ref={`s_s_${s.id}`}
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
@@ -488,7 +488,7 @@ const Stopped = 2;
           this.closeWordModal();
         }}
           style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px"}}  ref={"sentenceScrollDiv"}>
-          <div style={{fontSize:"18px",fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
+          <div style={{fontSize:"18px",color:base.COLOR.gray1,fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
             {article.title}
           </div>
 

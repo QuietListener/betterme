@@ -139,18 +139,18 @@ export default class Comment extends Component
     let time = c.created_at.split("T")[0];
     return <div className={css.box1} style={{width:"100%",padding:"8px",margin:"4px",marginBottom:"6px",fontSize:"14px"}}>
       <div>
-        <div className={css.smallText} style={{display:"inline-block",width:"60%"}} >{user["name"]||"user"}</div>
+        <div className={css.smallText} style={{display:"inline-block",width:"60%",fontWeight:"bold"}} >{user["name"]||"user"}</div>
 
         {like_div}
       </div>
 
-      <div style={{marginBottom:"8px",fontSize:"14px",marginTop:"4px"}}>
+      <div style={{marginBottom:"8px",fontSize:"16px",marginTop:"4px"}}>
         {c.content}
       </div>
 
       <div >
         <div style={{display:"inline-block",textAlign:"left",verticalAlign:"top",width:"50%"}}>
-          <span  className={css.smallText}> {time}</span>
+          <span  className={css.smallText} style={{color:base.COLOR.gray1}}> {time}</span>
         </div>
         <div style={{display:"inline-block",textAlign:"right",verticalAlign:"top",width:"49%"}}>{deleteDiv}</div>
       </div>

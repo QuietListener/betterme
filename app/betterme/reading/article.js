@@ -153,6 +153,7 @@ export default class Article extends Component
     var end = this.state.end;
     this.saveSentence_(id, s_id, start, end);
     this.setState({which:"start"})
+    this.refs.sId.value = "";
   }
 
   saveSplitAudio(article_id)

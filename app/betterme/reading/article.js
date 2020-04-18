@@ -45,6 +45,7 @@ export default class Article extends Component
     this.troogle_word_group = this.troogle_word_group.bind(this);
     this.choose_word_group = this.choose_word_group.bind(this);
     this.saveWord = this.saveWord.bind(this);
+    this.updateTrans = this.updateTrans.bind(this);
 
     this.audioRef = new Object();
 
@@ -155,6 +156,31 @@ export default class Article extends Component
     this.saveSentence_(id, s_id, start, end);
     this.setState({which:"start"})
     this.refs.sId.value = "";
+  }
+
+  updateTrans(s_id) {
+
+    var trans = this.refs[ "tran_"+s_id].value;
+    var id = this.state.id;
+    var params = {
+      sentence_id: s_id,
+      article_id: id,
+      trans:trans
+    }
+    console.log("save trans",params);
+
+    var url = `${BaseHost}/reading/update_trans.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+
+
   }
 
   saveSplitAudio(article_id)
@@ -389,7 +415,9 @@ export default class Article extends Component
         </div>
 
         {s_word_divs}
-        <div style={{display: "inline-block"}}></div>
+        <div style={{display: "inline-block",border:"1px solid"}}>
+          <textarea ref={"tran_"+s.id} value={s.trans_zh}  cols={40} rows={2}/> <span style={{marginLeft:"10px"}} onClick={()=>this.updateTrans(s.id)}>save tran</span>
+        </div>
       </div>
     })
 

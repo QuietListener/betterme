@@ -44,6 +44,7 @@ export default class Article extends Component
     this.playAudio = this.playAudio.bind(this);
     this.troogle_word_group = this.troogle_word_group.bind(this);
     this.choose_word_group = this.choose_word_group.bind(this);
+    this.saveWord = this.saveWord.bind(this);
 
     this.audioRef = new Object();
 
@@ -199,6 +200,33 @@ export default class Article extends Component
     }
 
     var url = `${BaseHost}/reading/update_sentence.json`;
+    console.log(url);
+    axios.post(url, params).then((res) => {
+      console.log("res", res);
+      this.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      this.load();
+    })
+
+  }
+
+
+  saveWord()
+  {
+
+    let order = this.refs.order.value
+    let text = this.refs.text.value
+    var id = this.state.id;
+
+    var params = {
+      article_id: id,
+      order: order,
+      text: text
+    }
+
+    var url = `${BaseHost}/reading/update_word.json`;
     console.log(url);
     axios.post(url, params).then((res) => {
       console.log("res", res);
@@ -432,6 +460,24 @@ export default class Article extends Component
         }}
              onClick={this.saveSentence}>
           save
+        </div>
+
+
+        <div style={{border:"1px solid"}}>
+
+          <div style={{ display: "inline-block",  margin: "2px",width:"160px" ,verticalAlign:"top"}}>
+            order:<input ref={"order"} style={{width:"100px"}}/>
+          </div>
+
+          <div style={{ display: "inline-block",  margin: "2px" ,width:"200px",verticalAlign:"top"}}>
+            text:<input ref={"text"} style={{width:"120px"}}/>
+          </div>
+          <br/><br/>
+
+          <div style={{ display: "block", border: "1px solid ", background: "black", padding: "2px", color: "white" }}
+               onClick={()=>this.saveWord()}>
+            save
+          </div>
         </div>
 
     </div>

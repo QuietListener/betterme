@@ -158,7 +158,7 @@ export default class Articles extends Component
     }
 
     let tags_div = tags.map(t=>{
-      return <span style={{padding:"4px"}}>{t.name}({t.id})</span>
+      return <span style={{padding:"2px",background:"black",color:"white",margin:"4px"}}>{t.name}({t.id})</span>
     });
 
     console.log("articles", articles);
@@ -191,7 +191,7 @@ export default class Articles extends Component
     return (
       <div style={{}}>
 
-        {tags_div}
+        <div style={{marginBottom:"10px"}}>{tags_div}</div>
         {articles_div}
 
         <div style={{padding:"4px",margin:"6px",color:"white",backgroundColor:"black"} } onClick={()=>this.modify({})}> clear modify</div>

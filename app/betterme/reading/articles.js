@@ -18,7 +18,8 @@ export default class Articles extends Component
     super(props);
     this.state = {
       data: {},
-      modified:{}
+      modified:{},
+      toggleState:{}
     };
 
     this.load = this.load.bind(this);
@@ -26,11 +27,17 @@ export default class Articles extends Component
     this.saveArticle = this.saveArticle.bind(this);
     this.split = this.split.bind(this);
     this.modify = this.modify.bind(this);
+    this.toggle = this.toggle.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
   }
 
+  toggle(tag_id){
+    let toggleState = this.state.toggleState || {};
+    toggleState[tag_id] = !toggleState[tag_id];
+    this.setState({toggleState:toggleState})
+  }
   componentDidMount()
   {
     this.load();
@@ -120,17 +127,16 @@ export default class Articles extends Component
     })
   }
 
-  renderArticle(a,tag){
+  renderArticle(a,tag,childCount){
     var tag_id = tag?tag.id:null;
     return <div style={{"border": "1px solid #f2f2f2", padding: "2px", margin: "4px"}}>
-      <p>{a.title}</p>
+      <p onClick={()=>this.toggle(a.id)}>{a.title}({childCount})</p>
       {tag?<div>tag: {tag.name}({tag.id})</div>:null}
-      <div>{a.id} | {a.created_at}
+      <div><span style={{background:"black",color:"white",padding:"2px",borderRadius:"10px"}}>{a.id}</span>
         <div style={inner_style.btn} onClick={()=>this.split(a.id)}>split</div>
         <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>
         <div style={inner_style.btn}  onClick={()=>this.modify(a,tag_id)}>modify</div>
       </div>
-
     </div>
   }
 
@@ -167,13 +173,15 @@ export default class Articles extends Component
 
       let tag_id = article2tagMap[a.id];
       let tag = tagsMap[tag_id];
-      let parent_article_div = this.renderArticle(a,tag);
+      let childCount = child_articles?child_articles.length:0;
+      let parent_article_div = this.renderArticle(a,tag,childCount);
 
        return  <div style={{marginBottom:"10px",backgroundColor:"#f2f2f2"}}>
          {parent_article_div}
-         <div style={{marginLeft:"20px"}}>
+         {this.state.toggleState[a.id] ? <div style={{marginLeft: "20px"}}>
            {child_articles_div}
-         </div>
+         </div>:null
+         }
         </div>
     })
 
@@ -283,5 +291,5 @@ const inner_style = {
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},
   box: {"padding": "2px", "margin": "4px"},
-  btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}
+  btn: {display: "inline-block",fontSize: "12px",verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid",borderRadius:"2px"}
 }

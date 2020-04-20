@@ -378,9 +378,11 @@ const Stopped = 2;
         let collected = (collect_words[w.text] != null)
         let backgroundColor = "";
         let color = "";
+        let fontWeight = "";
         if(collected){
-          backgroundColor = base.COLOR.gray1;
-          color = "white";
+          //backgroundColor = base.COLOR.gray1;
+          color = "black";
+          fontWeight="bold";
         }
 
         let padding= 2;
@@ -390,7 +392,7 @@ const Stopped = 2;
           margin = 0;
         }
 
-        return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: `${padding}px`,margin:`${margin}px`,fontSize:"14px",backgroundColor:backgroundColor,color:color,borderRadius:"2px"}}
+        return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: `${padding}px`,margin:`${margin}px`,fontSize:"14px",backgroundColor:backgroundColor,color:color,fontWeight:fontWeight,borderRadius:"2px"}}
 
                     onClick={(event)=>{
                       try

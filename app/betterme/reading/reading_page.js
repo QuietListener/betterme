@@ -60,6 +60,7 @@ const Stopped = 2;
     this.getCollectWordsIds = this.getCollectWordsIds.bind(this);
     this.showTooFastModal = this.showTooFastModal.bind(this);
     this.hideTooFastModal = this.hideTooFastModal.bind(this);
+    this.troogleTrans = this.troogleTrans.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -329,6 +330,19 @@ const Stopped = 2;
     })
   }
 
+  troogleTrans(s_id){
+    var show_trans_ids = this.state.show_trans_ids || [];
+    
+    let index = show_trans_ids.indexOf(s_id);
+    if(index >= 0){
+      show_trans_ids.splice(index,1);
+    }else{
+      show_trans_ids.push(s_id)
+    }
+
+    this.setState({show_trans_ids});
+  }
+
   render()
   {
 
@@ -391,6 +405,10 @@ const Stopped = 2;
         >{w.text}</div>
       })
 
+      let trans_div = <div   style={{ padding: "4px", border: "0px solid", color: color}}> {s.trans_zh} </div>
+
+      let show_trans_ids = this.state.show_trans_ids || [];
+      let showTrans  = show_trans_ids.indexOf(s.id) >= 0;
 
       let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
       let end_audio_ = index < splits_.length ? splits_[index]["point"] : 1000000;
@@ -398,8 +416,9 @@ const Stopped = 2;
       let color = this.state.playingSentence == s.id ? "green" : "#494949";
       return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`} ref={`s_s_${s.id}`}
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
-        {s_word_divs}
-        <div style={{display: "inline-block"}} ></div>
+        {s_word_divs}<span style={{fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
+        {showTrans?trans_div:null}
+
       </div>
     })
 

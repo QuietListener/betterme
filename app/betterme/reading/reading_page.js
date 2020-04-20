@@ -351,6 +351,7 @@ const Stopped = 2;
     }
 
     var article = this.state.data.article || {};
+    var should_show_trans = this.state.data.should_show_trans || false;
     var finished = this.state.data.finished || false;
     var words = this.state.data.words || [];
     var sentences = this.state.data.sentences || [];
@@ -405,10 +406,11 @@ const Stopped = 2;
         >{w.text}</div>
       })
 
+
       let trans_div = <div   style={{ padding: "4px", border: "0px solid", color: color}}> {s.trans_zh} </div>
 
       let show_trans_ids = this.state.show_trans_ids || [];
-      let showTrans  = show_trans_ids.indexOf(s.id) >= 0;
+      let showTrans  = (show_trans_ids.indexOf(s.id) >= 0);
 
       let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
       let end_audio_ = index < splits_.length ? splits_[index]["point"] : 1000000;
@@ -416,7 +418,11 @@ const Stopped = 2;
       let color = this.state.playingSentence == s.id ? "green" : "#494949";
       return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`} ref={`s_s_${s.id}`}
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
-        {s_word_divs}<span style={{fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
+        {s_word_divs}
+        { should_show_trans ?
+          <span style={{fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
+          : null
+        }
         {showTrans?trans_div:null}
 
       </div>

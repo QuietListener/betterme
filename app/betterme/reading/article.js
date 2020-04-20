@@ -132,11 +132,24 @@ export default class Article extends Component
     this.setState({loading: true});
 
     var id = this.state.id;
+    this.setState({loading: true});
     axios.get(`${BaseHost}/reading/get_article_data.json?article_id=${id}`).then((res) => {
       console.log("res", res);
-      that.setState({data: res.data.data});
+
+
+      var sentences = res.data.data.sentences || [];
+
+      let data_ = {}
+      for(let i = 0; i < sentences.length; i++){
+        let s = sentences[i];
+        data_["trans_"+s.id] = s.trans_zh;
+      }
+
+      data_["data"] = res.data.data;
+      that.setState(data_);
       console.log(that.state);
       // that.load_plans(user.id)
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -160,7 +173,7 @@ export default class Article extends Component
 
   updateTrans(s_id) {
 
-    var trans = this.refs[ "tran_"+s_id].value;
+    var trans = this.state["trans_"+s_id];
     var id = this.state.id;
     var params = {
       sentence_id: s_id,
@@ -168,12 +181,13 @@ export default class Article extends Component
       trans:trans
     }
     console.log("save trans",params);
-
+    this.setState({loading: true});
     var url = `${BaseHost}/reading/update_trans.json`;
     console.log(url);
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -202,10 +216,12 @@ export default class Article extends Component
     var url = `${BaseHost}/reading/save_audio_splits.json`;
     console.log(url);
     var that = this;
+    this.setState({loading: true});
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
       that.setState({audio_splits:[]});
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -227,9 +243,11 @@ export default class Article extends Component
 
     var url = `${BaseHost}/reading/update_sentence.json`;
     console.log(url);
+    this.setState({loading: true});
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -257,6 +275,7 @@ export default class Article extends Component
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
+      this.setState({loading: false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -346,6 +365,9 @@ export default class Article extends Component
       }
     }
 
+    var loading = this.state.loading;
+    var loading_div = loading == true ? <div style={{position:"fixed",top:"2px",right:"2px"}}>loading...</div>: null;
+
     var splitsObjs = this.state.audio_splits.map(ss=>{return {point:ss};});
     var splits_ = splits.concat(splitsObjs);
     var audio_splits_divs =splits_.map(t_ => {
@@ -393,8 +415,9 @@ export default class Article extends Component
 
       return <div style={{margin: "4px", padding: "2px", border: "1px solid"}}>
         <div>
-          <span>word：</span><span>{s.id}:{start}:{end}</span>
-          <span>音频：</span>
+          {index}
+          <span style={{marginLeft:"4px",fontWeight:"bold",color:"white",backgroundColor:"black",marginRight:"4px"}}>word</span><span>id:{s.id} , {start}-> {end}</span>
+          <span style={{marginLeft:"4px",fontWeight:"bold",color:"white",backgroundColor:"black"}}>音频</span>
           <input style={{width: "60px"}} value={start_audio_}
                  // onChange={(event) => {
                  //   this.handleChange("audio_start_" + s.id, event)
@@ -416,7 +439,8 @@ export default class Article extends Component
 
         {s_word_divs}
         <div style={{display: "inline-block",border:"1px solid"}}>
-          <textarea ref={"tran_"+s.id} value={s.trans_zh}  cols={40} rows={2}/> <span style={{marginLeft:"10px"}} onClick={()=>this.updateTrans(s.id)}>save tran</span>
+          <textarea  placeholder={"翻译"} value={this.state["trans_"+s.id]}  cols={60} rows={2} onChange={(event)=>this.handleChange("trans_"+s.id, event)}/>
+          <span style={{marginLeft:"10px",background:"black",color:"white"}} onClick={()=>this.updateTrans(s.id)}>save tran</span>
         </div>
       </div>
     })
@@ -491,7 +515,10 @@ export default class Article extends Component
         </div>
 
 
-        <div style={{border:"1px solid"}}>
+        <div style={{border:"1px solid",marginTop:"20px"}}>
+          <div style={{ display: "inline-block",  margin: "2px",width:"160px" ,verticalAlign:"top"}}>
+            修改单词:
+          </div>
 
           <div style={{ display: "inline-block",  margin: "2px",width:"160px" ,verticalAlign:"top"}}>
             order:<input ref={"order"} style={{width:"100px"}}/>
@@ -547,6 +574,7 @@ export default class Article extends Component
    
     return (
       <div style={{height:"100%"}}>
+        {loading_div}
 
       <div style={{position:"fixed",right:10,top:20,padding:"6px",backgroundColor:"black",color:"white"}}
                                 onClick={()=>{this.setState({mode: (this.state.mode == SplitSentence ? WordGroup: SplitSentence)})}}>

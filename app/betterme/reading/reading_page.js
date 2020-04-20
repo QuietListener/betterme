@@ -409,7 +409,7 @@ const Stopped = 2;
       })
 
 
-      let trans_div = <div   style={{ padding: "4px", border: "0px solid", color: color}}> {s.trans_zh} </div>
+      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {s.trans_zh} </div>
 
       let show_trans_ids = this.state.show_trans_ids || [];
       let showTrans  = (show_trans_ids.indexOf(s.id) >= 0);
@@ -422,7 +422,7 @@ const Stopped = 2;
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
         { should_show_trans ?
-          <span style={{fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
+          <span style={{fontSize:"14px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"4px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
           : null
         }
         {showTrans?trans_div:null}

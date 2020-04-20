@@ -5,8 +5,8 @@ export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
 export const BaseHost = "http://localhost:3000"
 export function BaseHostIreading() {
-  return "http://localhost:3100"
-  //return "https://freepic.store"
+  //return "http://localhost:3100"
+  return "https://freepic.store"
 }
 
 //export const BaseHost = `http://www.coderlong.com`

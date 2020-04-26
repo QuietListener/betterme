@@ -163,7 +163,7 @@ export default class Articles extends Component
 
     console.log("articles", articles);
 
-    let parentArticles = articles.filter(a=> (a.parent_id == null || a.parent_id =="") )
+    let parentArticles = articles.filter(a=> (a.parent_id == null || a.parent_id ==""  || a.parent_id<0) )
 
     var articles_div = parentArticles.map(a => {
 

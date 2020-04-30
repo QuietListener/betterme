@@ -101,6 +101,11 @@ export default class ReadingMinePage extends Component
       }
     )
 
+    let name =  user.name;
+    if(name && name.length > 20){
+      name = name.substring(0,20)+"..."
+    }
+
     return (
       <div style={{padding: "0px"}}>
 
@@ -112,7 +117,10 @@ export default class ReadingMinePage extends Component
                       border: "1px solid #e9e4d9",
                       minHeight:"70px"
                       }}>
-            {user.name}
+
+
+            <img style={{borderRadius:"25"}} width={50} height={50} src={user.img} />
+            <span style={{fontSize:"12px"}}>{name}</span>
 
             <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}
                  onClick={() => {

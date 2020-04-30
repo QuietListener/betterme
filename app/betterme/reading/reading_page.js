@@ -16,6 +16,8 @@ import ok1Png from "../../resource/imgs/ok1.png"
 import CToast from "./components/c_toast";
 import {connect} from "react-redux";
 import {get_all_articles, get_all_finished_articles} from "../redux/actions/actions";
+import CModal from "./components/c_modal";
+import CShareContent from "./components/c_share_content";
 
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
@@ -61,6 +63,7 @@ const Stopped = 2;
     this.showTooFastModal = this.showTooFastModal.bind(this);
     this.hideTooFastModal = this.hideTooFastModal.bind(this);
     this.troogleTrans = this.troogleTrans.bind(this);
+    //this.load_user_state = this.load_user_state.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -505,9 +508,17 @@ const Stopped = 2;
 
     var audio = this.refs.audioRef;
 
+
+
+    let share_info =  <CShareContent></CShareContent>;
+    let finished_model = <CModal>
+      {share_info}
+    </CModal>
+
     return (
 
       <div>
+        {finished_model}
         {wordModal}
         {this.state.showModelTooFast ? toastView:null}
 

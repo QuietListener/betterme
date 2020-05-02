@@ -11,6 +11,8 @@ import ReadingMinePage from "./betterme/reading/mine_page.js"
 import ArticlesList from "./betterme/reading/articles_list.js"
 import MainPageWithTab from "./betterme/reading/main_with_tab.js"
 import CollectedWords from  "./betterme/reading/collected_words.js"
+import SharePage from  "./betterme/reading/share_page.js"
+
 //
 // import Home from './betterme/home.js'
 // import PlanDetails from "./betterme/plan_details.js"
@@ -59,7 +61,10 @@ class App extends Component
             <Route path="/articles_choose_page" component={ArticlesChoosePage}></Route>
             <Route path="/article_list" component={ArticlesList}></Route>
             <Route path="/collected_words" component={CollectedWords}></Route>
-            
+
+            <Route path="/share_page" component={SharePage}></Route>
+
+
             {/*/!*<Route path="/" component={Home}></Route>*!/*/}
             {/*<Route path="/mine" component={Mine}/>*/}
             {/*<Route path="/plan_details/:id" component={PlanDetails}/>*/}

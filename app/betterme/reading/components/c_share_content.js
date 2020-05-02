@@ -7,7 +7,8 @@ export default class CShareContent extends Component {
 
   constructor(props) {
     super(props)
-    this.state={}
+    let user_id = this.props.user_id||null;
+    this.state={user_id:user_id}
     this.load_user_state = this.load_user_state.bind(this);
   }
 
@@ -16,7 +17,9 @@ export default class CShareContent extends Component {
     var that = this;
     this.setState({loading: true});
     var id = this.state.id;
-    axios.get(`${BaseHost}/reading/get_user_state.json`).then((res) => {
+    let added = this.state.user_id == null?"":"?user_id="+this.state.user_id;
+
+    axios.get(`${BaseHost}/reading/get_user_state.json${added}`).then((res) => {
       console.log("res", res);
       that.setState({data: res.data.data});
       console.log(that.state);

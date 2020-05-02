@@ -46,7 +46,8 @@ const Stopped = 2;
       playingSentence: -1,//正在播放哪个,
       progress: 0.0,
       playState: Stopped,
-      showModelTooFast:false
+      showModelTooFast:false,
+      showShare:true //分享modal
     };
 
     this.startAt = new Date();
@@ -510,10 +511,20 @@ const Stopped = 2;
 
 
 
-    let share_info =  <CShareContent style={{backgroundColor:"#f2f2f2",marginTop:"100px",paddingTop:"10px",paddingBottom:"20px"}}></CShareContent>;
-    let finished_model = <CModal style={{background:"rgba(0,0,0,0.3)"}}>
-      {share_info}
-    </CModal>
+
+    let finished_model = null;
+    if(this.state.showShare == true) {
+      finished_model = <CModal style={{background: "rgba(0,0,0,0.3)"}}
+                               close={() => this.setState({showShare: false})}
+      >
+        <CShareContent style={{
+          backgroundColor: "#f2f2f2",
+          marginTop: "100px",
+          paddingTop: "10px",
+          paddingBottom: "20px"
+        }}></CShareContent>
+      </CModal>
+    }
 
     return (
 

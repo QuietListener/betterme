@@ -510,8 +510,8 @@ const Stopped = 2;
 
 
 
-    let share_info =  <CShareContent></CShareContent>;
-    let finished_model = <CModal>
+    let share_info =  <CShareContent style={{backgroundColor:"#f2f2f2",marginTop:"100px",paddingTop:"10px",paddingBottom:"20px"}}></CShareContent>;
+    let finished_model = <CModal style={{background:"rgba(0,0,0,0.3)"}}>
       {share_info}
     </CModal>
 

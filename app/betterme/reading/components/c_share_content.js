@@ -45,21 +45,33 @@ export default class CShareContent extends Component {
 
 
       return (
-          <div>
+          <div style={this.props.style||{}}>
             <div style={{height: "60px", textAlign: "center",marginTop:"30px"}}>
               <img style={{borderRadius: "25"}} width={50} height={50} src={user.img}/>
               <div>{user.name}</div>
             </div>
 
-            <div style={{marginTop:"20px"}}>
-             Spent {state.read_days || 0} days At BeeReading
-            </div>
+            <div style={{marginTop:"30px"}}>
+              <div style={{}}>
+                <span style={Styles.count}>{state.read_days || 0} </span> days
+              </div>
 
+              <div style={{marginTop:"20px",textAlign:"center"}}>
+                <div style={Styles.count}>{state.readed_count || 0} </div>
+                articles
+              </div>
+
+            </div>
             <div>
-              Have read {state.readed_count || 0} articles
+
             </div>
           </div>
       );
     }
 
+}
+
+const Styles={
+  count:{fontSize:"12px",fontColor:"Red"},
+  part:{marginTop:"20px",textAlign:"center"}
 }

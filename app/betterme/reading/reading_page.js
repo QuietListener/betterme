@@ -451,8 +451,8 @@ const Stopped = 2;
       let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {s.trans_zh} </div>
 
       let show_trans_ids = this.state.show_trans_ids || [];
-      let showTrans  = (show_trans_ids.indexOf(s.id) >= 0);
-
+      let showTrans  = show_trans_ids.indexOf(s.id) >= 0;
+      let showTransTip = should_show_trans && s.trans_zh && s.trans_zh.length >2 ;
       let start_audio_ = (index - 1 >= 0 && index < splits_.length) ? splits_[index - 1]["point"] : 0;
       let end_audio_ = index < splits_.length ? splits_[index]["point"] : 1000000;
 
@@ -460,14 +460,14 @@ const Stopped = 2;
       return <div id={`s_s_${s.id}`} key={`s_s_${s.id}`} ref={`s_s_${s.id}`}
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
-        { should_show_trans ?
+        { showTransTip ?
           <span style={{fontSize:"14px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"4px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
           : null
         }
         {showTrans?trans_div:null}
 
       </div>
-    })
+    });
 
 
 

@@ -55,26 +55,26 @@ export default class CShareContent extends Component {
             </div>
 
             <div style={{marginTop:"30px"}}>
-              <div style={{}}>
-                <span style={Styles.count}>{state.read_days || 0} </span> days
+              <div style={{marginTop:"20px",textAlign:"center"}}>
+                在 BeeReading上，坚持阅读了 <span style={Styles.count}>{state.read_days || 0} </span> 天
               </div>
 
               <div style={{marginTop:"20px",textAlign:"center"}}>
-                <div style={Styles.count}>{state.readed_count || 0} </div>
-                articles
+                 学习完成了  <span style={Styles.count}>{state.readed_count || 0} 篇</span> 英文文章
               </div>
+
 
             </div>
             <div>
 
-            </div>
+          </div>
           </div>
       );
     }
 
 }
 
-const Styles={
+const Styles= {
   count:{fontSize:"12px",fontColor:"Red"},
   part:{marginTop:"20px",textAlign:"center"}
 }

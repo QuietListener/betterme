@@ -36,7 +36,7 @@ const Stopped = 2;
     console.log("id", id);
 
     this.state = {
-      user_id:1,
+      user_id:10,
       id: id,
       data: {},
       start: -1,
@@ -65,6 +65,7 @@ const Stopped = 2;
     this.hideTooFastModal = this.hideTooFastModal.bind(this);
     this.troogleTrans = this.troogleTrans.bind(this);
     //this.load_user_state = this.load_user_state.bind(this);
+    this.share2Facebook = this.share2Facebook.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -347,6 +348,20 @@ const Stopped = 2;
     this.setState({show_trans_ids});
   }
 
+
+  share2Facebook()
+  {
+    var url =  base.BaseHostIreading()+"/share_page?user_id="+this.state.user_id;
+    let content = "test";
+    if(window.Android)
+    {
+      console.log("share2Facebook android");
+      var result = window.Android.share2Facebook(url,content);
+    }else{
+      console.log("share2Facebook other ");
+    }
+  }
+
   render()
   {
 
@@ -517,12 +532,15 @@ const Stopped = 2;
       finished_model = <CModal style={{background: "rgba(0,0,0,0.3)"}}
                                close={() => this.setState({showShare: false})}
       >
+        <div style={{  backgroundColor: "#f2f2f2",paddingBottom:"8px"}}>
         <CShareContent style={{
-          backgroundColor: "#f2f2f2",
           marginTop: "100px",
           paddingTop: "10px",
           paddingBottom: "20px"
         }}></CShareContent>
+
+          <div  style={{borderRadius:"4px",backgroundColor:"blue",color:"white",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.share2Facebook()}> 分享到 Facebook </div>
+        </div>
       </CModal>
     }
 

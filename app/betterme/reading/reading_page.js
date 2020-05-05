@@ -47,7 +47,7 @@ const Stopped = 2;
       progress: 0.0,
       playState: Stopped,
       showModelTooFast:false,
-      showShare:true //分享modal
+      showShare:false //分享modal
     };
 
     this.startAt = new Date();
@@ -64,7 +64,7 @@ const Stopped = 2;
     this.showTooFastModal = this.showTooFastModal.bind(this);
     this.hideTooFastModal = this.hideTooFastModal.bind(this);
     this.troogleTrans = this.troogleTrans.bind(this);
-    //this.load_user_state = this.load_user_state.bind(this);
+    this.load_user_state = this.load_user_state.bind(this);
     this.share2Facebook = this.share2Facebook.bind(this);
 
     this.audioRef = new Object();
@@ -232,6 +232,7 @@ const Stopped = 2;
 
       that.props.dispatch(get_all_finished_articles());
       that.props.dispatch(get_all_articles());
+      that.load_user_state();
 
     }).catch(e => {
       console.log(e);
@@ -362,6 +363,25 @@ const Stopped = 2;
     }
   }
 
+
+
+
+  load_user_state() {
+    var that = this;
+    this.setState({loading: true});
+    var id = this.state.id;
+    let added = this.state.user_id == null?"":"?user_id="+this.state.user_id;
+
+    axios.get(`${BaseHost}/reading/get_user_state.json${added}`).then((res) => {
+      console.log("res", res);
+      that.setState({user_state: res.data.data,loading:false,showShare:true});
+      console.log(that.state);
+      // that.load_plans(user.id)
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+    })
+  }
   render()
   {
 
@@ -528,12 +548,14 @@ const Stopped = 2;
 
 
     let finished_model = null;
-    if(this.state.showShare == true) {
+    if(this.state.showShare == true && this.state.user_state) {
       finished_model = <CModal style={{background: "rgba(0,0,0,0.3)"}}
                                close={() => this.setState({showShare: false})}
       >
         <div style={{  backgroundColor: "#f2f2f2",paddingBottom:"8px"}}>
-        <CShareContent style={{
+        <CShareContent
+            data={this.state.user_state}
+            style={{
           marginTop: "100px",
           paddingTop: "10px",
           paddingBottom: "20px"

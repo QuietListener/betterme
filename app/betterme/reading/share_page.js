@@ -98,7 +98,8 @@ export default class SharePage extends Component
                         backgroundColor: "#f2f2f2",
                         marginTop: "100px",
                         paddingTop: "10px",
-                        paddingBottom: "20px"
+                        paddingBottom: "20px",
+                         minHeight:"100px"
                       }}></CShareContent>
     </div>
     );

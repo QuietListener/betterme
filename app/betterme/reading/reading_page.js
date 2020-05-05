@@ -566,6 +566,82 @@ const Stopped = 2;
       </CModal>
     }
 
+
+    var playerBar = null;
+
+    if(article.audio_normal) {
+      playerBar = <div style={{
+        display: "block",
+        height: "46px",
+        boxShadow: "0px -2px 2px #e5e5e5",
+        overflow: "scroll",
+        backgroundColor: "#f2f2f2",
+        position: "fixed",
+        bottom: 0,
+        width: "100%"
+      }}>
+
+        <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
+          Your browser does not support this audio format.
+        </audio>
+
+        <div style={{textAlign: "center", marginTop: "5px"}}>
+
+          <div style={{width: "100%", textAlign: "left", verticalAlign: "top", marginTop: "-4px"}}>
+            <div style={{width: `${this.state.progress * 100}%`, height: "4px", background: "green"}}></div>
+          </div>
+
+          <div style={{textAlign: "center", position: "relative"}}>
+
+
+            <div style={{
+              fontSize: "16px",
+              display: "inline-block",
+              verticalAlign: "top",
+              marginTop: "8px",
+              marginRight: "30px"
+            }} onClick={() => {
+              this.playSpan(-5)
+            }}>
+              <img width={14} src={arrayLeftPng}/>
+              5s
+            </div>
+
+            <div style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "15px",
+              position: "relative",
+              padding: "5px",
+              margin: "auto",
+              display: "inline-block",
+              verticalAlign: "top"
+            }}
+                 onClick={() => {
+                   this.troggle(audio);
+                 }}>
+              <img src={this.state.playState == Playing ? stopPng : playPng} style={{width: "20px"}}/>
+            </div>
+
+
+            <div style={{
+              fontSize: "16px",
+              display: "inline-block",
+              verticalAlign: "top",
+              marginTop: "8px",
+              marginLeft: "30px"
+            }} onClick={() => {
+              this.playSpan(5)
+            }}>
+              5s
+              <img width={14} src={arrayRightPng}/>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    }
+
     return (
 
       <div>
@@ -603,40 +679,7 @@ const Stopped = 2;
         </div>
 
 
-        <div style={{display: "block", height: "46px",boxShadow:"0px -2px 2px #e5e5e5", overflow: "scroll",backgroundColor:"#f2f2f2",position:"fixed",bottom:0,width:"100%"}}>
-
-          <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
-            Your browser does not support this audio format.
-          </audio>
-
-          <div style={{textAlign: "center",marginTop:"5px"}}>
-
-            <div style={{width: "100%", textAlign: "left", verticalAlign: "top",marginTop:"-4px"}}>
-              <div style={{width: `${this.state.progress * 100}%`, height: "4px", background: "green"}}></div>
-            </div>
-
-            <div style={{textAlign: "center",position:"relative"}}>
-
-
-              <div style={{fontSize:"16px",display:"inline-block",verticalAlign:"top" ,marginTop:"8px",marginRight:"30px"}} onClick={()=>{this.playSpan(-5)}}>
-                <img width={14} src={arrayLeftPng}/>
-                5s
-              </div>
-
-              <div style={{width:"30px",height:"30px",borderRadius:"15px",position:"relative",padding:"5px",margin:"auto",display:"inline-block",verticalAlign:"top"}}
-                  onClick={() => {this.troggle(audio);}}>
-                <img src={this.state.playState == Playing ? stopPng : playPng} style={{ width: "20px"}}/>
-              </div>
-
-
-              <div style={{fontSize:"16px",display:"inline-block",verticalAlign:"top",marginTop:"8px",marginLeft:"30px"}} onClick={()=>{this.playSpan(5)}}>
-                5s
-                <img width={14} src={arrayRightPng}/>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        {playerBar}
 
       </div>
     );

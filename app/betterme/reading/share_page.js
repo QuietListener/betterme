@@ -54,7 +54,7 @@ export default class SharePage extends Component
 
   componentDidMount()
   {
-      this.load_user_state();
+      //this.load_user_state();
       //this.load();
   }
 
@@ -114,9 +114,6 @@ export default class SharePage extends Component
       var user = this.state.user_state.user || {};
       var state = this.state.user_state.state || {};
 
-      if(user && user.name && state ){
-          window.title = user.name +" 完成了 "+(state.)
-      }
 
 
     return (

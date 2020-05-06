@@ -66,7 +66,7 @@ const Stopped = 2;
     this.troogleTrans = this.troogleTrans.bind(this);
     this.load_user_state = this.load_user_state.bind(this);
     this.share2Facebook = this.share2Facebook.bind(this);
-
+    this.share_result = this.share_result.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
 
@@ -80,8 +80,17 @@ const Stopped = 2;
     this.interval = setInterval(() => {
       this.scrollSentence();
     }, 500);
+
+    window.share_result = this.share_result;
   }
 
+
+  share_result(result){
+    console.log("share_result:"+result);
+    if(result == "1" || result == 1) {
+      this.setState({showShare: false});
+    }
+  }
 
   scrollSentence()
   {

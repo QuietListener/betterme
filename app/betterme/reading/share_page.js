@@ -31,13 +31,33 @@ export default class SharePage extends Component
       date:new Moment(),
     };
 
+    this.load_user_state = this.load_user_state.bind(this);
    // this.load = this.load.bind(this);
   }
 
-  // componentDidMount()
-  // {
-  //   this.load();
-  // }
+  load_user_state() {
+        var that = this;
+        this.setState({loading: true});
+        var id = this.state.id;
+        let added = this.state.user_id == null?"":"?user_id="+this.state.user_id;
+
+        axios.get(`${BaseHost}/reading/get_user_state.json${added}`).then((res) => {
+            console.log("res", res);
+            that.setState({user_state: res.data.data,loading:false,showShare:true});
+            console.log(that.state);
+            // that.load_plans(user.id)
+        }).catch(e => {
+            console.log(e);
+            this.setState({loading: false});
+        })
+    }
+
+  componentDidMount()
+  {
+      this.load_user_state();
+      //this.load();
+  }
+
   //
   // preMonth(){
   //   var date = this.state.date;
@@ -92,12 +112,12 @@ export default class SharePage extends Component
     // )
 
     return (
-    <div>
+    <div style={ {backgroundColor: "#f2f2f2",height:"100%",minHeight:base.height()+"px"}}>
       <CShareContent user_id={this.state.user_id}
+                     data={this.state.user_state}
                      style={{
                         backgroundColor: "#f2f2f2",
-                        marginTop: "100px",
-                        paddingTop: "10px",
+                        paddingTop: "30px",
                         paddingBottom: "20px",
                          minHeight:"100px"
                       }}></CShareContent>

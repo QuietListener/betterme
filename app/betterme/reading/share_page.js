@@ -111,6 +111,14 @@ export default class SharePage extends Component
     //   }
     // )
 
+      var user = this.state.user_state.user || {};
+      var state = this.state.user_state.state || {};
+
+      if(user && user.name && state ){
+          window.title = user.name +" 完成了 "+(state.)
+      }
+
+
     return (
     <div style={ {backgroundColor: "#f2f2f2",height:"100%",minHeight:base.height()+"px"}}>
       <CShareContent user_id={this.state.user_id}

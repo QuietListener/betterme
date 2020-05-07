@@ -107,7 +107,7 @@ export default class ReadingMinePage extends Component
     }
 
     var tips = base.getTipByLan();
-    let img_ = user.img||"https://freepic.store/static/reading/resources/imgs/bee02-squire.jpg"
+    let img_ = user.img || "https://freepic.store/static/reading/resources/imgs/bee02_squire.jpg"
     return (
       <div style={{padding: "0px"}}>
 

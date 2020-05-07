@@ -104,7 +104,7 @@ class ArticlesList_ extends Component
         {/* <div className={css.middleText}
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}
-          {articles_div}
+        {articles_div.length == 0? <div style={{marginTop:"10px",textAlign:"center",color:base.COLOR.gray1}}>还没有完成的文章喔~</div>:articles_div}
       </div>
     );
   }

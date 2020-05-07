@@ -25,6 +25,7 @@ export default class CShareContent extends Component {
         var finish_dates_ = this.props.data.finish_dates || [];
 
 
+        var tips = base.getTipByLan();
         return (
             <div style={this.props.style || {}}>
                 <div style={{height: "60px", textAlign: "center", marginTop: "30px"}}>
@@ -34,10 +35,10 @@ export default class CShareContent extends Component {
 
                 <div style={{marginTop: "30px"}}>
                     <div style={{marginTop: "20px", textAlign: "center"}}>
-                        我在 <a>BeeReading</a> 上，坚持阅读了 <span style={Styles.count}>{state.read_days || 0} </span> 天
+                        {tips.share_1} <a>BeeReading</a> {tips.share_2} <span style={Styles.count}>{state.read_days || 0} </span> {tips.share_3}
                     </div>
                     <div style={{marginTop: "20px", textAlign: "center"}}>
-                        学完了 <span style={Styles.count}>{state.readed_count || 0} 篇</span> 英文文章
+                        {tips.share_4} <span style={Styles.count}>{state.readed_count || 0} </span> {tips.share_5}
                     </div>
 
 

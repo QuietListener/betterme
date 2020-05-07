@@ -135,3 +135,39 @@ export const URLS = {
 }
 
 
+export function getTipByLan(){
+return TipByLan.ZhTw;
+}
+
+export const TipByLan = {
+  ZhCN:{
+     share_1:"我在",
+     share_2:"上，坚持阅读了",
+     share_3:"天",
+     share_4:"学完了",
+     share_5:"篇英文文章",
+
+     statistics_1:"单词",
+     statistics_2:"天",
+     statistics_3:"文章",
+
+     logout:"退出",
+     collectWords:"收藏的单词",
+    no_finished_articles_tip:"还没有完成的文章喔~"
+  },
+  ZhTw:{
+    share_1:"我在",
+    share_2:"上，堅持閱讀了",
+    share_3:"天",
+    share_4:"學完了",
+    share_5:"篇英文文章",
+
+    statistics_1:"單詞",
+    statistics_2:"天",
+    statistics_3:"文章",
+
+    logout:"退出",
+    collectWords:"收藏的單詞",
+    no_finished_articles_tip:"還沒有完成的文章喔~"
+  }
+}

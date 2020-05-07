@@ -106,6 +106,7 @@ export default class ReadingMinePage extends Component
       name = name.substring(0,20)+"..."
     }
 
+    var tips = base.getTipByLan();
     return (
       <div style={{padding: "0px"}}>
 
@@ -127,24 +128,24 @@ export default class ReadingMinePage extends Component
                    this.logout()
                  }}
             >
-              logout
+              {tips.logout}
             </div>
           </div>
 
           <div style={{marginTop: "0px", marginBottom: "10px"}}>
             <div style={inner_style.statistics_item}>
               <div style={inner_style.statistics_count}>{state.readed_words || 0} </div>
-              <div style={inner_style.statistics_title}> words</div>
+              <div style={inner_style.statistics_title}> {tips.statistics_1}</div>
             </div>
             <div style={inner_style.statistics_item}>
 
               <div style={inner_style.statistics_count}> {state.read_days || 0}  </div>
-              <div style={inner_style.statistics_title}> days</div>
+              <div style={inner_style.statistics_title}> {tips.statistics_2}</div>
             </div>
             <div style={inner_style.statistics_item}>
 
               <div style={inner_style.statistics_count}>  {this.state.data.readed_count || 0}  </div>
-              <div style={inner_style.statistics_title}> articles</div>
+              <div style={inner_style.statistics_title}> {tips.statistics_3}</div>
             </div>
           </div>
         </div>
@@ -174,7 +175,7 @@ export default class ReadingMinePage extends Component
 
         <div style={{marginTop:"20px",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold"}}
              onClick={()=>base.goto("/collected_words")}>
-          Collected Words
+          {tips.collectWords}
           </div>  
       </div>
     );

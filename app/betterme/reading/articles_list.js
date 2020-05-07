@@ -73,9 +73,10 @@ class ArticlesList_ extends Component
     // })
   }
 
+
   render()
   {
-
+    var tips= base.getTipByLan();
     var data_state = this.props.redux_data.reading[URLS.finished_articles.name]||{};
     var status = data_state["status"] || UPDATE_DATA_STATUS.LOADING;
 
@@ -104,7 +105,9 @@ class ArticlesList_ extends Component
         {/* <div className={css.middleText}
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}
-        {articles_div.length == 0? <div style={{marginTop:"10px",textAlign:"center",color:base.COLOR.gray1}}>还没有完成的文章喔~</div>:articles_div}
+        {articles_div.length > 0?
+            <div style={{marginTop:"10px",textAlign:"center",color:base.COLOR.gray1}}>{tips.no_finished_articles_tip}</div>
+            :articles_div}
       </div>
     );
   }

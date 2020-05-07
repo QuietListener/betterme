@@ -26,10 +26,11 @@ export default class SharePage extends Component
     super(props);
     let user_id = base.getParameterByName("user_id",window.location.href);
     this.state = {
-      user_id:user_id,
-      data: {},
-      date:new Moment(),
-    };
+        user_id: user_id,
+        data: {},
+        date: new Moment(),
+        user_state: {}
+    }
 
     this.load_user_state = this.load_user_state.bind(this);
    // this.load = this.load.bind(this);
@@ -126,6 +127,13 @@ export default class SharePage extends Component
                         paddingBottom: "20px",
                          minHeight:"100px"
                       }}></CShareContent>
+
+        <div style={{textAlign:"center",marginTop:"40px"}}>
+            <a>
+                <img style={{width:"100px",height:"100px",borderRadius:"50px"}}
+                     src="https://freepic.store/static/reading/resources/imgs/bee-01.jpg"/>
+            </a>
+        </div>
     </div>
     );
   }

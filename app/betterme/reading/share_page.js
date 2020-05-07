@@ -55,7 +55,7 @@ export default class SharePage extends Component
 
   componentDidMount()
   {
-      //this.load_user_state();
+      this.load_user_state();
       //this.load();
   }
 
@@ -128,10 +128,10 @@ export default class SharePage extends Component
                          minHeight:"100px"
                       }}></CShareContent>
 
-        <div style={{textAlign:"center",marginTop:"40px"}}>
+        <div style={{textAlign:"center",marginTop:"20px"}}>
             <a>
                 <img style={{width:"100px",height:"100px",borderRadius:"50px"}}
-                     src="https://freepic.store/static/reading/resources/imgs/bee-01.jpg"/>
+                     src="https://freepic.store/static/reading/resources/imgs/bee01-squire.jpg"/>
             </a>
         </div>
     </div>

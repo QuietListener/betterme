@@ -107,6 +107,7 @@ export default class ReadingMinePage extends Component
     }
 
     var tips = base.getTipByLan();
+    let img_ = user.img||"https://freepic.store/static/reading/resources/imgs/bee02-squire.jpg"
     return (
       <div style={{padding: "0px"}}>
 
@@ -120,7 +121,7 @@ export default class ReadingMinePage extends Component
                       }}>
 
 
-            <img style={{borderRadius:"25"}} width={50} height={50} src={user.img} />
+            <img style={{borderRadius:"25"}} width={50} height={50} src={img_ } />
             <span style={{fontSize:"12px"}}>{name}</span>
 
             <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}

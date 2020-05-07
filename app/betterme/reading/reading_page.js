@@ -398,6 +398,8 @@ const Stopped = 2;
       return (<CLoading />)
     }
 
+    var lan = base.getLan();
+
     var article = this.state.data.article || {};
     var should_show_trans = this.state.data.should_show_trans || false;
     var finished = this.state.data.finished || false;
@@ -457,7 +459,8 @@ const Stopped = 2;
       })
 
 
-      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {s.trans_zh} </div>
+
+      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {lan == "zh_tw" ? s.trans_tw : s.trans_cn} </div>
 
       let show_trans_ids = this.state.show_trans_ids || [];
       let showTrans  = show_trans_ids.indexOf(s.id) >= 0;

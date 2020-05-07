@@ -135,6 +135,10 @@ export const URLS = {
 }
 
 
+export function getLan(){
+  return "zh_tw"
+}
+
 export function getTipByLan(){
 return TipByLan.ZhTw;
 }
@@ -153,7 +157,7 @@ export const TipByLan = {
 
      logout:"退出",
      collectWords:"收藏的单词",
-    no_finished_articles_tip:"还没有完成的文章喔~"
+     no_finished_articles_tip:"还没有完成的文章喔~"
   },
   ZhTw:{
     share_1:"我在",

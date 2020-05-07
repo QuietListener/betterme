@@ -157,7 +157,9 @@ export const TipByLan = {
 
      logout:"退出",
      collectWords:"收藏的单词",
-     no_finished_articles_tip:"还没有完成的文章喔~"
+     no_finished_articles_tip:"还没有完成的文章喔~",
+     commit:"评论",
+    commitTip:"我有话想说"
   },
   ZhTw:{
     share_1:"我在",
@@ -172,6 +174,8 @@ export const TipByLan = {
 
     logout:"退出",
     collectWords:"收藏的單詞",
-    no_finished_articles_tip:"還沒有完成的文章喔~"
+    no_finished_articles_tip:"還沒有完成的文章喔~",
+    commit:"評論",
+    commitTip:"我有話想說"
   }
 }

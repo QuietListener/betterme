@@ -171,17 +171,16 @@ export default class Comment extends Component
     var comments_divs = comments.map(c=>{
       return this.commentDiv(c,false);
     })
-
+    let tips = base.getTipByLan();
     return (
-
       <div>
         {/*评论框*/}
         <div style={{marginBottom:"40px",marginLeft:"10px",marginRight:"10px"}}>
          <div style={inner_style.textBox} onChange={event=>this.handleChange("commentContent",event)}>
-           <textarea  placeholder={"say something"} style={{width:"100%",height:"100px",border:"1px solid #f2f2f2",borderRadius:"4px"}} value={this.state.commentContent} ></textarea>
+           <textarea  placeholder={tips.commitTip} style={{width:"100%",height:"100px",border:"1px solid #f2f2f2",borderRadius:"4px"}} value={this.state.commentContent} ></textarea>
          </div>
          <div style={{textAlign:"right",marginRight:"2px",marginTop:"6px"}}>
-              <div className={css.ibtn} style={{fontSize:"14px",margin:"4px",fontSize:"12px",backgroundColor:"",color:"black"}} onClick={this.submitComment}> submit </div>
+              <div className={css.ibtn} style={{fontSize:"14px",margin:"4px",fontSize:"12px",backgroundColor:"",color:"black"}} onClick={this.submitComment}> {tips.commit} </div>
          </div>
 
         </div>

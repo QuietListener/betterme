@@ -393,11 +393,6 @@ const Stopped = 2;
   }
   render()
   {
-
-    if(this.state.loading == true){
-      return (<CLoading />)
-    }
-
     var lan = base.getLan();
 
     var article = this.state.data.article || {};
@@ -660,6 +655,8 @@ const Stopped = 2;
         {finished_model}
         {wordModal}
         {this.state.showModelTooFast ? toastView:null}
+
+        {this.state.loading == true? <CLoading /> : null}
 
         <div  onClick={(event)=>{
           this.closeWordModal();

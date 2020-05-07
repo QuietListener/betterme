@@ -25,9 +25,10 @@ export default class CArticle extends Component
 
   render()
   {
-    let a = this.props.a; //a 是Article
+    let pa = this.props.pa ||{}; //a 是Parent Article
+    let a = this.props.a||{}; //a 是Article
     let finished  = this.props.finished || false; //是否完成
-    let img = a.img;
+    let img = a.img || pa.img;
     let backgroundColor = "rgb(211,211,211,0.2)";
     let color= "black";
     let width = this.props.width || base.width();
@@ -46,6 +47,7 @@ export default class CArticle extends Component
     let infoWidth = width-imgWidth-40;
     let height =  imgWidth*4/3;
 
+    let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
     return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
@@ -56,7 +58,7 @@ export default class CArticle extends Component
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{a.title}</p>
+          <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
           <p className={css.smallText} style={{color:"gray",marginTop:"10px"}}>{a.author}</p>
         </div>
 

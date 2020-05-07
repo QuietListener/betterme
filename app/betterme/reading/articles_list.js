@@ -94,10 +94,18 @@ class ArticlesList_ extends Component
 
     var finished_articles_ = target_data_
     var finished_articles = finished_articles_["finished_articles"]||[];
+    var parent_articles = finished_articles_["parent_articles"]||[];
+    var pid2article = {}
+    for(let i = 0;i  < parent_articles.length; i++){
+      pid2article[parent_articles[i].id] = parent_articles[i];
+    }
+
     console.log("finished_articles",finished_articles);
 
     var articles_div = finished_articles.map(a => {
-      return <CArticle a={a} />
+
+      let pa = pid2article[a.parent_id];
+      return <CArticle a={a} pa={pa}/>
     })
 
     return (
@@ -105,7 +113,7 @@ class ArticlesList_ extends Component
         {/* <div className={css.middleText}
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}
-        {articles_div.length > 0?
+        {articles_div.length <= 0?
             <div style={{marginTop:"10px",textAlign:"center",color:base.COLOR.gray1}}>{tips.no_finished_articles_tip}</div>
             :articles_div}
       </div>

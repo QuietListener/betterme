@@ -674,7 +674,14 @@ const Stopped = 2;
           <div  style={{width:"100%",textAlign:"center",marginBottom:"40px",marginTop:"40px"}}>
             <div className={css.ibtn}
                  style={{padding:"6px",paddingTop:"10px",paddingBottom:"10px",fontSize:"16px", fontWeight:"bold",borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?"#5eca50":''}`,color:`${finished?"white":''}`}}
-                onClick={this.finish}
+                onClick={()=>{
+                  if (finished)
+                  {
+                    this.load_user_state();
+                    this.setState({showShare:true});
+                  }
+                  else{ this.finish();}
+                }}
             >
               {finished ? "FINISHED" : "FINISH"}
             </div>

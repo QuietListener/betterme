@@ -7,7 +7,7 @@ import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
 import CLoading from "./components/c_loading.js"
 import CError from "./components/c_error.js"
-import {get_all_articles, UPDATE_DATA_STATUS} from "../redux/actions/actions"
+import {get_all_articles, get_all_finished_articles, UPDATE_DATA_STATUS} from "../redux/actions/actions"
 import {Articles} from "../redux/actions/actions"
 
 const BaseHost = base.BaseHostIreading();
@@ -56,6 +56,7 @@ class ArticlesChoosePage__ extends Component
   load()
   {
     this.props.dispatch(get_all_articles());
+    this.props.dispatch(get_all_finished_articles());
     // var that = this;
     // this.setState({loading: true});
     //
@@ -109,6 +110,8 @@ class ArticlesChoosePage__ extends Component
     var all_tags = articles_data_.all_tags || [];
     var tag_2_articles = articles_data_.tag_2_articles || {};
     let choosedTagIds = this.state.choosedTagIds  || [];
+    finished_article_ids = finished_article_ids.map(t=>parseInt(t));
+    console.log("finished_article_ids",finished_article_ids);
 
     var articles = []
     if(choosedTagIds.length<=0){

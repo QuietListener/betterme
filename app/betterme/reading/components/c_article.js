@@ -46,7 +46,7 @@ export default class CArticle extends Component
     let infoWidth = width-imgWidth-40;
     let height =  imgWidth*4/3;
 
-    return (<div className={css.ibtn} style={{backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
+    return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
       {img?<div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>
@@ -63,11 +63,12 @@ export default class CArticle extends Component
 
         <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"14px",paddingBottom:"4px"}} >
           <div className={[css.box]} style={{color:"#2F4F4F"}}> <img width={12} src={levelPng} />  {a.level||1} </div>
-          <div className={[css.box]} style={{marginLeft:"10px",color:"#2F4F4F"}}> <img width={12} src={readedPng}/>  {100}</div>
-          {finished? <div className={[css.box]} style={{position:"fixed",color:"#2F4F4F",fontWeight:"bold",fontSize:"12px", right:"20px"}}> FINISHED</div> : null}
+          {/*<div className={[css.box]} style={{marginLeft:"10px",color:"#2F4F4F"}}> <img width={12} src={readedPng}/>  {100}</div>*/}
         </div>
 
       </div>
+      {finished? <div className={[css.box]} style={{position:"absolute",color:"#2F4F4F",fontWeight:"bold",fontSize:"12px", bottom:"4px", right:"4px"}}> FINISHED</div> : null}
+
     </div>)
   }
 }

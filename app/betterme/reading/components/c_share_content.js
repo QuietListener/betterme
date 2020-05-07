@@ -34,11 +34,10 @@ export default class CShareContent extends Component {
 
                 <div style={{marginTop: "30px"}}>
                     <div style={{marginTop: "20px", textAlign: "center"}}>
-                        在 BeeReading上，坚持阅读了 <span style={Styles.count}>{state.read_days || 0} </span> 天
+                        我在 <a>BeeReading</a> 上，坚持阅读了 <span style={Styles.count}>{state.read_days || 0} </span> 天
                     </div>
-
                     <div style={{marginTop: "20px", textAlign: "center"}}>
-                        学习完成了 <span style={Styles.count}>{state.readed_count || 0} 篇</span> 英文文章
+                        学完了 <span style={Styles.count}>{state.readed_count || 0} 篇</span> 英文文章
                     </div>
 
 

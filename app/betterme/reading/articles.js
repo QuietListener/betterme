@@ -28,6 +28,7 @@ export default class Articles extends Component
     this.split = this.split.bind(this);
     this.modify = this.modify.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.troogle_article = this.troogle_article.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -114,6 +115,27 @@ export default class Articles extends Component
 
   }
 
+
+  troogle_article(id)
+  {
+    var params = {
+      article_id: id
+    }
+    var that = this;
+    var url = `${BaseHost}/reading/troogle_article.json?article_id=${id}`;
+    console.log(url);
+    axios.get(url, params).then((res) => {
+      console.log("res", res);
+      alert(res.data.msg);
+      that.load();
+    }).catch(e => {
+      console.log(e);
+      this.setState({loading: false});
+      alert(e.message);
+    })
+
+  }
+
   modify(a,tag_id){
     this.setState({
       id: a.id,
@@ -130,8 +152,13 @@ export default class Articles extends Component
   renderArticle(a,tag,childCount){
     var tag_id = tag?tag.id:null;
     return <div style={{"border": "1px solid #f2f2f2", padding: "2px", margin: "4px"}}>
-      <p onClick={()=>this.toggle(a.id)}>{a.title}({childCount})</p>
+      <div>
+        <span onClick={()=>this.toggle(a.id)}>{a.title}({childCount})</span>
+        <span style={{marginLeft:"10px",border:"1px solid red",padding:"4px",backgroundColor:a.state+"" == "1" ? "gray":"white"}} onClick={()=>this.troogle_article(a.id)}> {a.state+"" == "2" ? "enabled":"disabled" } </span>
+      </div>
       {tag?<div>tag: {tag.name}({tag.id})</div>:null}
+
+
       <div><span style={{background:"black",color:"white",padding:"2px",borderRadius:"10px"}}>{a.id}</span>
         <div style={inner_style.btn} onClick={()=>this.split(a.id)}>split</div>
         <div style={inner_style.btn}  onClick={()=>base.goto(`/article/${a.id}`)}>detail</div>

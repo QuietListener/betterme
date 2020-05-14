@@ -18,7 +18,7 @@ import {connect} from "react-redux";
 import {get_all_articles, get_all_finished_articles} from "../redux/actions/actions";
 import CModal from "./components/c_modal";
 import CShareContent from "./components/c_share_content";
-
+import loadingGif from "../../resource/imgs/Spinner.gif"
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
 const Stopped = 2;
@@ -47,7 +47,8 @@ const Stopped = 2;
       progress: 0.0,
       playState: Stopped,
       showModelTooFast:false,
-      showShare:false //分享modal
+      showShare:false, //分享modal,
+      collectLoading:false
     };
 
     this.startAt = new Date();
@@ -307,11 +308,14 @@ const Stopped = 2;
 
     var url = `${BaseHost}/reading/collect_word.json`;
     console.log(url);
+    this.setState({collectLoading:true});
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.getCollectWordsIds();
+      this.setState({collectLoading:false});
     }).catch(e => {
       console.log(e);
+      this.setState({collectLoading:false});
     })
   }
 
@@ -322,11 +326,14 @@ const Stopped = 2;
 
     var url = `${BaseHost}/reading/uncollect_word.json`;
     console.log(url);
+    this.setState({collectLoading:true});
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.getCollectWordsIds();
+      this.setState({collectLoading:false});
     }).catch(e => {
       console.log(e);
+      this.setState({collectLoading:false});
     })
   }
 
@@ -495,6 +502,10 @@ const Stopped = 2;
 
           <div style={{position: "absolute", padding:"6px",top: 0, right: 4}}
                onClick={() => {
+                 if(this.state.collectLoading == true){
+                   return ;
+                 }
+
                  if (collected == false)
                  {
                    this.collectWord(to_check_word)
@@ -504,7 +515,7 @@ const Stopped = 2;
                  }
                }}>
 
-             <img width={18} src={collected ? likePng : notlikePng} />
+            {this.state.collectLoading == true ?<img width={18} src={loadingGif} /> : <img width={18} src={collected ? likePng : notlikePng} />}
           </div>
 
           <div style={{fontSize:"18px",fontWeight:"bold"}}>

@@ -586,8 +586,8 @@ const Stopped = 2;
           paddingBottom: "20px"
         }}></CShareContent>
 
-          <div  style={{borderRadius:"4px",backgroundColor:"blue",color:"white",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.share2Facebook()}> 分享到 Facebook </div>
-          <div  style={{borderRadius:"4px",backgroundColor:"gray",color:"white",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.setState({showShare:false})}> close </div>
+          <div  style={{borderRadius:"4px",backgroundColor:"gray",color:"white",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.share2Facebook()}> 分享到 Facebook </div>
+          <div  style={{borderRadius:"4px",backgroundColor:"white",color:"black",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.setState({showShare:false})}> close </div>
         </div>
       </CModal>
     }

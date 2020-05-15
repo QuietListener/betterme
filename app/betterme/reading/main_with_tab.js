@@ -24,7 +24,7 @@ const FlagMine = 1;
 const FlagArticle = 2;
 const FlagArticleOk = 3;
 
-import {test,get_all_articles,get_all_finished_articles} from "../redux/actions/actions"
+import {test,get_all_articles,get_all_finished_articles,setSettingData} from "../redux/actions/actions"
 
 class MainPageWithTab_ extends Component
 {
@@ -69,14 +69,20 @@ class MainPageWithTab_ extends Component
   }
 
   choose(id){
-    this.setState({flag:id})
+
+    this.props.dispatch(setSettingData({flag:id}));
+    this.setState({flag:id});
   }
 
   render()
   {
     let showView = null;
 
-    let flag = this.state.flag || FlagArticle;
+    let setting_data = this.props.redux_data.setting_data || {};
+    console.log("setting_data",setting_data);
+
+    let flag = setting_data.flag || FlagArticle;
+    
     if(flag == FlagArticle){
       showView =  <ArticlesChoosePage key={12121}/>
     }else if (flag == FlagMine){
@@ -85,15 +91,16 @@ class MainPageWithTab_ extends Component
       showView = <ArticleList title={"finished articles"}  key={121214}/>
     }
 
-    console.log("this.props.redux_data",this.props.redux_data);
+    console.log("this.props.redux_data--",this.props.redux_data);
 
     var hilighted = {};
     var tabsView = [];
+     
    for( let i = 0; i < this.tabFlags.length ; i++){
      let key =  this.tabFlags[i];
      let style = Object.assign(inner_style.tabItem,{borderRight: "0px"});
      let hilight = false;
-     if(key == this.state.flag){
+     if(key == flag){
        hilight = true;
      }
 
@@ -111,7 +118,7 @@ class MainPageWithTab_ extends Component
         <div style={{paddingBottom:"60px"}} >
         {showView}
         </div>
-        <div style={{position: "fixed", zIndex:10000,bottom: "0px", width:"100%", minHeight: "50px",textAlign:"center"}}>
+        <div key={"keyaaaaa"+flag} style={{position: "fixed", zIndex:10000,bottom: "0px", width:"100%", minHeight: "50px",textAlign:"center"}}>
           {tabsView}
         </div>
       </div>

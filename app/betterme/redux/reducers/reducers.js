@@ -1,15 +1,27 @@
 import { combineReducers } from 'redux'
-import {TEST, CLEAR_ALL_DATA,UPDATE_DATA_STATE,UPDATE_DATA_STATUS} from "../actions/actions.js"
+import {TEST, SET_DATA, CLEAR_ALL_DATA,UPDATE_DATA_STATE,UPDATE_DATA_STATUS} from "../actions/actions.js"
 
 export function rtest(state = {}, action) {
     console.log("action",action);
     if(action.type == TEST)
     {
-      return {text:action.text}
+        return {test:action.text}
     }
     return state;
 }
 
+
+
+export function update_setting_data(state = {}, action) {
+    console.log("action",action);
+    if(action.type == SET_DATA)
+    {
+       let newdata =  action.text || {};
+       let newstate = Object.assign(state,newdata); 
+       return newstate;
+    }
+    return state;
+}
 
 
 
@@ -61,7 +73,8 @@ function update_state(state={},action)
 
 const reducers = combineReducers({
     rtest,
-    reading:update_state
+    reading:update_state,
+    setting_data:update_setting_data
 })
 
 export default reducers;

@@ -1,6 +1,7 @@
 import {axios,URLS} from "../../base.js"
 
 export const TEST = "test"
+export const SET_DATA = "SetData"
 
 export const CLEAR_ALL_DATA = "CLEAR_ALL_DATA";
 export const UPDATE_DATA_STATE = "UPDATE_DATA_STATE"
@@ -9,6 +10,12 @@ export const UPDATE_DATA_STATUS = {
   SUCCEED:"SUCCEED",
   FAILED:"FAILED",
   INIT:"INIT",
+}
+
+
+export function setSettingData(pair)
+{
+  return { type: SET_DATA, text:pair }
 }
 
 export function test(text)

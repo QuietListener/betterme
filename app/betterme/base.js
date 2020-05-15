@@ -156,7 +156,7 @@ export function setLan(lan){
 }
 
 export function getLan(){
-  var lan_ =  getValue("language") || "zh_tw"
+  var lan_ =  getValue("language") || "zh_cn"
   return lan_;
 }
 

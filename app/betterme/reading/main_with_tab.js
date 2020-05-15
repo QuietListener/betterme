@@ -106,7 +106,8 @@ class MainPageWithTab_ extends Component
 
      let tab = <div style={style}
           onClick={()=>this.choose(key)}>
-       <img src={hilight? this.tabMap[key]["hilight"]: this.tabMap[key]["normal"]} width={20} height={20}/>
+       <img src={hilight? this.tabMap[key]["normal"]: this.tabMap[key]["normal"]} width={20} height={20}/>
+       {hilight?<div style={{margin:"auto",border:"1px solid gray",height:"1px",width:"30px"}}></div>:null}
      </div>
 
       tabsView.push(tab);

@@ -72,6 +72,7 @@ const Stopped = 2;
     this.timeoutPlay = null;
 
     this.interval = null;
+    this.lan = base.getLan();
   }
 
   componentDidMount()
@@ -257,7 +258,7 @@ const Stopped = 2;
     this.setState({loading: true});
 
     var id = this.state.id;
-    axios.get(`${BaseHost}/reading/get_article_data.json?article_id=${id}`).then((res) => {
+    axios.get(`${BaseHost}/reading/get_article_data.json?article_id=${id}&lan=${this.lan}`).then((res) => {
       console.log("res", res);
       that.setState({data: res.data.data});
       console.log(that.state);
@@ -282,7 +283,7 @@ const Stopped = 2;
 
     that.setState({loadingMean: true, to_check_word_mean: null});
 
-    axios.get(`${BaseHost}/reading/dict?word=${word.text}`).then((res) => {
+    axios.get(`${BaseHost}/reading/dict?word=${word.text}&lan=${this.lan}`).then((res) => {
       console.log("res", res);
       that.setState({loadingMean: false,to_check_word_mean:res.data});
     }).catch(e => {
@@ -338,7 +339,7 @@ const Stopped = 2;
       setTimeout(()=>{
         this.setState({collectLoading:false});
       },1000);
-      
+
     }).catch(e => {
       console.log(e);
       this.setState({collectLoading:false});

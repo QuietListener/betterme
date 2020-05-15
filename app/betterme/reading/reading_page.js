@@ -408,7 +408,8 @@ const Stopped = 2;
     })
   }
   render()
-  {
+  { 
+    let tips = base.getTipByLan();
     var lan = base.getLan();
 
     var article = this.state.data.article || {};
@@ -566,7 +567,7 @@ const Stopped = 2;
 
 
     var toastView = <CToast hide={this.hideTooFastModal}>
-      <div style={{color:"white"}}>you are too fast~</div>
+      <div style={{color:"white"}}>{tips.toofast}</div>
     </CToast>
 
     var audio = this.refs.audioRef;

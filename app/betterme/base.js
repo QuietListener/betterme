@@ -196,7 +196,8 @@ var tipCn = {
   commit:"评论",
   commitTip:"我有话想说",
   settingTip:"设置",
-  settingLan:"设置语言"
+  settingLan:"设置语言",
+  toofast:"读得太快了吧"
 };
 
 var tipTw={
@@ -214,8 +215,11 @@ var tipTw={
   commit:"評論",
   commitTip:"我有話想說",
   settingTip:"設置",
-  settingLan:"設置語言"
+  settingLan:"設置語言",
+  toofast:"讀得太快了吧"
 }
+
+
 var TipByLan_ = {}
 TipByLan_[Languages.ZhTw.name] = tipTw;
 TipByLan_[Languages.ZhCN.name] = tipCn;

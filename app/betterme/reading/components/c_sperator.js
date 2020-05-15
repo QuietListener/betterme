@@ -11,7 +11,7 @@ export default class CSeperator extends Component
 
   render()
   {
-    return (<div style={{"borderTop": "1px solid #f2f2f2  ", margin: "0px",width:"100%"}}>
+    return (<div style={Object.assign({"borderTop": "1px solid #f2f2f2  ", margin: "0px",width:"100%"},this.props.style||{})}>
     </div>)
   }
 }

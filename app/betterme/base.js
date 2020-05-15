@@ -134,48 +134,85 @@ export const URLS = {
   },
 }
 
+export function getValue(key){
+  var result = null;
+  if(window.Android) {
+    result = window.Android.getValue(key);
+  }
+  return result;
+}
+
+
+export function putValue( key , value){
+  var result
+  if(window.Android) {
+    result = window.Android.putValue(key);
+  }
+  return result;
+}
+
+export function setLan(lan){
+     putValue("language",lan);
+}
 
 export function getLan(){
-  return "zh_tw"
+  var lan_ =  getValue("language") || "zh_tw"
+  return lan_;
 }
 
 export function getTipByLan(){
-return TipByLan.ZhTw;
+return TipByLan[Languages.ZhTw.name];
 }
 
-export const TipByLan = {
-  ZhCN:{
-     share_1:"我在",
-     share_2:"上，坚持阅读了",
-     share_3:"天",
-     share_4:"学完了",
-     share_5:"篇英文文章",
-
-     statistics_1:"单词",
-     statistics_2:"天",
-     statistics_3:"文章",
-
-     logout:"退出",
-     collectWords:"收藏的单词",
-     no_finished_articles_tip:"还没有完成的文章喔~",
-     commit:"评论",
-    commitTip:"我有话想说"
-  },
+export const Languages = {
   ZhTw:{
-    share_1:"我在",
-    share_2:"上，堅持閱讀了",
-    share_3:"天",
-    share_4:"學完了",
-    share_5:"篇英文文章",
-
-    statistics_1:"單詞",
-    statistics_2:"天",
-    statistics_3:"文章",
-
-    logout:"退出",
-    collectWords:"收藏的單詞",
-    no_finished_articles_tip:"還沒有完成的文章喔~",
-    commit:"評論",
-    commitTip:"我有話想說"
+    name:"zh_tw",
+    displayName:"中文繁体"
+    },
+  ZhCN:{
+    name:"zh_cn",
+    displayName:"中文简体"
   }
 }
+
+var tipCn = {
+  share_1:"我在",
+  share_2:"上，坚持阅读了",
+  share_3:"天",
+  share_4:"学完了",
+  share_5:"篇英文文章",
+
+  statistics_1:"单词",
+  statistics_2:"天",
+  statistics_3:"文章",
+
+  logout:"退出",
+  collectWords:"收藏的单词",
+  no_finished_articles_tip:"还没有完成的文章喔~",
+  commit:"评论",
+  commitTip:"我有话想说",
+  settingTip:"设置",
+  settingLan:"设置语言"
+};
+
+var tipTw={
+  share_1:"我在",
+  share_2:"上，堅持閱讀了",
+  share_3:"天",
+  share_4:"學完了",
+  share_5:"篇英文文章",
+  statistics_1:"單詞",
+  statistics_2:"天",
+  statistics_3:"文章",
+  logout:"退出",
+  collectWords:"收藏的單詞",
+  no_finished_articles_tip:"還沒有完成的文章喔~",
+  commit:"評論",
+  commitTip:"我有話想說",
+  settingTip:"設置",
+  settingLan:"設置語言"
+}
+var TipByLan_ = {}
+TipByLan_[Languages.ZhTw.name] = tipTw;
+TipByLan_[Languages.ZhCN.name] = tipCn;
+export const TipByLan = TipByLan_;

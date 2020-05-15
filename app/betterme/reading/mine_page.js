@@ -124,13 +124,10 @@ export default class ReadingMinePage extends Component
             <img style={{borderRadius:"25"}} width={50} height={50} src={img_ } />
             <span style={{fontSize:"12px"}}>{name}</span>
 
-            <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}
-                 onClick={() => {
-                   this.logout()
-                 }}
-            >
-              {tips.logout}
-            </div>
+            {/* <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}
+                 onClick={() => { console.log("goto setting");base.goto("/setting_page")} }>
+              {tips.settingTip}
+            </div> */}
           </div>
 
           <div style={{marginTop: "0px", marginBottom: "10px"}}>
@@ -174,10 +171,16 @@ export default class ReadingMinePage extends Component
 
         <CSeperator />
 
-        <div style={{marginTop:"20px",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold"}}
+        <div style={{textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold",marginTop:"20px"}}
              onClick={()=>base.goto("/collected_words")}>
           {tips.collectWords}
           </div>  
+
+          <div style={{textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",padding:"10px",backgroundColor:"gray",color:"white",fontWeight:"bold",marginTop:"20px"}}
+             onClick={() => { console.log("goto setting");base.goto("/setting_page")} }>
+             {tips.settingTip}
+          </div>  
+
       </div>
     );
   }

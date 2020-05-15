@@ -312,7 +312,11 @@ const Stopped = 2;
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.getCollectWordsIds();
-      this.setState({collectLoading:false});
+
+      setTimeout(()=>{
+        this.setState({collectLoading:false});
+      },1000);
+     
     }).catch(e => {
       console.log(e);
       this.setState({collectLoading:false});
@@ -330,7 +334,11 @@ const Stopped = 2;
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.getCollectWordsIds();
-      this.setState({collectLoading:false});
+      
+      setTimeout(()=>{
+        this.setState({collectLoading:false});
+      },1000);
+      
     }).catch(e => {
       console.log(e);
       this.setState({collectLoading:false});

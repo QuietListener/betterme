@@ -24,6 +24,7 @@ export default class CollectedWords extends Component
     this.load = this.load.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
+    this.lan = base.getLan();
   }
 
   componentDidMount()
@@ -37,7 +38,7 @@ export default class CollectedWords extends Component
     var that = this;
     this.setState({loading: true});
 
-    axios.get(`${BaseHost}/reading/collected_words.json`).then((res) => {
+    axios.get(`${BaseHost}/reading/collected_words.json?lan=${this.lan}`).then((res) => {
       console.log("res", res);
       that.setState({data: res.data.data});
       console.log(that.state);

@@ -25,7 +25,7 @@ export default class CModal extends Component{
         width:"100%",height:"100%",textAlign:"center",color:"black",
         backgroundColor:"white"},this.props.style)}>
 
-        {closeBtn}
+        {this.props.close ? closeBtn : null}
         {this.props.children}
       </div>
     );

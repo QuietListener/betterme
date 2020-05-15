@@ -146,22 +146,26 @@ export function getValue(key){
 export function putValue( key , value){
   var result
   if(window.Android) {
-    result = window.Android.putValue(key);
+    result = window.Android.putValue(key,value);
   }
   return result;
 }
 
 export function setLan(lan){
+     console.log("base setLan,lan");
      putValue("language",lan);
 }
 
 export function getLan(){
+  console.log("base getLan");
   var lan_ =  getValue("language") || "zh_cn"
   return lan_;
 }
 
 export function getTipByLan(){
-return TipByLan[Languages.ZhTw.name];
+  console.log("base getTipByLan");
+  var lan = getLan();
+  return TipByLan[lan];
 }
 
 export const Languages = {

@@ -576,9 +576,7 @@ const Stopped = 2;
 
     let finished_model = null;
     if(this.state.showShare == true && this.state.user_state) {
-      finished_model = <CModal style={{background: "rgba(0,0,0,0.3)"}}
-                               close={() => this.setState({showShare: false})}
-      >
+      finished_model = <CModal style={{background: "rgba(0,0,0,0.3)"}} >
         <div style={{  backgroundColor: "#f2f2f2",paddingBottom:"8px"}}>
         <CShareContent
             data={this.state.user_state}
@@ -589,6 +587,7 @@ const Stopped = 2;
         }}></CShareContent>
 
           <div  style={{borderRadius:"4px",backgroundColor:"blue",color:"white",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.share2Facebook()}> 分享到 Facebook </div>
+          <div  style={{borderRadius:"4px",backgroundColor:"gray",color:"white",padding:"4px",margin:"20px",marginBottom:"20px"}} onClick={()=>this.setState({showShare:false})}> close </div>
         </div>
       </CModal>
     }

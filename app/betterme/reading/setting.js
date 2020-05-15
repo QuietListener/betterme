@@ -82,7 +82,7 @@ export default class SettingPage extends Component
       <div style={{padding: "0px"}}>
         
           <div style={{textAlign:"left",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",color:"gray",fontWeight:"bold",marginTop:"30px"}}>
-            <div style={{}}>设置语言</div>
+            <div style={{marginBottom:"12px"}}>设置语言</div>
             <div style={{textAlign:"left"}}>{lanItems}</div>
           </div>  
 

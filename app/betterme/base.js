@@ -238,7 +238,8 @@ var tipCn = {
   commitTip:"我有话想说",
   settingTip:"设置",
   settingLan:"设置语言",
-  toofast:"读得太快了吧"
+  toofast:"读得太快了吧",
+  shareTo:"分享到"
 };
 
 var tipTw={
@@ -257,7 +258,8 @@ var tipTw={
   commitTip:"我有話想說",
   settingTip:"設置",
   settingLan:"設置語言",
-  toofast:"讀得太快了吧"
+  toofast:"讀得太快了吧",
+  shareTo:"分享到"
 }
 
 var tipEnUs={
@@ -276,7 +278,8 @@ var tipEnUs={
   commitTip:"I want say something",
   settingTip:"Settings",
   settingLan:"Language",
-  toofast:"slow down~ "
+  toofast:"slow down~ ",
+  shareTo:"Share to "
 }
 
 

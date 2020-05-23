@@ -158,24 +158,48 @@ export function setLan(lan){
 
 export function getLan(){
   console.log("base getLan");
-  var lan_ =  getValue("language") || "zh_cn"
+  var lan_ =  getValue("language");
+  if(lan_ == null){
+    lan_ = getBrowerLan();
+  }
   return lan_;
 }
 
 export function getTipByLan(){
   console.log("base getTipByLan");
   var lan = getLan();
-  return TipByLan[lan];
+
+  var choosedLan = lan;
+  if(lan.indexOf('zh')>=0){
+    if(lan.indexOf('cn')>0){
+      choosedLan = Languages.ZhCN.name; //是简体中文就返回简体中文
+    }else{
+      choosedLan = Languages.ZhTw; //否则返回繁体
+    }
+  }
+  else{
+    choosedLan = Languages.En.name; //否则返回英语
+  }
+  return TipByLan[choosedLan];
+}
+
+export function getBrowerLan(){
+  var jsSrc =(navigator.language || navigator.browserLanguage).toLowerCase();
+  return jsSrc;
 }
 
 export const Languages = {
   ZhTw:{
-    name:"zh_tw",
+    name:"zh-tw",
     displayName:"中文繁体"
     },
   ZhCN:{
-    name:"zh_cn",
+    name:"zh-cn",
     displayName:"中文简体"
+  },
+  En:{
+    name:"en",
+    displayName:"English"
   }
 }
 
@@ -219,8 +243,28 @@ var tipTw={
   toofast:"讀得太快了吧"
 }
 
+var tipEnUs={
+  share_1:"我在",
+  share_2:"上，堅持閱讀了",
+  share_3:"天",
+  share_4:"學完了",
+  share_5:"篇英文文章",
+  statistics_1:"word",
+  statistics_2:"day",
+  statistics_3:"article",
+  logout:"logout",
+  collectWords:"collected words",
+  no_finished_articles_tip:"no finished articles yet~",
+  commit:"submit",
+  commitTip:"I want say something",
+  settingTip:"settings",
+  settingLan:"Language",
+  toofast:"slow down~ "
+}
+
 
 var TipByLan_ = {}
 TipByLan_[Languages.ZhTw.name] = tipTw;
 TipByLan_[Languages.ZhCN.name] = tipCn;
+TipByLan_[Languages.EnUs.name] = tipEnUs;
 export const TipByLan = TipByLan_;

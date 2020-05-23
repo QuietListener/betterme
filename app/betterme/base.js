@@ -157,13 +157,30 @@ export function setLan(lan){
 }
 
 export function getLan(){
-  console.log("base getLan");
+  
   var lan_ =  getValue("language");
   if(lan_ == null){
     lan_ = getBrowerLan();
   }
+  console.log("base getLan ",lan_);
+  //return "en-us";
   return lan_;
 }
+
+
+export function isZh(){
+  console.log("base getTipByLan");
+  var lan = getLan();
+
+  var choosedLan = lan;
+  if(lan.indexOf('zh')>=0){
+    return true;
+  }
+
+  return false;
+}
+
+
 
 export function getTipByLan(){
   console.log("base getTipByLan");
@@ -174,11 +191,11 @@ export function getTipByLan(){
     if(lan.indexOf('cn')>0){
       choosedLan = Languages.ZhCN.name; //是简体中文就返回简体中文
     }else{
-      choosedLan = Languages.ZhTw; //否则返回繁体
+      choosedLan = Languages.ZhTw.name; //否则返回繁体
     }
   }
   else{
-    choosedLan = Languages.En.name; //否则返回英语
+    choosedLan = Languages.EnUs.name; //否则返回英语
   }
   return TipByLan[choosedLan];
 }
@@ -197,7 +214,7 @@ export const Languages = {
     name:"zh-cn",
     displayName:"中文简体"
   },
-  En:{
+  EnUs:{
     name:"en",
     displayName:"English"
   }
@@ -249,15 +266,15 @@ var tipEnUs={
   share_3:"天",
   share_4:"學完了",
   share_5:"篇英文文章",
-  statistics_1:"word",
-  statistics_2:"day",
-  statistics_3:"article",
-  logout:"logout",
-  collectWords:"collected words",
+  statistics_1:"Words",
+  statistics_2:"Days",
+  statistics_3:"Articles",
+  logout:"Logout",
+  collectWords:"Collected Words",
   no_finished_articles_tip:"no finished articles yet~",
   commit:"submit",
   commitTip:"I want say something",
-  settingTip:"settings",
+  settingTip:"Settings",
   settingLan:"Language",
   toofast:"slow down~ "
 }

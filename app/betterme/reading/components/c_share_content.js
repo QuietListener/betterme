@@ -26,6 +26,7 @@ export default class CShareContent extends Component {
 
 
         var tips = base.getTipByLan();
+        var isZh = base.isZh();
         return (
             <div style={this.props.style || {}}>
                 <div style={{height: "60px", textAlign: "center", marginTop: "30px"}}>
@@ -33,6 +34,7 @@ export default class CShareContent extends Component {
                     <div>{user.name}</div>
                 </div>
 
+             {isZh ?
                 <div style={{marginTop: "30px"}}>
                     <div style={{marginTop: "20px", textAlign: "center"}}>
                         {tips.share_1} <a>BeeReading</a> {tips.share_2} <span style={Styles.count}>{state.read_days || 0} </span> {tips.share_3}
@@ -40,9 +42,17 @@ export default class CShareContent extends Component {
                     <div style={{marginTop: "20px", textAlign: "center"}}>
                         {tips.share_4} <span style={Styles.count}>{ this.props.data.readed_count || 0} </span> {tips.share_5}
                     </div>
-
-
                 </div>
+                :
+                <div style={{marginTop: "30px"}}>
+                <div style={{marginTop: "20px", textAlign: "center"}}>
+                    I'v been reading <span style={Styles.count}>{state.read_days || 0} </span>days at   <a>BeeReading</a> 
+                </div>
+                <div style={{marginTop: "20px", textAlign: "center"}}>
+                    and finished <span style={Styles.count}>{ this.props.data.readed_count || 0} </span> articles
+                </div>
+            </div>
+                }
                 <div>
 
                 </div>

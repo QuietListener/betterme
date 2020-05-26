@@ -377,7 +377,8 @@ const Stopped = 2;
 
   share2Facebook()
   {
-    var url =  base.BaseHostIreading()+"/reading/share_page?user_id="+this.state.user_id+"/#/share_page";
+    let lan = base.getLan();
+    var url =  base.BaseHostIreading()+"/reading/share_page?timestamp="+new Date().getTime()+"&user_id="+this.state.user_id+"lan="+lan+"/#/share_page";
     let content = "test";
     if(window.Android)
     {

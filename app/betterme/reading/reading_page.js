@@ -36,7 +36,7 @@ const Stopped = 2;
     console.log("id", id);
 
     this.state = {
-      user_id:10,
+      user_id:null,
       id: id,
       data: {},
       start: -1,
@@ -84,6 +84,7 @@ const Stopped = 2;
     }, 500);
 
     window.share_result = this.share_result;
+    this.load_user_state(false);
   }
 
 
@@ -392,7 +393,7 @@ const Stopped = 2;
 
 
 
-  load_user_state() {
+  load_user_state(share) {
     var that = this;
     this.setState({loading: true});
     var id = this.state.id;
@@ -400,7 +401,7 @@ const Stopped = 2;
 
     axios.get(`${BaseHost}/reading/get_user_state.json${added}`).then((res) => {
       console.log("res", res);
-      that.setState({user_state: res.data.data,loading:false,showShare:true});
+      that.setState({user_state: res.data.data,loading:false,showShare:share,user_id:res.data.data.user.id});
       console.log(that.state);
       // that.load_plans(user.id)
     }).catch(e => {
@@ -698,7 +699,7 @@ const Stopped = 2;
                 onClick={()=>{
                   if (finished)
                   {
-                    this.load_user_state();
+                    this.load_user_state(true);
                     this.setState({showShare:true});
                   }
                   else{ this.finish();}

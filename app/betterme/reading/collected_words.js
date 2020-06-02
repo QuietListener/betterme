@@ -25,6 +25,7 @@ export default class CollectedWords extends Component
     this.audioRef = new Object();
     this.timeoutPlay = null;
     this.lan = base.getLan();
+    this.playAudio = this.playAudio.bind(this);
   }
 
   componentDidMount()
@@ -32,13 +33,21 @@ export default class CollectedWords extends Component
     this.load();
   }
 
+  playAudio(text){
+   
+    var url = "https://fanyi.baidu.com/gettts?lan=uk&text="+text+"&spd=3&source=wise";
+    console.log("playAudio",url);
+    let audio = new Audio();
+    audio.src=url;
+    audio.play();
+  }
 
   load()
   {
     var that = this;
     this.setState({loading: true});
 
-    axios.get(`${BaseHost}/reading/collected_words.json?lan=${this.lan}`).then((res) => {
+    axios.get(`${BaseHost}/reading/collected_words.json?lan=${this.lan}&page=1`).then((res) => {
       console.log("res", res);
       that.setState({data: res.data.data});
       console.log(that.state);
@@ -61,7 +70,13 @@ export default class CollectedWords extends Component
     let words_div = [];
     for(let key in collect_words){
         let word = collect_words[key];
-        let word_info = word_infos[key]||{};
+        let word_info = word_infos[key]
+        if(!word_info){
+            continue;
+        }
+
+        let audio_key = "audio"+key;
+        let dateStr = base.formatDate1(word.created_at);
 
         let mean_cn = word_info.mean_cn ? word_info.mean_cn.replace("[","").replace("]","") : "";
 
@@ -71,14 +86,14 @@ export default class CollectedWords extends Component
            <span style={{color:"gray",marginLeft:"10px",fontSize:"12px"}}>{word_info.accent} </span>
 
            <div  className={[css.box]} style={{position:"absolute",right:"20px"}}>
-             <audio ref={"audio_en"} src={word.audio_en} />
-             <div onClick={()=>{this.refs["audio_en"].play();}}>
+             <div onClick={()=>{this.playAudio(word.text)}}>
                <img src={speakerPng} width={16}></img>
              </div>
            </div>
 
          </p>
           <p className={css.smallText} style={{marginTop:"8px"}}>{base.trimStr(mean_cn)}</p>
+          <p className={css.smallText} style={{textAlign:"right"}}>{dateStr}</p>
           <CSeperator/>
         </div> 
         words_div.push(div_)

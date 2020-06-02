@@ -238,6 +238,7 @@ const Stopped = 2;
     var url = `${BaseHost}/reading/finish_article.json`;
     console.log(url);
     var that = this;
+    this.setState({finishLoading:true});
     axios.post(url, params).then((res) => {
       console.log("res", res);
       this.load();
@@ -246,10 +247,12 @@ const Stopped = 2;
       that.props.dispatch(get_all_articles());
       that.load_user_state();
 
+      setTimeout(()=>this.setState({finishLoading:false}), 4000);
+
     }).catch(e => {
       console.log(e);
-      this.setState({loading: false});
-      this.load();
+      this.setState({finishLoading:false});
+      that.load();
     })
   }
 
@@ -264,7 +267,7 @@ const Stopped = 2;
       that.setState({data: res.data.data});
       console.log(that.state);
       // that.load_plans(user.id)
-      this.setState({loading: false});
+      this.setState({loading: false,finishLoading:false,collectLoading:false});
     }).catch(e => {
       console.log(e);
       this.setState({loading: false});
@@ -317,7 +320,7 @@ const Stopped = 2;
 
       setTimeout(()=>{
         this.setState({collectLoading:false});
-      },1000);
+      },2000);
      
     }).catch(e => {
       console.log(e);
@@ -671,6 +674,13 @@ const Stopped = 2;
       </div>
     }
 
+
+    var finish_view = null;
+    if(this.state.finishLoading == true){
+      finish_view = <img width={18} src={loadingGif} />;
+    }else{
+      finish_view = finished ? "FINISHED" : "FINISH";
+    }
     return (
 
       <div>
@@ -679,6 +689,8 @@ const Stopped = 2;
         {this.state.showModelTooFast ? toastView:null}
 
         {this.state.loading == true? <CLoading /> : null}
+
+       
 
         <div  onClick={(event)=>{
           this.closeWordModal();
@@ -693,6 +705,7 @@ const Stopped = 2;
           </div>
 
 
+         
           <div  style={{width:"100%",textAlign:"center",marginBottom:"40px",marginTop:"40px"}}>
             <div className={css.ibtn}
                  style={{padding:"6px",paddingTop:"10px",paddingBottom:"10px",fontSize:"16px", fontWeight:"bold",borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?base.COLOR.gray1:''}`,color:`${finished?"white":''}`}}
@@ -705,7 +718,7 @@ const Stopped = 2;
                   else{ this.finish();}
                 }}
             >
-              {finished ? "FINISHED" : "FINISH"}
+              {finish_view}
             </div>
           </div>
 

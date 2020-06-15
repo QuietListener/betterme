@@ -421,7 +421,7 @@ const Stopped = 2;
       base.goto(`/article_group/${a.id}`)
     }
 
-    setTimeout(()=>window.location.reload(),200);
+    setTimeout(()=>window.location.reload(),50);
   }
 
   load_user_state(share) {

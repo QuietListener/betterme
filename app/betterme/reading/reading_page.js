@@ -32,7 +32,7 @@ const Stopped = 2;
     var init_plans = [];//[{id:1,plan_name:"背单词",start:"2017-12-12",end:"2017-12-22"},
     //{id:2,plan_name:"跑步",start:"2017-12-12",end:"2017-12-24"}];
 
-    var id = this.props.params.id;
+    var id = this.props.params.id || parseInt(window.location.href.split("#")[1].split("/")[2]);
     console.log("id", id);
 
     this.state = {
@@ -68,8 +68,10 @@ const Stopped = 2;
     this.load_user_state = this.load_user_state.bind(this);
     this.share2Facebook = this.share2Facebook.bind(this);
     this.share_result = this.share_result.bind(this);
+    this.get_next_article = this.get_next_article.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
+    this.goto = this.goto.bind(this);
 
     this.interval = null;
     this.lan = base.getLan();
@@ -85,6 +87,7 @@ const Stopped = 2;
 
     window.share_result = this.share_result;
     this.load_user_state(false);
+    this.getRecomendation();
   }
 
 
@@ -254,6 +257,8 @@ const Stopped = 2;
       this.setState({finishLoading:false});
       that.load();
     })
+
+    this.getRecomendation();
   }
 
   load()
@@ -365,6 +370,21 @@ const Stopped = 2;
     })
   }
 
+
+
+  get_next_article(){
+
+    var that = this;
+    axios.get(`${BaseHost}/reading/get_next_article.json?article_id=${this.state.id}&time=${new Date().getTime()}`).then((res) => {
+      console.log("res", res);
+      that.setState({recomends: res.data.data});
+      console.log(that.state);    
+    }).catch(e => {
+      console.log(e);
+    })
+  }
+
+
   troogleTrans(s_id){
     var show_trans_ids = this.state.show_trans_ids || [];
     
@@ -394,7 +414,15 @@ const Stopped = 2;
   }
 
 
+  goto(a){
+    if(a.parent_id ){
+      base.goto(`/reading_page/${a.id}`)
+    }else{
+      base.goto(`/article_group/${a.id}`)
+    }
 
+    setTimeout(()=>window.location.reload(),200);
+  }
 
   load_user_state(share) {
     var that = this;
@@ -681,6 +709,20 @@ const Stopped = 2;
     }else{
       finish_view = finished ? "FINISHED" : "FINISH";
     }
+
+
+   var reco_article_div = null; 
+   //推荐
+   if(this.state.recomends && this.state.recomends.next_a){
+     let rec_a = this.state.recomends.next_a;
+    reco_article_div = <div style={{textAlign:"center",padding:"6px"}}
+                onClick={()=>this.goto(rec_a)}>
+        {rec_a.title}
+    </div>
+   }
+
+   
+
     return (
 
       <div>
@@ -723,6 +765,9 @@ const Stopped = 2;
           </div>
 
 
+          <div>
+            {reco_article_div}
+          </div>
           <div style={{marginBottom:"80px"}}>
             {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id}></Comment> :null}
           </div>

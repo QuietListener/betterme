@@ -22,7 +22,7 @@ export default class CError extends Component
       <div>
 
         <div onClick={this.refresh} style={{textAlign:"center"}}
-             tyle={{border: "1px solid red", borderRadius: "2px", fontSize: "12px", padding: "4px", margin: "0px"}}>
+             style={{border: "1px solid red", borderRadius: "2px", fontSize: "12px", padding: "4px", margin: "0px"}}>
           <img alt="" src={errorPng} style={{height: "24px", display: "inline-block", verticalAlign: "top"}}></img>
 
           <div

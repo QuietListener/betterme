@@ -715,9 +715,13 @@ const Stopped = 2;
    //推荐
    if(this.state.recomends && this.state.recomends.next_a){
      let rec_a = this.state.recomends.next_a;
-    reco_article_div = <div style={{textAlign:"center",padding:"6px"}}
+    reco_article_div = 
+    <div  style={{width:"100%",textAlign:"center",marginBottom:"20px",marginTop:"20px"}}>
+    <div style={{margin:"auto",textAlign:"left",padding:"10px",width:"90%",border:"1px solid #e5e5e5",backgroundColor:'white'}}
+                            className={css.ibtn}
                 onClick={()=>this.goto(rec_a)}>
-        {rec_a.title}
+       next: <span style={{color: base.COLOR.red,fontSize:"18px"}}>{rec_a.title}</span>
+    </div>
     </div>
    }
 
@@ -765,9 +769,9 @@ const Stopped = 2;
           </div>
 
 
-          <div>
-            {reco_article_div}
-          </div>
+          {/**推荐 */}      
+          {reco_article_div}
+
           <div style={{marginBottom:"80px"}}>
             {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id}></Comment> :null}
           </div>

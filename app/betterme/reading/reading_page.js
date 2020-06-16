@@ -22,6 +22,7 @@ import loadingGif from "../../resource/imgs/Spinner.gif"
 const BaseHost = base.BaseHostIreading();
 const Playing = 1;
 const Stopped = 2;
+import { hashHistory } from 'react-router'
 
  class ReadingPage_ extends Component
 {
@@ -420,8 +421,7 @@ const Stopped = 2;
     }else{
       base.goto(`/article_group/${a.id}`)
     }
-    this.setState({id:a.id});
-    setTimeout(()=>this.componentDidMount(),100);
+    window.location.reload();
   }
 
   load_user_state(share) {

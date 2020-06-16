@@ -87,7 +87,7 @@ const Stopped = 2;
 
     window.share_result = this.share_result;
     this.load_user_state(false);
-    this.getRecomendation();
+    this.get_next_article();
   }
 
 
@@ -258,7 +258,7 @@ const Stopped = 2;
       that.load();
     })
 
-    this.getRecomendation();
+    this.get_next_article();
   }
 
   load()
@@ -420,8 +420,8 @@ const Stopped = 2;
     }else{
       base.goto(`/article_group/${a.id}`)
     }
-
-    setTimeout(()=>window.location.reload(),50);
+    this.setState({id:a.id});
+    setTimeout(()=>this.componentDidMount(),100);
   }
 
   load_user_state(share) {

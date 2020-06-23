@@ -637,7 +637,8 @@ import { hashHistory } from 'react-router'
         backgroundColor: "#f2f2f2",
         position: "fixed",
         bottom: 0,
-        width: "100%"
+        width: "100%",
+        maxWidth:`${base.maxWidth}px`
       }}>
 
         <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>

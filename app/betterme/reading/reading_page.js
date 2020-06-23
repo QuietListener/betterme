@@ -103,7 +103,6 @@ import { hashHistory } from 'react-router'
   {
     try
     {
-
       var audio = this.refs.audioRef;
       var sentences = this.state.data.sentences || [];
       var splits_ = this.state.data.splits || [];
@@ -421,7 +420,7 @@ import { hashHistory } from 'react-router'
     }else{
       base.goto(`/article_group/${a.id}`)
     }
-    window.location.reload();
+    //window.location.reload();
   }
 
   load_user_state(share) {

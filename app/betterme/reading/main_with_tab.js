@@ -119,7 +119,7 @@ class MainPageWithTab_ extends Component
         <div style={{paddingBottom:"60px"}} >
         {showView}
         </div>
-        <div key={"keyaaaaa"+flag} style={{position: "fixed", zIndex:10000,bottom: "0px", width:"100%", minHeight: "50px",textAlign:"center"}}>
+        <div key={"keyaaaaa"+flag} style={{position: "fixed", display:"relative",zIndex:10000,bottom: "0px", width:"100%",maxWidth:"1024px", minHeight: "50px",textAlign:"center"}}>
           {tabsView}
         </div>
       </div>

@@ -78,7 +78,7 @@ export default class ArticleGroup extends Component
     if(imgWidth > 120){
       imgWidth = 120;
     }
-    let infoWidth = base.width() - imgWidth - 20;
+    let infoWidth = null;//base.width() - imgWidth - 20;
     let height = imgWidth*4/3;
     return (
       <div style={{textAlign:"left"}}>

@@ -106,7 +106,7 @@ class ArticlesList_ extends Component
     var articles_div = finished_articles.map(a => {
 
       let pa = pid2article[a.parent_id];
-      return <CArticleCard a={a} pa={pa}/>
+      return <CArticle a={a} pa={pa}/>
     })
 
     return (

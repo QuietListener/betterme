@@ -6,7 +6,7 @@ import readedPng from "../../../resource/imgs/readed.png"
 import levelPng from "../../../resource/imgs/level.png"
 
 
-export default class CArticle extends Component
+export default class CArticleCard extends Component
 {
   constructor(props)
   {
@@ -34,20 +34,21 @@ export default class CArticle extends Component
     let width = this.props.width || base.width();
     //let height = width + 50;
 
-    let border = null;
     if(finished){
       //backgroundColor = "#5eca50 "
       color="white";
-      border = "1px dotted green"
     }
 
 
-    let imgWidth = 0.3*width;
-    let infoWidth = 0.3*width;//width-imgWidth-40;
+    let imgWidth = 0.28*width;
+    if(imgWidth > 70){
+      imgWidth = 70;
+    }
+    let infoWidth = null;//width-imgWidth-40;
     let height =  imgWidth*4/3;
 
     let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
-    return (<div className={css.ibtn} style={{border:border,position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${infoWidth}px`,marginTop:"4px",marginBottom:"14px",margin:"4px", height:`${height+50}px`,textAlign:"center",marginLet:"2px"}}
+    return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
       {img?<div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>
@@ -60,7 +61,15 @@ export default class CArticle extends Component
           <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
           <p className={css.smallText} style={{color:"gray",marginTop:"10px"}}>{a.author}</p>
         </div>
+
+
+        <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"14px",paddingBottom:"4px"}} >
+          <div className={[css.box]} style={{color:"#2F4F4F"}}> <img width={12} src={levelPng} />  {a.level||1} </div>
+          {/*<div className={[css.box]} style={{marginLeft:"10px",color:"#2F4F4F"}}> <img width={12} src={readedPng}/>  {100}</div>*/}
+        </div>
+
       </div>
+      {finished? <div className={[css.box]} style={{position:"absolute",color:"#2F4F4F",fontWeight:"bold",fontSize:"12px", bottom:"4px", right:"4px"}}> FINISHED</div> : null}
 
     </div>)
   }

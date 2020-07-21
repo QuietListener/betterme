@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {axios} from "../base.js"
 import * as base from "../base.js"
 import CArticle from "./components/c_article"
+import CArticleCard from "./components/c_article_card"
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
 import { get_all_finished_articles, UPDATE_DATA_STATUS} from "../redux/actions/actions";
@@ -105,11 +106,11 @@ class ArticlesList_ extends Component
     var articles_div = finished_articles.map(a => {
 
       let pa = pid2article[a.parent_id];
-      return <CArticle a={a} pa={pa}/>
+      return <CArticleCard a={a} pa={pa}/>
     })
 
     return (
-      <div style={{padding:"12px"}}>
+      <div style={{padding:"12px",textAlign:"center"}}>
         {/* <div className={css.middleText}
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}

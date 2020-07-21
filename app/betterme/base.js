@@ -5,8 +5,8 @@ export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
 export const BaseHost = "http://localhost:3000"
 export function BaseHostIreading() {
-  //return "http://localhost:3100"
-  return "https://freepic.store"
+  return "http://localhost:3100"
+  //return "https://freepic.store"
 }
 
 export function getParameterByName(name, url) {
@@ -29,7 +29,10 @@ export function goto(path)
 }
 
 export function width() {
-  return document.body.clientWidth || window.innerWidth;
+  let w1 =  document.body.clientWidth || window.innerWidth;
+  let w2 = maxWidth;
+
+  return w1;
 }
 
 export function height() {

@@ -160,7 +160,7 @@ class ArticlesChoosePage__ extends Component
           {tags_div}
         </div>
 
-        <div style={{margin:"12px"}}>
+        <div style={{margin:"12px",textAlign:"center"}}>
           {articles_div}
         </div>
 

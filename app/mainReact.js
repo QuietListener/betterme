@@ -13,6 +13,7 @@ import MainPageWithTab from "./betterme/reading/main_with_tab.js"
 import CollectedWords from  "./betterme/reading/collected_words.js"
 import SharePage from  "./betterme/reading/share_page.js"
 import SettingPage from  "./betterme/reading/setting.js"
+import Signin from  "./betterme/reading/signin.js"
 
 //
 // import Home from './betterme/home.js'
@@ -47,8 +48,8 @@ class App extends Component
         <Provider store={store}>
 
           <Router history={hashHistory}>
-
-
+            
+            <Route path="/signin" component={Signin}></Route>
             <Route path="/article/:id" component={Article}></Route>
             <Route path="/articles" component={Articles}></Route>
 

@@ -90,6 +90,51 @@ function update_state(state={},action)
 
 }
 
+function override_state(state={},action)
+{
+  if(action.type == UPDATE_DATA_STATE)
+  {
+    var {name,url,status,data,e} = action.text;
+
+    if(name == null)
+    {
+      console.error("update_state error",action);
+      return state;
+    }
+
+    if(name == CLEAR_ALL_DATA)
+    {
+      return {};
+    }
+
+    if(state[name] == null)
+    {
+      state[name] = {};
+    }
+
+    if(status == UPDATE_DATA_STATUS.SUCCEED)
+    {
+      state[name] = {url,status,data,e}
+    }
+    else if(status == UPDATE_DATA_STATUS.FAILED || status == UPDATE_DATA_STATUS.LOADING )
+    {
+      state[name][`url`] = url;
+      state[name][`status`] = status;
+      state[name][`e`] = e;
+      state[name][`data`] = data;
+    }
+    else if(status == UPDATE_DATA_STATUS.INIT)
+    {
+      state[name] = {};
+    }
+
+    return Object.assign({},state);
+  }
+
+  return state;
+
+}
+
 
 
 async function return_get_data_func_(type,dispatch,getState,call_back,method,postData)

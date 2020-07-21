@@ -29,7 +29,7 @@ function update_state(state={},action)
 {
     if(action.type == UPDATE_DATA_STATE)
     {
-        var {name,url,status,data,e} = action.text;
+        var {name,url,status,data,e,force} = action.text;
 
         if(name == null)
         {

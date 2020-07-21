@@ -88,7 +88,7 @@ class SettingPage_ extends Component
     }
 
   
-    let loginModal = <CModalLogin />
+    let loginModal = null;// <CModalLogin />
     
     return (
       <div style={{padding: "0px"}}>

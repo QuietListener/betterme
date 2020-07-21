@@ -3,7 +3,7 @@ import * as base from "../base.js"
 import {axios} from "../base.js"
 import CCalendar from "./components/c_calendar.js"
 import css from "./css/ireading.css"
-
+import {connect} from "react-redux";
 
 const BaseHost = base.BaseHostIreading();
 import Moment from "moment"
@@ -13,7 +13,7 @@ import playPng from "../../resource/imgs/play.png";
 import arrayLeftPng from "../../resource/imgs/array_left.png"
 import arrayRightPng from "../../resource/imgs/array_right.png"
 
-export default class ReadingMinePage extends Component
+ class ReadingMinePage_ extends Component
 {
 
   constructor(props)
@@ -91,6 +91,7 @@ export default class ReadingMinePage extends Component
     }
 
     var user = this.state.data.user || {};
+
     var state = this.state.data.state || {};
     var date = this.state.date;
     var finish_dates_ = this.state.data.finish_dates || [];
@@ -101,6 +102,11 @@ export default class ReadingMinePage extends Component
       }
     )
 
+  
+    
+ 
+    let logined = (user != null && user != {} && user["access_token"]);
+
     let name =  user.name;
     if(name && name.length > 20){
       name = name.substring(0,20)+"..."
@@ -108,6 +114,8 @@ export default class ReadingMinePage extends Component
 
     var tips = base.getTipByLan();
     let img_ = user.img || "https://freepic.store/static/reading/resources/imgs/bee02_squire.jpg"
+
+    let notLogin = "点击登录"
     return (
       <div style={{padding: "0px"}}>
 
@@ -121,8 +129,12 @@ export default class ReadingMinePage extends Component
                       }}>
 
 
-            {/* <img style={{borderRadius:"25"}} width={50} height={50} src={img_ } /> */}
+           {logined?<img style={{borderRadius:"20"}} width={40} height={40} src={img_ } /> : null} 
+
+            {logined ? 
             <span style={{fontSize:"12px"}}>{name}</span>
+            : <span onClick={()=>{base.goto("/signin")}} style={{fontSize:"12px"}}>{notLogin}</span>
+          }
 
             {/* <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}
                  onClick={() => { console.log("goto setting");base.goto("/setting_page")} }>
@@ -202,3 +214,12 @@ const inner_style = {
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top", "padding": "2px", "margin": "4px", border: "1px solid"}
 }
+
+
+const mapStateToProps = state => {
+  return {
+    redux_data: state,
+  }
+}
+const ReadingMinePage = connect(mapStateToProps)(ReadingMinePage_)
+export default ReadingMinePage;

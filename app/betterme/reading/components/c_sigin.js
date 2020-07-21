@@ -17,7 +17,7 @@ export default class CSignin extends Component
   }
 
   componentDidMount(){
-    this.loadImg();
+    // this.loadImg();
   }
 
   loadImg(){
@@ -49,11 +49,26 @@ export default class CSignin extends Component
   {
     return (
     <div style={{}}>
-      <div>
-        <input ref={"name"}></input>
-        <input ref={"password"}></input>
-        <input ref={"yzm"}></input>
-        <img src={""}></img>
+      <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px"}}>
+         <div style={{textAlign:null,marginTop:"4px"}}>
+          <input ref={"name"} placeholder="邮箱或者手机号码" style={{minWidth:"200px"}} ></input>
+          </div>
+
+        <div style={{textAlign:null,marginTop:"4px"}}>
+          <input ref={"password"} placeholder="密码" style={{minWidth:"200px"}} ></input>
+          </div>
+
+        {/* <input ref={"yzm"}></input>
+        <img src={""}></img> */}
+
+        <div style={{marginTop:"6px",textAlign:"center"}}>
+        <button style={{width:"95px",marginRight:"4px"}} 
+          onClick={()=>{}}> 登录</button>
+
+           <button style={{width:"95px"}}
+          onClick={()=>{}}> 注册</button>
+        </div>
+   
 
       </div>
     </div>

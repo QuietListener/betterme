@@ -121,7 +121,7 @@ export default class ReadingMinePage extends Component
                       }}>
 
 
-            <img style={{borderRadius:"25"}} width={50} height={50} src={img_ } />
+            {/* <img style={{borderRadius:"25"}} width={50} height={50} src={img_ } /> */}
             <span style={{fontSize:"12px"}}>{name}</span>
 
             {/* <div style={{position: "absolute", top: "10px", right: "10px",fontSize:"12px",color:"white",border:"1px solid",borderColor:"white",padding:"4px",borderRadius:"2px"}}

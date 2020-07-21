@@ -14,6 +14,8 @@ import playPng from "../../resource/imgs/play.png";
 import arrayLeftPng from "../../resource/imgs/array_left.png"
 import arrayRightPng from "../../resource/imgs/array_right.png"
 
+import CModalLogin from  "./components/c_modal_login.js"
+
 class SettingPage_ extends Component
 {
   constructor(props)
@@ -86,9 +88,11 @@ class SettingPage_ extends Component
     }
 
   
+    let loginModal = <CModalLogin />
     
     return (
       <div style={{padding: "0px"}}>
+          {loginModal}
         
           <div style={{textAlign:"left",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",color:"gray",fontWeight:"bold",marginTop:"30px"}}>
             <div style={{marginBottom:"12px"}}>设置语言</div>

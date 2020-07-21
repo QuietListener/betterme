@@ -187,7 +187,7 @@ export function login(name,password){
   }
 }
 
-export function signin(name,password,captcha,fileName){
+export function signin(name,password,captcha,fileName,call_back){
   console.log("signin");
   return function(dispatch,getState) {
     return_get_data_func_(URLS.signin,dispatch,getState,()=>{

@@ -5,8 +5,10 @@ import Moment from "moment"
 import css from "../css/ireading.css"
 import readedPng from "../../../resource/imgs/readed.png"
 import levelPng from "../../../resource/imgs/level.png"
+const BaseHost = base.BaseHostIreading();
 
-
+const LOGIN = 1;
+const REGISTER = 2;
 export default class CSignin extends Component
 {
   constructor(props)
@@ -14,6 +16,7 @@ export default class CSignin extends Component
     super(props);
     this.goto = this.goto.bind(this);
     this.loadImg = this.loadImg.bind(this);
+    this.state={state:LOGIN}
   }
 
   componentDidMount(){
@@ -21,19 +24,21 @@ export default class CSignin extends Component
   }
 
   loadImg(){
-    var url = "https://freepic.store/reading/mini_captcha?t="+new Date().getTime();
-    axios.get(url).then((res) => {
-      console.log("res", res);
-      
-      let filename = res["header"]
-          .get("content-disposition")
-          .split('"')[1];
-      
-      console.log(filename);
-
-    }).catch(e => {
-      console.error(e);
-    })
+    
+      var that = this;
+      this.setState({loading: true});
+  
+      var id = this.state.id;
+      axios.get(`${BaseHost}/reading/mini_captcha1.json`).then((res) => {
+        console.log("res", res);
+        that.setState({data: res.data});
+        console.log(that.state);
+        // that.load_plans(user.id)
+      }).catch(e => {
+        console.log(e);
+        this.setState({loading: false});
+      })
+  
   }
   
   goto(a){
@@ -47,9 +52,31 @@ export default class CSignin extends Component
 
   render()
   {
+
+
+    let state = this.state.state;
+
+    let base64Img = "";
+    if(this.state.data){
+        base64Img = this.state.data.img;
+    }
     return (
-    <div style={{}}>
-      <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px"}}>
+    <div style={{textAlign:"center"}}>
+
+    <div style={{marginTop:"6px",textAlign:"center"}}>
+        <div style={{width:"95px",marginRight:"4px",display:"inline-block",borderBottom:`${state == LOGIN ? "1px solid":  ""}`}}
+           onClick={()=>this.setState({state:LOGIN}) }>  登录</div>
+
+           <div style={{width:"95px",display:"inline-block",borderBottom:`${state == REGISTER ? "1px solid" :  ""}` }}
+           onClick={()=>{ 
+             this.setState({state:REGISTER}) ;
+             if(this.state.data == null ){
+              this.loadImg();}
+           } }> 注册</div>
+        </div>
+   
+
+      <div style={{textAlign:"center",marginTop:"12px",minWidth:"200px"}}>
          <div style={{textAlign:null,marginTop:"4px"}}>
           <input ref={"name"} placeholder="邮箱或者手机号码" style={{minWidth:"200px"}} ></input>
           </div>
@@ -58,17 +85,18 @@ export default class CSignin extends Component
           <input ref={"password"} placeholder="密码" style={{minWidth:"200px"}} ></input>
           </div>
 
-        {/* <input ref={"yzm"}></input>
-        <img src={""}></img> */}
+      {this.state.state == REGISTER ?
+          <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px",marginTop:"8px"}}>
+            <img src={"data:image/jpg;base64,"+base64Img} style={{height:"20px",width:"70px",display:"inline-block",verticalAlign:"top",marginRight:"4px"}}  onClick={this.loadImg}/>
+            <input ref={"yzm"} placeholder="验证码" style={{width:"120px",display:"inline-block",verticalAlign:"top"}}></input>
+        </div>:null
+      }
 
         <div style={{marginTop:"6px",textAlign:"center"}}>
-        <button style={{width:"95px",marginRight:"4px"}} 
-          onClick={()=>{}}> 登录</button>
-
-           <button style={{width:"95px"}}
-          onClick={()=>{}}> 注册</button>
+        <button style={{width:"200px",marginRight:"4px"}} 
+          onClick={()=>{}}> 提交</button>
         </div>
-   
+
 
       </div>
     </div>

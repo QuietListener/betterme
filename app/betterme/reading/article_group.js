@@ -3,7 +3,7 @@ import * as base from "../base.js"
 import css from "./css/ireading.css"
 import {axios} from "../base.js"
 import CSeperator from "./components/c_sperator.js"
-import CArticle from "./components/c_article.js"
+import CArticle from "./components/c_article_card.js"
 import readedPng from "../../resource/imgs/readed.png"
 import levelPng from "../../resource/imgs/level.png"
 

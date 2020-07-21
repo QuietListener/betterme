@@ -26,14 +26,14 @@ class Signin_ extends Component
 
   render(){
 
-   var userInfo = this.props.redux_data.reading[base.URLS.signin.name]||{};
+
+   let access_token = base.getCookie("access_token");
 
    let showDiv = null;
-    if(userInfo && userInfo["data"] && userInfo["data"]["user"]){
-      let name = userInfo["data"]["user"]["name"];
+    if(access_token){
       showDiv = <div>
-            <div>{name} 已经登录</div>
-            <div onClick={()=>base.goto("/")}>去首页</div>
+        <div>登录成功</div>
+        <div onClick={()=>base.goto("/")}>去首页</div>
       </div>
     }else{
       showDiv = <CSignin></CSignin>;

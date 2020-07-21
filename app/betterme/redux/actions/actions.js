@@ -35,12 +35,12 @@ async function fetch_data(dispatch,getState,key,url,func)
 }
 
 
-export function update_data_state(name,url,status,data,e)
+export function update_data_state(name,url,status,data,e,forceUpdateData)
 {
   return {
     type: UPDATE_DATA_STATE,
     text:{
-      name,url,status,data,e
+      name,url,status,data,e,forceUpdateData
     }
   }
 }
@@ -255,6 +255,6 @@ export function logout(){
     dispatch(update_data_state(
       type.name,
       type.url(),
-      UPDATE_DATA_STATUS.FAILED,null,null));
+      UPDATE_DATA_STATUS.FAILED,null,null,true));
   }
 }

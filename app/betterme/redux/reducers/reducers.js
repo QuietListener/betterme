@@ -56,6 +56,9 @@ function update_state(state={},action)
             state[name][`url`] = url;
             state[name][`status`] = status;
             state[name][`e`] = e;
+            if(force == true){
+                state[name][`data`] = data;
+            }
         }
         else if(status == UPDATE_DATA_STATUS.INIT)
         {

@@ -15,6 +15,7 @@ import arrayRightPng from "../../resource/imgs/array_right.png"
 import CShareContent from "./components/c_share_content";
 import CSignin from "./components/c_sigin";
 import {connect} from "react-redux";
+import CLoading from './components/c_loading.js';
 
 class Signin_ extends Component
 {
@@ -22,6 +23,35 @@ class Signin_ extends Component
   constructor(props)
   {
     super(props);
+    this.state = {loading:false}
+    this.load = this.load.bind(this);
+  }
+
+  componentDidMount()
+  {
+    this.load();
+  }
+
+  load()
+  {
+    let access_token = base.getCookie("access_token");
+    if(access_token && access_token.length > 0){
+      var that = this;
+      this.setState({loading: true});
+
+      var id = this.state.id;
+      axios.get(`${BaseHost}/reading/userInfo.json`).then((res) => {
+        console.log("res", res);
+        that.setState({data: res.data});
+        console.log(that.state);
+        // that.load_plans(user.id)
+        this.setState({loading: false});
+      }).catch(e => {
+        console.log(e);
+        this.setState({loading: false});
+      })
+
+    }
   }
 
   render(){
@@ -29,10 +59,20 @@ class Signin_ extends Component
 
    let access_token = base.getCookie("access_token");
 
+   let data = this.state.data;
+   let user = data && data['user'] ? data['user'] : {};
+
    let showDiv = null;
-    if(access_token){
+   if(access_token){
       showDiv = <div>
-        <div>登录成功</div>
+      
+        {this.state.loading == true 
+        ? 
+         <CLoading></CLoading>
+         :
+         <span> {user.name} </span>
+        }
+        <span>登录成功</span>
         <div onClick={()=>base.goto("/")}>去首页</div>
       </div>
     }else{

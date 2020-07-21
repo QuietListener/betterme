@@ -278,6 +278,11 @@ export function setCookie(name, value, seconds) {
   document.cookie = name+"="+escape(value)+expires+"; path=/";   //转码并赋值
 }
 
+
+export function getAccessToken(){
+  return getCookie("access_token");
+}
+
 var tipCn = {
   share_1:"我在",
   share_2:"上，坚持阅读了",

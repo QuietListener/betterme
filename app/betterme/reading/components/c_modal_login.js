@@ -12,11 +12,13 @@ class CModalLogin_ extends Component
     this.state = {
       show: true
     }
+
+    this.hide = this.hide.bind(this);
   }
 
   componentDidMount()
   {
-    setTimeout(() => this.hide(), this.props.timeout || 2000);
+  
   }
 
 
@@ -35,9 +37,13 @@ class CModalLogin_ extends Component
     //   return null;
 
     return (
-      <CModal style={{backgroundColor: "rgba(0,0,0,0.2)"}} showCloseBtn={true}>
-            <CSignin></CSignin>
-            asdfasdfa
+      <CModal style={{backgroundColor: "white"}} close={this.hide} showCloseBtn={true}>
+        <div style={{marginTop:"20px",marginBottom:"40px"}}>
+          <p>登录才能继续操作喔</p>
+        </div>
+
+       <CSignin></CSignin>
+          
       </CModal>
     );
   }

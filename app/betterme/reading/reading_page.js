@@ -23,6 +23,7 @@ const BaseHost = base.BaseHostIreading();
 const Playing = 1;
 const Stopped = 2;
 import { hashHistory } from 'react-router'
+import CModalLogin from './components/c_modal_login';
 
  class ReadingPage_ extends Component
 {
@@ -49,7 +50,8 @@ import { hashHistory } from 'react-router'
       playState: Stopped,
       showModelTooFast:false,
       showShare:false, //分享modal,
-      collectLoading:false
+      collectLoading:false,
+      showLoginModal:false//打开
     };
 
     this.startAt = new Date();
@@ -72,6 +74,7 @@ import { hashHistory } from 'react-router'
     this.get_next_article = this.get_next_article.bind(this);
     this.audioRef = new Object();
     this.timeoutPlay = null;
+    this.showLoginModal = this.showLoginModal.bind(this);
     this.goto = this.goto.bind(this);
 
     this.interval = null;
@@ -217,12 +220,25 @@ import { hashHistory } from 'react-router'
     this.setState({showModelTooFast:true});
   }
 
+
+  showLoginModal(){
+    if(!base.getAccessToken()){
+      this.setState({showLoginModal:true});
+      return true;
+    }
+
+    return false;
+  }
+
   hideTooFastModal(){
     this.setState({showModelTooFast:false});
   }
 
   finish()
   {
+    if(this.showLoginModal()){
+      return;
+    }
 
     let now = new Date();
     let span = now.getTime() - this.startAt.getTime();
@@ -312,6 +328,11 @@ import { hashHistory } from 'react-router'
 
 
   collectWord(w){
+
+    if(this.showLoginModal()){
+      return;
+    };
+    
     var params = {
       word_id: w.id,
     }
@@ -486,6 +507,8 @@ import { hashHistory } from 'react-router'
           margin = 0;
         }
 
+
+      
         return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: `${padding}px`,margin:`${margin}px`,fontSize:"14px",backgroundColor:backgroundColor,color:color,fontWeight:fontWeight,borderRadius:"2px"}}
 
                     onClick={(event)=>{
@@ -503,6 +526,8 @@ import { hashHistory } from 'react-router'
       })
 
 
+
+     
 
       let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {lan == "zh_tw" ? s.trans_tw : s.trans_cn} </div>
 
@@ -727,9 +752,12 @@ import { hashHistory } from 'react-router'
 
    
 
+   let loginModal = this.state.showLoginModal == true ? <CModalLogin hide={()=>this.setState({showLoginModal:false})}></CModalLogin> :null;
+
     return (
 
       <div>
+        {loginModal}
         {finished_model}
         {wordModal}
         {this.state.showModelTooFast ? toastView:null}
@@ -756,13 +784,17 @@ import { hashHistory } from 'react-router'
             <div className={css.ibtn}
                  style={{padding:"6px",paddingTop:"10px",paddingBottom:"10px",fontSize:"16px", fontWeight:"bold",borderRadius:"4px",width:"90%",display:"inline-block",margin:"auto",backgroundColor:`${finished?base.COLOR.gray1:''}`,color:`${finished?"white":''}`}}
                 onClick={()=>{
-                  if (finished)
-                  {
-                    this.load_user_state(true);
-                    this.setState({showShare:true});
-                  }
-                  else{ this.finish();}
-                }}
+
+                    if (finished)
+                    {
+                      this.load_user_state(true);
+                      this.setState({showShare:true});
+                    }
+                    else{ 
+                      this.finish();
+                    }
+                }
+              }
             >
               {finish_view}
             </div>

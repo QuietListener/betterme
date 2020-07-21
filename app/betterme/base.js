@@ -32,7 +32,13 @@ export function width() {
   let w1 =  document.body.clientWidth || window.innerWidth;
   let w2 = maxWidth;
 
-  return w1;
+  console.log("w1 w2",w1,w2);
+  if(w1 < w2){
+    return w1;
+  }
+
+  return w2;
+
 }
 
 export function height() {

@@ -31,7 +31,9 @@ export default class CArticle extends Component
     let img = a.img || pa.img;
     let backgroundColor = "rgb(211,211,211,0.2)";
     let color= "black";
+   
     let width = this.props.width || base.width();
+    console.log("final width",width)
     //let height = width + 50;
 
     let border = null;
@@ -47,7 +49,7 @@ export default class CArticle extends Component
     let height =  imgWidth*4/3;
 
     let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
-    return (<div className={css.ibtn} style={{border:border,position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${infoWidth}px`,marginTop:"4px",marginBottom:"14px",margin:"4px", height:`${height+50}px`,textAlign:"center",marginLet:"2px"}}
+    return (<div className={css.ibtn} style={{border:border,position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${infoWidth}px`,marginTop:"4px",marginBottom:"14px",margin:"2px", height:`${height+60}px`,textAlign:"center",marginLet:"2px"}}
                  onClick={()=>this.goto(a)}>
 
       {img?<div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>
@@ -56,9 +58,9 @@ export default class CArticle extends Component
 
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
-        <div className={css.smallText} style={{paddingTop:"4px",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
-          <p className={css.smallText} style={{color:"gray",marginTop:"10px"}}>{a.author}</p>
+        <div className={css.smallText} style={{paddingTop:"4px",overflowX:"wrap", color:color,fontSize:"10px",paddingBottom:"1px"}} >
+          <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: null, textOverflow: "ellipsis",fontSize:"10px"}}>{title}</p>
+          <p className={css.smallText} style={{color:"gray",marginTop:"2px"}}>{a.author}</p>
         </div>
       </div>
 

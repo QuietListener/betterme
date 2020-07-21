@@ -129,11 +129,11 @@ class ArticlesChoosePage__ extends Component
     }
     console.log("articles", articles);
 
-    let articleWidth = base.width()-40;
+    //let articleWidth = base.width()-40;
     var articles_div = articles.map(a => {
       let aa = a;
       let finished = (finished_article_ids.indexOf(a.id) >= 0)
-      return <CArticle a={aa} width={articleWidth} finished={finished}  key={"article_id__"+aa.id}/>
+      return <CArticle a={aa} width={null} finished={finished}  key={"article_id__"+aa.id}/>
     })
 
     var tags_div = all_tags.map(t=>{
@@ -160,7 +160,7 @@ class ArticlesChoosePage__ extends Component
           {tags_div}
         </div>
 
-        <div style={{margin:"12px",textAlign:"center"}}>
+        <div style={{margin:"2px",textAlign:"center"}}>
           {articles_div}
         </div>
 

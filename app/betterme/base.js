@@ -142,6 +142,9 @@ export function getValue(key){
   var result = null;
   if(window.Android) {
     result = window.Android.getValue(key);
+  }else if (window.localStorage){
+    let storage = window.localStorage;
+    result = storage[key];
   }
   return result;
 }
@@ -151,6 +154,9 @@ export function putValue( key , value){
   var result
   if(window.Android) {
     result = window.Android.putValue(key,value);
+  }else if(window.localStorage){
+    let storage = window.localStorage;
+    storage[key]=value;
   }
   return result;
 }

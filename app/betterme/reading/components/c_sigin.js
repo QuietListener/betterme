@@ -5,17 +5,22 @@ import Moment from "moment"
 import css from "../css/ireading.css"
 import readedPng from "../../../resource/imgs/readed.png"
 import levelPng from "../../../resource/imgs/level.png"
+
+import {connect} from "react-redux";
+import {login, signin} from "../../redux/actions/actions"
+
 const BaseHost = base.BaseHostIreading();
 
 const LOGIN = 1;
 const REGISTER = 2;
-export default class CSignin extends Component
+class CSignin_ extends Component
 {
   constructor(props)
   {
     super(props);
     this.goto = this.goto.bind(this);
     this.loadImg = this.loadImg.bind(this);
+    this.login_ = this.login_.bind(this);
     this.state={state:LOGIN}
   }
 
@@ -38,7 +43,6 @@ export default class CSignin extends Component
         console.log(e);
         this.setState({loading: false});
       })
-  
   }
   
   goto(a){
@@ -50,15 +54,24 @@ export default class CSignin extends Component
 
   }
 
+  signin_(name,password,captcha,fileName){
+    this.props.dispatch(signin(name,password,captcha,fileName));
+  }
+
+
+  login_(name,password){
+    this.props.dispatch(login(name,password));
+  }
+
   render()
   {
-
-
     let state = this.state.state;
 
     let base64Img = "";
+    let fileName= '';
     if(this.state.data){
         base64Img = this.state.data.img;
+        fileName = this.state.data.code_flag;
     }
     return (
     <div style={{textAlign:"center"}}>
@@ -94,9 +107,19 @@ export default class CSignin extends Component
 
         <div style={{marginTop:"6px",textAlign:"center"}}>
         <button style={{width:"200px",marginRight:"4px"}} 
-          onClick={()=>{}}> 提交</button>
+          onClick={()=>{
+            
+            let name = this.refs["name"].value;
+            let password = this.refs["password"].value
+            console.log("name,password",name,password);
+            if(this.state.state == LOGIN){
+               this.login_(name,password);
+            }else{
+              let yzm = this.refs["yzm"].value
+              this.signin_(name,password,yzm,fileName);
+            }
+          }}> 提交</button>
         </div>
-
 
       </div>
     </div>
@@ -111,3 +134,12 @@ const inner_style = {
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}
 }
+
+
+const mapStateToProps = state => {
+  return {
+    redux_data: state,
+  }
+}
+const CSignin = connect(mapStateToProps)(CSignin_)
+export default  CSignin;

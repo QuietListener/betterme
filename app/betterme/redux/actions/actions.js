@@ -1,4 +1,4 @@
-import {axios,URLS} from "../../base.js"
+import {axios,URLS,setCookie,getCookie} from "../../base.js"
 
 export const TEST = "test"
 export const SET_DATA = "SetData"
@@ -90,7 +90,9 @@ function update_state(state={},action)
 
 }
 
-async function return_get_data_func(type,dispatch,getState,call_back)
+
+
+async function return_get_data_func_(type,dispatch,getState,call_back,method,postData)
 {
   var state = getState();
   //console.log("getState",state);
@@ -111,7 +113,19 @@ async function return_get_data_func(type,dispatch,getState,call_back)
 
   try
   {
-    var res3 = await axios({method: 'get', url: type.url()})
+    
+    if(method == null){
+      method = "get";
+    }
+   
+    var res3 = null;
+    
+    if(method == "get"){
+      res3 = await axios({method: 'get', url: type.url()})
+    }else{
+      res3 = await axios({method: 'post', url: type.url(),data: postData})
+    }
+
     let data = res3.data;
     let new_data = null;
     if (call_back)
@@ -139,6 +153,11 @@ async function return_get_data_func(type,dispatch,getState,call_back)
 
 }
 
+async function return_get_data_func(type,dispatch,getState,call_back)
+{
+  return  return_get_data_func_(type,dispatch,getState,call_back,"get",null )
+}
+
 
 export function get_all_articles()
 {
@@ -152,5 +171,45 @@ export function get_all_finished_articles(){
   console.log("finished_articles");
   return function(dispatch,getState) {
     return_get_data_func(URLS.finished_articles,dispatch,getState);
+  }
+}
+
+export function login(name,password){
+  console.log("login");
+  return function(dispatch,getState) {
+    return_get_data_func_(URLS.login,dispatch,getState,(data)=>{
+       console.log("data--",data);
+       if(data && data.user && data.user.access_token){
+         setCookie("access_token",data.user.access_token,60*60*24*365);
+       }
+       return data;
+    },"post",{user_name:name, password:password});
+  }
+}
+
+export function signin(name,password,captcha,fileName){
+  console.log("signin");
+  return function(dispatch,getState) {
+    return_get_data_func_(URLS.signin,dispatch,getState,()=>{
+      console.log("data222",data);
+      if(data && data.user && data.user.access_token){
+        setCookie("access_token",data.user.access_token,60*60*24*365);
+      }
+      return data;
+    }, "post",{user_name:name, password:password,captcha:captcha,fileName:fileName});
+  }
+}
+
+
+export function logout(){
+  console.log("logout");
+  setCookie("access_token",null,-1);
+  return function(dispatch,getState) {
+
+    let type = URLS.login;
+    dispatch(update_data_state(
+      type.name,
+      type.url(),
+      UPDATE_DATA_STATUS.FAILED,null,null));
   }
 }

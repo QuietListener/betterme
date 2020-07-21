@@ -3,7 +3,8 @@ import * as base from "../base.js"
 import {axios} from "../base.js"
 import CCalendar from "./components/c_calendar.js"
 import css from "./css/ireading.css"
-
+import {connect} from "react-redux";
+import {logout} from "../redux/actions/actions";
 
 const BaseHost = base.BaseHostIreading();
 import Moment from "moment"
@@ -13,7 +14,7 @@ import playPng from "../../resource/imgs/play.png";
 import arrayLeftPng from "../../resource/imgs/array_left.png"
 import arrayRightPng from "../../resource/imgs/array_right.png"
 
-export default class SettingPage extends Component
+class SettingPage_ extends Component
 {
   constructor(props)
   {
@@ -48,6 +49,14 @@ export default class SettingPage extends Component
     {
       var result = window.Android.logout();
     }
+    else{
+      this.props.dispatch(logout());
+
+      setTimeout(()=>{
+        base.back(1)
+      },100);
+    }
+
     console.log("logout");
   }
 
@@ -96,3 +105,13 @@ export default class SettingPage extends Component
     );
   }
 }
+
+
+
+const mapStateToProps = state => {
+  return {
+    redux_data: state,
+  }
+}
+const SettingPage = connect(mapStateToProps)(SettingPage_)
+export default  SettingPage;

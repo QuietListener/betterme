@@ -150,8 +150,10 @@ export default class Articles extends Component
       showModifyModal:true,
       id: a.id,
       author: a.author,
+      author_cn: a.author_cn,
       tag_id:tag_id,
       title: a.title,
+      title_cn: a.title_cn,
       img:a.img,
       parent_id:a.parent_id,
       audio: a.audio_normal,
@@ -343,12 +345,12 @@ export default class Articles extends Component
           </div>
 
 
-          <div style={inner_style.box}><label>content:</label>
+          <div style={{maxWidth:"1200px"}}><label>content:</label>
             <textArea style={{width: "100%"}}
                       onChange={(event) => {
                         this.handleChange("text", event)
                       }}
-                      rows={14}
+                      rows={18}
                       value={this.state.text}
             ></textArea>
           </div>
@@ -367,6 +369,6 @@ export default class Articles extends Component
 const inner_style = {
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},
-  box: {"padding": "2px", "margin": "4px"},
+  box: {"padding": "2px", "margin": "4px",width:"600px",display:"inline-block",verticalAlign:"top"},
   btn: {display: "inline-block",fontSize: "12px",verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid",borderRadius:"2px"}
 }

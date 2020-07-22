@@ -55,12 +55,14 @@ class CSignin_ extends Component
   }
 
   signin_(name,password,captcha,fileName){
-    this.props.dispatch(signin(name,password,captcha,fileName));
+    let loginCallBack = this.props.loginCallBack;
+    this.props.dispatch(signin(name,password,captcha,fileName,loginCallBack));
   }
 
 
   login_(name,password){
-    this.props.dispatch(login(name,password));
+    let loginCallBack = this.props.loginCallBack;
+    this.props.dispatch(login(name,password,loginCallBack));
   }
 
   render()

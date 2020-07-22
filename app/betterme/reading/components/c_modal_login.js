@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CModal from "./c_modal";
 import CSignin from './c_sigin';
 import {connect} from "react-redux";
+import * as base from "../../base.js"
 
 
 class CModalLogin_ extends Component
@@ -10,10 +11,12 @@ class CModalLogin_ extends Component
   {
     super(props);
     this.state = {
-      show: true
+      show: true,
+      loginSucceed:false
     }
 
     this.hide = this.hide.bind(this);
+    this.loginCallBack = this.loginCallBack.bind(this);
   }
 
   componentDidMount()
@@ -31,18 +34,35 @@ class CModalLogin_ extends Component
   }
 
 
+  loginCallBack(data){
+    if(data && data.user && data.user.access_token){
+      this.setState({loginSucceed:true})
+      // setTimeout(()=>{
+      //   this.hide();
+      // },1000);
+    }
+  }
+
+
   render()
   {
     // if (this.state.show == false)
     //   return null;
 
     return (
-      <CModal style={{backgroundColor: "white"}} close={this.hide} showCloseBtn={true}>
+      <CModal style={{backgroundColor: "rgba(255,255,255,0.96)"}} close={this.hide} showCloseBtn={true}>
         <div style={{marginTop:"20px",marginBottom:"40px"}}>
-          <p>登录才能继续操作喔</p>
+          <p style={{color:base.COLOR.gray1, fontSize: "16px"}}>登录才能继续操作喔</p>
         </div>
 
-       <CSignin></CSignin>
+       {this.state.loginSucceed ?
+        <div style={{fontSize:"18px"}}>
+          登录成功!
+        </div>
+        :
+       <CSignin loginCallBack={this.loginCallBack}></CSignin>
+       } 
+       
           
       </CModal>
     );

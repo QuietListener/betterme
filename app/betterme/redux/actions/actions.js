@@ -219,7 +219,7 @@ export function get_all_finished_articles(){
   }
 }
 
-export function login(name,password){
+export function login(name,password,loginCallBack){
   console.log("login");
   return function(dispatch,getState) {
     return_get_data_func_(URLS.login,dispatch,getState,(data)=>{
@@ -227,12 +227,13 @@ export function login(name,password){
        if(data && data.user && data.user.access_token){
          setCookie("access_token",data.user.access_token,60*60*24*365);
        }
+       loginCallBack(data);
        return data;
     },"post",{user_name:name, password:password});
   }
 }
 
-export function signin(name,password,captcha,fileName,call_back){
+export function signin(name,password,captcha,fileName,loginCallBack){
   console.log("signin");
   return function(dispatch,getState) {
     return_get_data_func_(URLS.signin,dispatch,getState,()=>{
@@ -240,6 +241,7 @@ export function signin(name,password,captcha,fileName,call_back){
       if(data && data.user && data.user.access_token){
         setCookie("access_token",data.user.access_token,60*60*24*365);
       }
+      loginCallBack(data);
       return data;
     }, "post",{user_name:name, password:password,captcha:captcha,fileName:fileName});
   }

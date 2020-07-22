@@ -49,8 +49,14 @@ export default class CArticle extends Component
     }
     let infoWidth = imgWidth;//width-imgWidth-40;
     let height =  imgWidth*4/3;
+    let title = a.title;
+    let author = a.author;
+    if(base.isZh()){
+      title = a.title_cn;
+      author = a.author_cn;
+    }
 
-    let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
+    //let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
     return (<div className={css.ibtn} style={{border:border,position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${infoWidth}px`,marginTop:"4px",marginBottom:"14px",margin:"2px", height:`${height+60}px`,textAlign:"center",marginLet:"2px"}}
                  onClick={()=>this.goto(a)}>
 
@@ -62,7 +68,7 @@ export default class CArticle extends Component
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"wrap", color:color,fontSize:"10px",paddingBottom:"1px"}} >
           <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: null, textOverflow: "ellipsis",fontSize:"10px"}}>{title}</p>
-          <p className={css.smallText} style={{color:color,marginTop:"2px"}}>{a.author}</p>
+          <p className={css.smallText} style={{color:color,marginTop:"2px"}}>{author}</p>
         </div>
       </div>
 

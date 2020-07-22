@@ -45,7 +45,10 @@ export default class CArticle extends Component
 
 
     let imgWidth = 0.3*width;
-    let infoWidth = 0.3*width;//width-imgWidth-40;
+    if(imgWidth > 190){
+        imgWidth = 190;
+    }
+    let infoWidth = imgWidth;//width-imgWidth-40;
     let height =  imgWidth*4/3;
 
     let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;

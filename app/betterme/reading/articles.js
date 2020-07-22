@@ -70,14 +70,16 @@ export default class Articles extends Component
     })
   }
 
-  saveArticle(id,author,title, text,audio,img,parent_id,tag_id)
+  saveArticle(id,author,author_cn,title,title_cn, text,audio,img,parent_id,tag_id)
   {
     var params = {
       id: id,
       text: text,
       author: author,
+      author_cn: author_cn,
       img:img,
       title: title,
+      title_cn: title_cn,
       audio:audio,
       parent_id:parent_id,
       tag_id:tag_id
@@ -216,7 +218,7 @@ export default class Articles extends Component
 
 
     return (
-      <div style={{}}>
+      <div style={{width:"1560px"}}>
 
         <div style={{marginBottom:"10px"}}>{tags_div}</div>
         {articles_div}
@@ -267,11 +269,31 @@ export default class Articles extends Component
           </div>
 
           <div style={inner_style.box}>
+            <label>title_cn:</label>
+
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("title_cn", event)
+            }}
+                   value={this.state.title_cn}
+            ></input>
+          </div>
+
+
+          <div style={inner_style.box}>
             <label>author:</label>
             <input style={{width: "100%"}} onChange={(event) => {
               this.handleChange("author", event)
             }}
                    value={this.state.author}
+            ></input>
+          </div>
+
+          <div style={inner_style.box}>
+            <label>author_cn:</label>
+            <input style={{width: "100%"}} onChange={(event) => {
+              this.handleChange("author_cn", event)
+            }}
+                   value={this.state.author_cn}
             ></input>
           </div>
 
@@ -305,7 +327,7 @@ export default class Articles extends Component
           </div>
 
           <div style={{border: "1px solid", textAlign: "center"}} onClick={()=>{
-            this.saveArticle(this.state.id,this.state.author,this.state.title,this.state.text,this.state.audio,this.state.img,this.state.parent_id,this.state.tag_id)
+            this.saveArticle(this.state.id,this.state.author,this.state.author_cn,this.state.title,this.state.title_cn,this.state.text,this.state.audio,this.state.img,this.state.parent_id,this.state.tag_id)
           }}>save</div>
         </div>
 

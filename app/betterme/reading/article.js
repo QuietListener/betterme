@@ -56,6 +56,16 @@ export default class Article extends Component
   {
     this.load();
     document.addEventListener("keydown", this.onKeyDown)
+
+    setTimeout(()=>{
+      console.log("document.body.style.maxWidth",document.body.style.maxWidth);
+      document.body.style.maxWidth = (window.screen.availWidth - 20) + "px";
+      console.log("document.body.style.maxWidth",document.body.style.maxWidth);
+
+      document.getElementById("root").style.maxWidth = (window.screen.availWidth - 20) + "px";
+      
+    },1000);
+    
   }
 
   onKeyDown(event)
@@ -373,7 +383,7 @@ export default class Article extends Component
     var audio_splits_divs =splits_.map(t_ => {
 
       let t =  t_["point"];
-      return <div style={{display: "inline-block", padding: "2px",border:"1px solid"}}>
+      return <div style={{display: "inline-block", padding: "2px",border:"1px solid",minWidth:"1200px"}}>
         {t}
 
         <div>

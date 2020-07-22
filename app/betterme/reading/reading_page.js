@@ -332,7 +332,7 @@ import CModalLogin from './components/c_modal_login';
     if(this.showLoginModal()){
       return;
     };
-    
+
     var params = {
       word_id: w.id,
     }
@@ -805,7 +805,7 @@ import CModalLogin from './components/c_modal_login';
           {reco_article_div}
 
           <div style={{marginBottom:"80px"}}>
-            {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id}></Comment> :null}
+            {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id} showLoginModal={this.showLoginModal}></Comment> :null}
           </div>
 
         </div>

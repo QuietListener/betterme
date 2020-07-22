@@ -30,7 +30,7 @@ export default class CArticle extends Component
     let finished  = this.props.finished || false; //是否完成
     let img = a.img || pa.img;
     let backgroundColor = "rgb(211,211,211,0.2)";
-    let color= "black";
+    let color= base.COLOR.gray1;
    
     let width = this.props.width || base.width();
     console.log("final width",width)
@@ -38,9 +38,8 @@ export default class CArticle extends Component
 
     let border = null;
     if(finished){
-      //backgroundColor = "#5eca50 "
+      backgroundColor = "#5eca50 "
       color="white";
-      border = "1px dotted green"
     }
 
 
@@ -62,8 +61,8 @@ export default class CArticle extends Component
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"wrap", color:color,fontSize:"10px",paddingBottom:"1px"}} >
-          <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: null, textOverflow: "ellipsis",fontSize:"10px"}}>{title}</p>
-          <p className={css.smallText} style={{color:"gray",marginTop:"2px"}}>{a.author}</p>
+          <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: null, textOverflow: "ellipsis",fontSize:"10px"}}>{title}</p>
+          <p className={css.smallText} style={{color:color,marginTop:"2px"}}>{a.author}</p>
         </div>
       </div>
 

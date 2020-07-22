@@ -30,12 +30,12 @@ export default class CArticleCard extends Component
     let finished  = this.props.finished || false; //是否完成
     let img = a.img || pa.img;
     let backgroundColor = "rgb(211,211,211,0.2)";
-    let color= "black";
+    let color= base.COLOR.gray1;
     let width = this.props.width || base.width();
     //let height = width + 50;
 
     if(finished){
-      //backgroundColor = "#5eca50 "
+      backgroundColor = "#5eca50 "
       color="white";
     }
 
@@ -58,8 +58,8 @@ export default class CArticleCard extends Component
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          <p className={css.smallText} style={{color:base.COLOR.gray1,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
-          <p className={css.smallText} style={{color:"gray",marginTop:"10px"}}>{a.author}</p>
+          <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
+          <p className={css.smallText} style={{color:color,marginTop:"10px"}}>{a.author}</p>
         </div>
 
 
@@ -69,7 +69,7 @@ export default class CArticleCard extends Component
         </div>
 
       </div>
-      {finished? <div className={[css.box]} style={{position:"absolute",color:"#2F4F4F",fontWeight:"bold",fontSize:"12px", bottom:"4px", right:"4px"}}> FINISHED</div> : null}
+      {finished? <div className={[css.box]} style={{position:"absolute",color:color,fontWeight:"bold",fontSize:"12px", bottom:"4px", right:"4px"}}> FINISHED</div> : null}
 
     </div>)
   }

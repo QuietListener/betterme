@@ -106,11 +106,11 @@ class ArticlesList_ extends Component
     var articles_div = finished_articles.map(a => {
 
       let pa = pid2article[a.parent_id];
-      return <CArticle a={a} pa={pa}/>
+      return <CArticle a={a} pa={pa} finished={true}/>
     })
 
     return (
-      <div style={{padding:"12px",textAlign:"center"}}>
+      <div style={{padding:"4px",textAlign:"center"}}>
         {/* <div className={css.middleText}
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}

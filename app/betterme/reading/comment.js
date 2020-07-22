@@ -57,6 +57,11 @@ export default class Comment extends Component
   }
 
   submitComment(){
+
+    if(this.props.showLoginModal && this.props.showLoginModal() ){
+      return;
+    }
+
     var params = {
       target_id:this.state.id,
       content: this.state.commentContent

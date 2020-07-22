@@ -41,6 +41,10 @@ class CModalLogin_ extends Component
       //   this.hide();
       // },1000);
     }
+
+    if(this.props.loginCallBack){
+      this.props.loginCallBack(data);
+    }
   }
 
 
@@ -50,7 +54,7 @@ class CModalLogin_ extends Component
     //   return null;
 
     return (
-      <CModal style={{backgroundColor: "rgba(255,255,255,0.96)"}} close={this.hide} showCloseBtn={true}>
+      <CModal style={{backgroundColor: "rgba(255,255,255,0.98)"}} close={this.hide} showCloseBtn={true}>
         <div style={{marginTop:"20px",marginBottom:"40px"}}>
           <p style={{color:base.COLOR.gray1, fontSize: "16px"}}>登录才能继续操作喔</p>
         </div>
@@ -60,7 +64,7 @@ class CModalLogin_ extends Component
           登录成功!
         </div>
         :
-       <CSignin loginCallBack={this.loginCallBack}></CSignin>
+       <CSignin loginCallBack={this.loginCallBack} style={this.props.style}></CSignin>
        } 
        
           

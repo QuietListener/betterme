@@ -263,7 +263,7 @@ export function getCookie(name) {
       return unescape(c.substring(nameEQ.length, c.length)) // 解码并截取我们要值
     }
   }
-  return false
+  return null
 }
 
 // 设置cookie

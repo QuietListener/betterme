@@ -19,7 +19,8 @@ export default class Articles extends Component
     this.state = {
       data: {},
       modified:{},
-      toggleState:{}
+      toggleState:{},
+      choosedTagId:-1
     };
 
     this.load = this.load.bind(this);
@@ -29,6 +30,7 @@ export default class Articles extends Component
     this.modify = this.modify.bind(this);
     this.toggle = this.toggle.bind(this);
     this.troogle_article = this.troogle_article.bind(this);
+    this.chooseTag = this.chooseTag.bind(this);
 
     this.audioRef = new Object();
     this.timeoutPlay = null;
@@ -138,8 +140,14 @@ export default class Articles extends Component
 
   }
 
+  chooseTag(id)
+  {
+    this.setState({choosedTagId:id});
+  }
+
   modify(a,tag_id){
     this.setState({
+      showModifyModal:true,
       id: a.id,
       author: a.author,
       tag_id:tag_id,
@@ -186,9 +194,17 @@ export default class Articles extends Component
       article2tagMap[tag2article.article_id] = tag2article.reading_tag_id;
     }
 
+   
+    if(tags.filter(t=>t.id == -1).length == 0){
+      tags.push({id:-1,name:"all"})
+    }
+
     let tags_div = tags.map(t=>{
-      return <span style={{padding:"2px",background:"black",color:"white",margin:"4px"}}>{t.name}({t.id})</span>
+      return <span style={{padding:"2px",background:"black",color:"white",margin:"4px"}}
+                   onClick={()=>this.chooseTag(t.id)}
+      >{t.name}({t.id})</span>
     });
+  
 
     console.log("articles", articles);
 
@@ -196,11 +212,15 @@ export default class Articles extends Component
 
     var articles_div = parentArticles.map(a => {
 
+      let tag_id = article2tagMap[a.id];
+      if(this.state.choosedTagId > 0  && parseInt(tag_id+"") != parseInt(this.state.choosedTagId +"") ){
+          return null;
+      }
+
       let child_articles = articles.filter(aa=>aa.parent_id == a.id);
 
       let child_articles_div = child_articles.map(aa_=> this.renderArticle(aa_));
 
-      let tag_id = article2tagMap[a.id];
       let tag = tagsMap[tag_id];
       let childCount = child_articles?child_articles.length:0;
       let parent_article_div = this.renderArticle(a,tag,childCount);
@@ -226,7 +246,14 @@ export default class Articles extends Component
         <div style={{padding:"4px",margin:"6px",color:"white",backgroundColor:"black"} } onClick={()=>this.modify({})}> clear modify</div>
 
 
-        <div>
+        {this.state.showModifyModal == true ?
+        <div style={{position:"fixed",top:0,left:0,zIndex:1000,
+        width:"100%",height:"100%",textAlign:"center",color:"black",
+        backgroundColor:"white" ,textAlign:"left",padding:"20px"}}>
+           <div style={{right:"20px",top:"10px",position:"fixed",fontSize:"30px"}} 
+                 onClick={()=>{this.modify({}); this.setState({showModifyModal:false}) } }
+           >x</div>
+
           <div style={inner_style.box}>
             <label>id:</label>
             <input style={{width: "100%"}} onChange={(event) => {
@@ -330,6 +357,7 @@ export default class Articles extends Component
             this.saveArticle(this.state.id,this.state.author,this.state.author_cn,this.state.title,this.state.title_cn,this.state.text,this.state.audio,this.state.img,this.state.parent_id,this.state.tag_id)
           }}>save</div>
         </div>
+  : null}
 
       </div>
     );

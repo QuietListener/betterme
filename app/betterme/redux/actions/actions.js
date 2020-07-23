@@ -249,14 +249,5 @@ export function signin(name,password,captcha,fileName,loginCallBack){
 
 
 export function logout(){
-  console.log("logout");
-  setCookie("access_token",'',-1);
-  return function(dispatch,getState) {
-
-    let type = URLS.login;
-    dispatch(update_data_state(
-      type.name,
-      type.url(),
-      UPDATE_DATA_STATUS.FAILED,null,null,true));
-  }
+  return {};
 }

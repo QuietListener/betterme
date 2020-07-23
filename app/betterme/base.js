@@ -186,11 +186,15 @@ export async function request(method,url,postData,successCallBack,failedCallBack
     }else{
       res3 = await axios({method: 'post', url: url,data: postData})
     }
-    successCallBack(res3);
+    if(successCallBack){
+      successCallBack(res3);
+    }
   }
   catch(e)
   {
-    failedCallBack(e);
+    if(failedCallBack){
+      failedCallBack(e);
+    }
   }
 
 }

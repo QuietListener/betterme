@@ -52,15 +52,16 @@ class SettingPage_ extends Component
       var result = window.Android.logout();
     }
     else{
-      this.props.dispatch(logout());
-
-      setTimeout(()=>{
-        base.back(1)
-      },100);
+      base.request("post",`${base.BaseHostIreading()}/reading/logout.json?timestamp=${new Date().getTime()}`,{},()=>{
+        setTimeout(()=>{
+          base.back(1);
+        },200);
+      })
     }
-
+    
     console.log("logout");
   }
+
 
   render(){
 

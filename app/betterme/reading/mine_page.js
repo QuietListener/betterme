@@ -80,6 +80,9 @@ import arrayRightPng from "../../resource/imgs/array_right.png"
     {
       var result = window.Android.logout();
     }
+    else{
+      base.request("post",`${BaseHostIreading()}/reading/logout.json?timestamp=${new Date().getTime()}`)
+    }
     console.log("logout");
   }
 

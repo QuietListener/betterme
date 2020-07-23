@@ -52,8 +52,8 @@ export default class CArticle extends Component
     let title = a.title;
     let author = a.author;
     if(base.isZh()){
-      title = a.title_cn;
-      author = a.author_cn;
+      title = a.title_cn || title;
+      author = a.author_cn || author;
     }
 
     //let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;

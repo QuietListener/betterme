@@ -7,8 +7,8 @@ export const slogon = "做更好的自己"
 export const BaseHost = "https://freepic.store"
 
 export function BaseHostIreading() {
-  //return "http://localhost:3100"
-  return "https://freepic.store"
+  return "http://localhost:3100"
+  //return "https://freepic.store"
 }
 
 export function getParameterByName(name, url) {
@@ -172,6 +172,28 @@ export function getValue(key){
 }
 
 
+
+export async function request(method,url,postData,successCallBack,failedCallBack){
+  try
+  {
+    if(method == null){
+      method = "get";
+    }
+    var res3 = null;
+    
+    if(method == "get"){
+      res3 = await axios({method: 'get', url: url})
+    }else{
+      res3 = await axios({method: 'post', url: url,data: postData})
+    }
+    successCallBack(res3);
+  }
+  catch(e)
+  {
+    failedCallBack(e);
+  }
+
+}
 export function putValue( key , value){
   var result
   if(window.Android) {
@@ -270,6 +292,8 @@ export function getCookie(name) {
 
 // 设置cookie
 export function setCookie(name, value, seconds) {
+  console.log("before set cookie",document.cookie);
+
   seconds = seconds || 0;   //seconds有值就直接赋值，没有为0，这个根php不一样。
   var expires = "";
   if (seconds != 0 ) {      //设置cookie生存时间

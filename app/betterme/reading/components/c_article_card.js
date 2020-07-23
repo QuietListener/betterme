@@ -49,10 +49,7 @@ export default class CArticleCard extends Component
 
     let title = a.title;
     let author = a.author;
-    if(base.isZh()){
-      title = a.title_cn;
-      author = a.author_cn;
-    }
+    let title_cn = a.title_cn;
 
     //let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
     return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
@@ -65,8 +62,9 @@ export default class CArticleCard extends Component
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-          <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
-          <p className={css.smallText} style={{color:color,marginTop:"10px"}}>{author}</p>
+        <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"18px"}}>{title_cn}</p>
+          <p className={css.smallText} style={{color:color,fontWeight:"normal",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
+         
         </div>
 
 

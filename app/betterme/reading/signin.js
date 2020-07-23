@@ -80,11 +80,17 @@ class Signin_ extends Component
     }
 
    
+    let tip = {
+      
+    }
 
     return (
       <div style={{textAlign:"center"}}>
         <div> 小蜜蜂英文阅读 </div>
           {showDiv}
+        <div>
+          {}
+        </div>  
       </div>
     );
   }

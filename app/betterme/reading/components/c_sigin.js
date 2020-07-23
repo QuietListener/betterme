@@ -22,6 +22,7 @@ class CSignin_ extends Component
     this.loadImg = this.loadImg.bind(this);
     this.login_ = this.login_.bind(this);
     this.state={state:LOGIN}
+    this.networkerror = this.networkerror.bind(this);
   }
 
   componentDidMount(){
@@ -54,20 +55,54 @@ class CSignin_ extends Component
 
   }
 
-  signin_(name,password,captcha,fileName){
-    let loginCallBack = this.props.loginCallBack;
-    this.props.dispatch(signin(name,password,captcha,fileName,loginCallBack));
+  async signin_(name,password,captcha,fileName){
+    this.setState({errorMsg:null})
+    await base.request("post",base.URLS.signin.url(),{user_name:name,password,captcha,fileName},(res)=>{
+      console.log("login",res);
+      if(res.status != 200 || !res.data || !res.data.user){
+        
+        let errorMsg = "注册失败";
+        if(res.data && res.data.status<0){
+          errorMsg = res.data.msg;
+        }
+
+        this.setState({errorMsg})
+        return;
+      }
+    },
+    (e)=>{
+      console.log("res",e);
+      this.networkerror();
+    });
   }
 
 
-  login_(name,password){
+
+  async login_(name,password){
+    this.setState({errorMsg:null})
     let loginCallBack = this.props.loginCallBack;
-    this.props.dispatch(login(name,password,loginCallBack));
+    await base.request("post",base.URLS.login.url(),{user_name:name,password},(res)=>{
+      console.log("login",res);
+      if(res.status != 200 || !res.data || !res.data.user){
+        this.setState({errorMsg:"登录失败!"})
+        return;
+      }
+    },
+    (e)=>{
+      console.log("res",e);
+      this.networkerror();
+    });
+  }
+
+  networkerror(){
+    this.setState({errorMsg:"网络有问题!"})
   }
 
   render()
   {
     let state = this.state.state;
+
+    let errorMsg = this.state.errorMsg;
 
     let base64Img = "";
     let fileName= '';
@@ -124,6 +159,10 @@ class CSignin_ extends Component
         </div>
 
       </div>
+
+      {errorMsg ? <div style={{fontSize:"10px",marginTop:"4px",color:"red"}}>
+        {errorMsg}
+      </div>: null}
     </div>
     )
   }

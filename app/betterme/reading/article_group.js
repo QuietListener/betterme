@@ -86,8 +86,9 @@ export default class ArticleGroup extends Component
 
             <img src={img}  className={css.box} style={{borderRadius:"4px",width:`${imgWidth}px`,height:`${height}px`}}/>
 
-            <div className={css.box} style={{width:`${infoWidth}px`,height:`${height}px`,paddingLeft:"8px",position:"relative"}}>
-              <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title}</div>
+            <div className={css.box} style={{width:`${infoWidth}px`,height:`${height}px`,paddingLeft:"4px",position:"relative"}}>
+             <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title_cn}</div>
+             <div className={css.smallText} style={{fontWeight:"normal"}}>{article.title}</div>
               <div className={css.smallText} style={{color:"gray",marginTop:"4px"}} >{article.author}</div>
 
               <div className={css.middleText} style={{fontSize:"14px",paddingBottom:"4px",position:"absolute",bottom:0}} >

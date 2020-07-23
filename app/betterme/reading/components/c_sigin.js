@@ -69,6 +69,16 @@ class CSignin_ extends Component
         this.setState({errorMsg})
         return;
       }
+
+      if(res && res.data && res.data.user){
+        let accessToken = res.data.user.access_token;
+        base.setCookie("access_token",accessToken);
+      }
+
+      if(this.props.loginCallBack){
+        this.props.loginCallBack(res.data);
+      }
+      
     },
     (e)=>{
       console.log("res",e);
@@ -86,6 +96,14 @@ class CSignin_ extends Component
       if(res.status != 200 || !res.data || !res.data.user){
         this.setState({errorMsg:"登录失败!"})
         return;
+      }
+      if(res && res.data && res.data.user){
+        let accessToken = res.data.user.access_token;
+        base.setCookie("access_token",accessToken);
+      }
+
+      if(this.props.loginCallBack){
+        this.props.loginCallBack(res.data);
       }
     },
     (e)=>{
@@ -114,10 +132,10 @@ class CSignin_ extends Component
     <div style={{textAlign:"center"}}>
 
     <div style={{marginTop:"6px",textAlign:"center"}}>
-        <div style={{width:"95px",marginRight:"4px",display:"inline-block",borderBottom:`${state == LOGIN ? "1px solid":  ""}`}}
+        <div style={{width:"95px",color:base.COLOR.gray1,marginRight:"4px",display:"inline-block",borderBottom:`${state == LOGIN ? "1px solid":  ""}`}}
            onClick={()=>this.setState({state:LOGIN}) }>  登录</div>
 
-           <div style={{width:"95px",display:"inline-block",borderBottom:`${state == REGISTER ? "1px solid" :  ""}` }}
+           <div style={{color:base.COLOR.gray1,width:"95px",display:"inline-block",borderBottom:`${state == REGISTER ? "1px solid" :  ""}` }}
            onClick={()=>{ 
              this.setState({state:REGISTER}) ;
              if(this.state.data == null ){
@@ -128,22 +146,22 @@ class CSignin_ extends Component
 
       <div style={{textAlign:"center",marginTop:"12px",minWidth:"200px"}}>
          <div style={{textAlign:null,marginTop:"4px"}}>
-          <input ref={"name"} placeholder="邮箱或者手机号码" style={{minWidth:"200px"}} ></input>
+          <input ref={"name"} placeholder="邮箱或者手机号码" style={inner_style.input} ></input>
           </div>
 
         <div style={{textAlign:null,marginTop:"4px"}}>
-          <input ref={"password"} placeholder="密码" style={{minWidth:"200px"}} ></input>
+          <input ref={"password"} placeholder="密码" style={inner_style.input}  ></input>
           </div>
 
       {this.state.state == REGISTER ?
-          <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px",marginTop:"8px"}}>
+          <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px"}}>
             <img src={"data:image/jpg;base64,"+base64Img} style={{height:"20px",width:"70px",display:"inline-block",verticalAlign:"top",marginRight:"4px"}}  onClick={this.loadImg}/>
-            <input ref={"yzm"} placeholder="验证码" style={{width:"120px",display:"inline-block",verticalAlign:"top"}}></input>
+            <input ref={"yzm"} placeholder="验证码" style={Object.assign({},inner_style.input,{width:"120px",height:""})}></input>
         </div>:null
       }
 
         <div style={{marginTop:"6px",textAlign:"center"}}>
-        <button style={{width:"200px",marginRight:"4px"}} 
+        <button style={{width:"200px",marginRight:"4px",color:base.COLOR.gray1}} 
           onClick={()=>{
             
             let name = this.refs["name"].value;
@@ -170,8 +188,8 @@ class CSignin_ extends Component
 
 
 const inner_style = {
+  input:{width:"200px",height:"26px",border:"1px solid "+base.COLOR.gray1},
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
-  input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"},
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}
 }

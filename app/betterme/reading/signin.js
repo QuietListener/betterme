@@ -17,6 +17,7 @@ import CSignin from "./components/c_sigin";
 import {connect} from "react-redux";
 import CLoading from './components/c_loading.js';
 
+
 class Signin_ extends Component
 {
 
@@ -25,6 +26,7 @@ class Signin_ extends Component
     super(props);
     this.state = {loading:false}
     this.load = this.load.bind(this);
+    this.loginCallBack = this.loginCallBack.bind(this);
   }
 
   componentDidMount()
@@ -54,6 +56,10 @@ class Signin_ extends Component
     }
   }
 
+  loginCallBack(data){
+     this.load();  
+  }
+
   render(){
 
 
@@ -70,23 +76,31 @@ class Signin_ extends Component
         ? 
          <CLoading></CLoading>
          :
-         <span> {user.name} </span>
+         <span style={{fontSize:"16px",color:base.COLOR.red,fontWeight:"bold"}}> {user.name} </span>
         }
+
         <span>登录成功</span>
-        <div onClick={()=>base.goto("/")}>去首页</div>
+
+        <button style={{marginTop:"20px",width:"200px",height:"30px",background:base.COLOR.red,color:"white",border:"0px"}} onClick={()=>base.goto("/")}>去首页 开始阅读吧</button>
       </div>
     }else{
-      showDiv = <CSignin></CSignin>;
+      showDiv = <CSignin loginCallBack={this.loginCallBack}></CSignin>;
     }
 
    
-    let tip = {
-      
-    }
+    let tip = <div></div>
 
     return (
       <div style={{textAlign:"center"}}>
-        <div> 小蜜蜂英文阅读 </div>
+       
+        <div style={{position:"fixed",fontSize:"16px",top:"2px",left:"2px",padding:"6px"}} onClick={()=>{base.goto("/")}}>
+              <img width={14} src={arrayLeftPng}/>
+        </div>
+
+        <div style={{marginBottom:"30px",marginTop:"20px"}}> 
+        小蜜蜂英文阅读 
+        </div>
+
           {showDiv}
         <div>
           {}

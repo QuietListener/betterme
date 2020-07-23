@@ -3,7 +3,9 @@ import moment from "moment"
 export const maxWidth = 800;
 export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
-export const BaseHost = "http://localhost:3000"
+//export const BaseHost = "http://localhost:3000"
+export const BaseHost = "https://freepic.store"
+
 export function BaseHostIreading() {
   //return "http://localhost:3100"
   return "https://freepic.store"
@@ -276,6 +278,7 @@ export function setCookie(name, value, seconds) {
     expires = "; expires="+date.toGMTString();
   }
   document.cookie = name+"="+escape(value)+expires+"; path=/";   //转码并赋值
+  console.log("set cookie",document.cookie);
 }
 
 

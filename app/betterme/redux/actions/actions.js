@@ -250,7 +250,7 @@ export function signin(name,password,captcha,fileName,loginCallBack){
 
 export function logout(){
   console.log("logout");
-  setCookie("access_token",null,-1);
+  setCookie("access_token",'',-1);
   return function(dispatch,getState) {
 
     let type = URLS.login;

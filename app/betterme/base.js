@@ -7,8 +7,8 @@ export const slogon = "做更好的自己"
 export const BaseHost = "https://freepic.store"
 
 export function BaseHostIreading() {
-  return "http://localhost:3100"
-  //return "https://freepic.store"
+  //return "http://localhost:3100"
+  return "https://freepic.store"
 }
 
 export function getParameterByName(name, url) {

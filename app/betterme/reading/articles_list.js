@@ -106,8 +106,13 @@ class ArticlesList_ extends Component
     var articles_div = finished_articles.map(a => {
 
       let pa = pid2article[a.parent_id];
-      return <CArticle a={a} pa={pa} finished={true}/>
+      return <CArticleCard a={a} pa={pa} finished={true}/>
     })
+
+
+    // for(let i = 0; i < (base.width()-100)/20;i++){
+    //   articles_div.push(<div style={{display:"inline-block",width:"20px",height:"10px"}}></div>)
+    // }
 
     return (
       <div style={{padding:"4px",textAlign:"center"}}>
@@ -115,7 +120,7 @@ class ArticlesList_ extends Component
          style={{textAlign:"center",padding:"6px"}}>{this.props.title||""}</div>
         */}
         {articles_div.length <= 0?
-            <div style={{marginTop:"10px",textAlign:"center",color:base.COLOR.gray1}}>{tips.no_finished_articles_tip}</div>
+            <div style={{marginTop:"10px",textAlign:"left",color:base.COLOR.gray1}}>{tips.no_finished_articles_tip}</div>
             :articles_div}
       </div>
     );

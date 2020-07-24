@@ -114,7 +114,7 @@ class ArticlesChoosePage__ extends Component
     console.log("finished_article_ids",finished_article_ids);
 
     var articles = []
-    if(choosedTagIds.length<=0){
+    if(choosedTagIds.length<=0 ||  choosedTagIds[0] < 0){
       articles = articles_;
     }else{
       let tag_id = choosedTagIds[0];
@@ -136,6 +136,14 @@ class ArticlesChoosePage__ extends Component
       return <CArticle a={aa} width={null} finished={finished}  key={"article_id__"+aa.id}/>
     })
 
+    for(let i = 0; i < (base.width()-100)/20;i++){
+      articles_div.push(<div style={{display:"inline-block",width:"20px",height:"10px"}}></div>)
+    }
+    
+    if(all_tags.filter(t=>t.id==-1).length == 0){
+      all_tags.splice(0,0,{id:-1,name:"All",name_cn:"所有"});
+    }
+
     var tags_div = all_tags.map(t=>{
 
       let color ="black";
@@ -146,10 +154,12 @@ class ArticlesChoosePage__ extends Component
         fontWeight = "bold"
       }
 
+      let name = t.name_cn || t.name;
+
       let tag_id = t.id;
       return <div key={"tag_id__"+tag_id} style={{display:"inline-block", padding:"2px",fontSize:"15px",borderRadius:"0px",margin:"2px", marginLeft:"6px", borderBottom:borderBottom, fontWeight:fontWeight }}
                   onClick={()=>this.toggleTag(tag_id)} >
-        {t.name}
+        {name}
       </div>
     })
 

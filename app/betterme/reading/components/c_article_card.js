@@ -40,11 +40,13 @@ export default class CArticleCard extends Component
     }
 
 
-    let imgWidth = 0.28*width;
+    
+    let totalWidth = base.width()*0.9;
+    let imgWidth = 0.28*totalWidth;
     if(imgWidth > 70){
       imgWidth = 70;
     }
-    let infoWidth = null;//width-imgWidth-40;
+    let infoWidth = totalWidth - imgWidth-10;
     let height =  imgWidth*4/3;
 
     let title = a.title;
@@ -52,7 +54,7 @@ export default class CArticleCard extends Component
     let title_cn = a.title_cn;
 
     //let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
-    return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:"100%",marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
+    return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${totalWidth}`,marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
                  onClick={()=>this.goto(a)}>
 
       {img?<div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>

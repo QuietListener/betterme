@@ -59,10 +59,10 @@ export default class Article extends Component
 
     setTimeout(()=>{
       console.log("document.body.style.maxWidth",document.body.style.maxWidth);
-      document.body.style.maxWidth = (window.screen.availWidth - 20) + "px";
+      document.body.style.maxWidth = (window.screen.availWidth) + "px";
       console.log("document.body.style.maxWidth",document.body.style.maxWidth);
 
-      document.getElementById("root").style.maxWidth = (window.screen.availWidth - 20) + "px";
+      document.getElementById("root").style.maxWidth = (window.screen.availWidth) + "px";
       
     },1000);
     
@@ -383,7 +383,7 @@ export default class Article extends Component
     var audio_splits_divs =splits_.map(t_ => {
 
       let t =  t_["point"];
-      return <div style={{display: "inline-block", padding: "2px",border:"1px solid",minWidth:"1200px"}}>
+      return <div style={{display: "inline-block", padding: "2px",border:"1px solid"}}>
         {t}
 
         <div>
@@ -416,7 +416,7 @@ export default class Article extends Component
       let s_word_divs = words.filter((w) => {
         return w.order >= start && w.order <= end;
       }).map(w => {
-        return <div style={{display: "inline-block", margin: "2px"}}>{w.text}</div>
+        return <div style={{display: "inline-block", margin: "2px",fontSize:"10px"}}>{w.text}</div>
       })
 
 
@@ -448,8 +448,10 @@ export default class Article extends Component
         </div>
 
         {s_word_divs}
+
+
         <div style={{display: "inline-block",border:"1px solid"}}>
-          <textarea  placeholder={"翻译"} value={this.state["trans_"+s.id]}  cols={60} rows={2} onChange={(event)=>this.handleChange("trans_"+s.id, event)}/>
+          <textarea  placeholder={"翻译"} value={this.state["trans_"+s.id]}  cols={56} rows={2} onChange={(event)=>this.handleChange("trans_"+s.id, event)}/>
           <span style={{marginLeft:"10px",background:"black",color:"white"}} onClick={()=>this.updateTrans(s.id)}>save tran</span>
         </div>
       </div>
@@ -458,7 +460,10 @@ export default class Article extends Component
 
     let color=["red","green"]
     let count_ = 0;
-    var words_divs = words.map(w => {
+    
+    var words_divs = [];
+    for(let i = 0; i < words.length; i++){
+       let w = words[i];
       let border = w.order <= maxOrder ? "1px solid green" : "1px solid black";
 
       let color = "black"
@@ -473,20 +478,27 @@ export default class Article extends Component
         color="white"
       }
 
-      if(end_word_orders.indexOf(w.order) >=0){
+      let isEnd = end_word_orders.indexOf(w.order) >=0;
+      if(isEnd){
         border="3px solid yellow";
       }else if(start_word_orders.indexOf(w.order) >= 0){
         border="3px solid blue";
       }
 
       //console.log(maxOrder + ":" + w.order + ":" + color);
-      return <div
-        style={{ display: "inline-block", margin: "2px", color:color,background:background,border:border}}
+      let tmp_div =  <div
+        style={{ display:  "inline-block", margin: "2px", color:color,background:background,border:border}}
         onClick={() => this.choose(w.order)}>
         <div>{w.text}</div>
         <div>{w.order}</div>
       </div>
-    })
+
+      words_divs.push(tmp_div);
+      if(isEnd){
+        words_divs.push(<br/>)
+        words_divs.push(<br/>)
+      }
+    }
 
     let split_sentence_div =   <div>
       {sentence_divs}
@@ -597,10 +609,7 @@ export default class Article extends Component
 
 
         <div style={inner_style.part}>
-
           {this.state.mode == SplitSentence ? split_sentence_div : word_group_div}
-
-
         </div>
       </div>
 
@@ -631,6 +640,6 @@ export default class Article extends Component
 }
 
 const inner_style = {
-  part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
+  part: {display: "inline-block", verticalAlign: "top", width: "49%", fontSize: "10px"},
   input: {fontSize: "22px", minWidth: "120px", border: "0px", borderBottom: "1px solid #f2f2f2", marginTop: "10px"}
 }

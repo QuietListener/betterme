@@ -165,10 +165,14 @@ export default class Articles extends Component
     var tag_id = tag?tag.id:null;
     return <div style={{"border": "1px solid #f2f2f2", padding: "2px", margin: "4px"}}>
       <div>
-        <span onClick={()=>this.toggle(a.id)}>{a.title}({childCount})</span>
-        <span style={{marginLeft:"10px",border:"1px solid red",padding:"4px",backgroundColor:a.state+"" == "1" ? "gray":"white"}} onClick={()=>this.troogle_article(a.id)}> {a.state+"" == "2" ? "enabled":"disabled" } </span>
+        <span onClick={()=>this.toggle(a.id)} style={{fontSize:"10px",fontWeight:"bold"}}>{a.title}({childCount})</span>
+
+        <span style={{fontSize:"10px",marginLeft:"10px",border:"1px solid red",padding:"4px",backgroundColor:a.state+"" == "1" ? "gray":"white"}} 
+            onClick={()=>this.troogle_article(a.id)}>
+               {a.state+"" == "2" ? "enabled":"disabled" } 
+        </span>
       </div>
-      {tag?<div>tag: {tag.name}({tag.id})</div>:null}
+      {tag?<div style={{fontSize:"10px"}}>tag: {tag.name}({tag.id})</div>:null}
 
 
       <div><span style={{background:"black",color:"white",padding:"2px",borderRadius:"10px"}}>{a.id}</span>
@@ -227,7 +231,7 @@ export default class Articles extends Component
       let childCount = child_articles?child_articles.length:0;
       let parent_article_div = this.renderArticle(a,tag,childCount);
 
-       return  <div style={{marginBottom:"10px",backgroundColor:"#f2f2f2"}}>
+       return  <div style={{marginBottom:"10px",backgroundColor:"#f2f2f2",display:"inline-block",verticalAlign:"top",width:"30%",margin:"2px"}}>
          {parent_article_div}
          {this.state.toggleState[a.id] ? <div style={{marginLeft: "20px"}}>
            {child_articles_div}

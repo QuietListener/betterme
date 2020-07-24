@@ -529,8 +529,9 @@ import CSeperator from './components/c_sperator';
 
 
      
+      let istw = lan == "zh_tw" ;
 
-      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {lan == "zh_tw" ? s.trans_tw : s.trans_cn} </div>
+      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {istw == true ? s.trans_tw : s.trans_zh} </div>
 
       let show_trans_ids = this.state.show_trans_ids || [];
       let showTrans  = show_trans_ids.indexOf(s.id) >= 0;
@@ -543,7 +544,7 @@ import CSeperator from './components/c_sperator';
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
         { showTransTip ?
-          <span style={{fontSize:"14px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"4px",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
+          <span style={{fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px 5px 2px 5px ",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
           : null
         }
         {showTrans?trans_div:null}

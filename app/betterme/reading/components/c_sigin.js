@@ -156,12 +156,12 @@ class CSignin_ extends Component
       {this.state.state == REGISTER ?
           <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px"}}>
             <img src={"data:image/jpg;base64,"+base64Img} style={{height:"20px",width:"70px",display:"inline-block",verticalAlign:"top",marginRight:"4px"}}  onClick={this.loadImg}/>
-            <input ref={"yzm"} placeholder="验证码" style={Object.assign({},inner_style.input,{width:"120px",height:""})}></input>
+            <input ref={"yzm"} placeholder="验证码" style={Object.assign({},inner_style.input,{width:"120px",height:"20px"})}></input>
         </div>:null
       }
 
         <div style={{marginTop:"6px",textAlign:"center"}}>
-        <button style={{width:"200px",marginRight:"4px",color:base.COLOR.gray1}} 
+        <button style={{width:"200px",fontSize:"18px", marginRight:"4px",color:"white",background:base.COLOR.red,padding:"4px",border:"0px"}} 
           onClick={()=>{
             
             let name = this.refs["name"].value;
@@ -188,7 +188,7 @@ class CSignin_ extends Component
 
 
 const inner_style = {
-  input:{width:"200px",height:"26px",border:"1px solid "+base.COLOR.gray1},
+  input:{width:"200px",height:"26px",border:"1px solid "+base.COLOR.red,padding:"4px"},
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}

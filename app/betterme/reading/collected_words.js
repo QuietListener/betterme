@@ -80,13 +80,13 @@ export default class CollectedWords extends Component
 
         let mean_cn = word_info.mean_cn ? word_info.mean_cn.replace("[","").replace("]","") : "";
 
-        let div_ = <div  style={{paddingBottom:"8px",backgroundColor:"white",padding:"4px"}}>
+        let div_ = <div  style={{paddingBottom:"8px",backgroundColor:"white",padding:"4px",position:"relative"}}>
          <p>
-           <span style={{fontSize:"18px",color:"black",fontWeight:"bold"}}>{word.text}</span>
+           <span style={{fontSize:"16px",color:"black",fontWeight:"bold"}}>{word.text}</span>
            <span style={{color:"gray",marginLeft:"10px",fontSize:"12px"}}>{word_info.accent} </span>
 
            <div  className={[css.box]} style={{position:"absolute",right:"20px"}}>
-             <div onClick={()=>{this.playAudio(word.text)}}>
+             <div onClick={()=>{this.playAudio(word.text)}} style={{padding:"4px"}}>
                <img src={speakerPng} width={16}></img>
              </div>
            </div>
@@ -101,7 +101,7 @@ export default class CollectedWords extends Component
 
     return (
       <div style={{padding:"10px"}}>
-        <div className={css.bigText} style={{padding:"14px"}}>{this.props.title||""}</div>
+        <div className={css.bigText} style={{padding:"4px"}}>{this.props.title||""}</div>
           {words_div}
       </div>
     );

@@ -68,9 +68,13 @@ export default class CArticle extends Component
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"wrap", color:color,fontSize:"10px",paddingBottom:"1px"}} >
           <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: null, textOverflow: "ellipsis",fontSize:"10px"}}>{title}</p>
-          <p className={css.smallText} style={{color:color,marginTop:"2px"}}>{author}</p>
+          <div className={css.smallText} style={{color:color,marginTop:"2px"}}>
+            <span>{author}</span>
+            </div> 
         </div>
       </div>
+
+      {a.level ? <div style={{background:"rgba(0,0,0,0.6)",color:"white",position:"absolute",top:2,right:2,paddingTop:"6px",borderRadius:"15px",width:"30px",height:"30px"}}> L{a.level||1}</div>: null} 
 
     </div>)
   }

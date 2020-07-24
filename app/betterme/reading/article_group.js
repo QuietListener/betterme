@@ -92,8 +92,12 @@ export default class ArticleGroup extends Component
               <div className={css.smallText} style={{color:"gray",marginTop:"4px"}} >{article.author}</div>
 
               <div className={css.middleText} style={{fontSize:"14px",paddingBottom:"4px",position:"absolute",bottom:0}} >
-                <div className={[css.box]} style={{color:"#2F4F4F"}}>  <img width={12} src={levelPng} /> {article.level||1} </div>
-                <div className={[css.box]} style={{color:"#2F4F4F",marginLeft:"10px"}}> <img width={12} src={readedPng}/>  {100} </div>
+                <div className={[css.box]} style={{color:"#2F4F4F",fontSize:"16px"}}>  
+                {/* <img width={12} src={levelPng} />  */}
+                L{article.level||1} </div>
+                {/* <div className={[css.box]} style={{color:"#2F4F4F",marginLeft:"10px"}}> 
+                 <img width={12} src={readedPng}/>  {100}
+                 </div> */}
               </div>
 
             </div>

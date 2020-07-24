@@ -56,7 +56,7 @@ class CModalLogin_ extends Component
     return (
       <CModal style={{backgroundColor: "rgba(255,255,255,0.98)"}} close={this.hide} showCloseBtn={true}>
         <div style={{marginTop:"20px",marginBottom:"40px"}}>
-          <p style={{color:base.COLOR.gray1, fontSize: "16px"}}>登录才能继续操作喔</p>
+          <p style={{color:base.COLOR.gray1, fontSize: "16px",color:base.COLOR.red}}>登录后才能继续操作喔~</p>
         </div>
 
        {this.state.loginSucceed ?

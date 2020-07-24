@@ -13,7 +13,7 @@ export default class CModal extends Component{
   {
 
 
-    var closeBtn =  <div style={{position:"fixed",top:0,right:0}} onClick={this.props.close}>
+    var closeBtn =  <div style={{position:"fixed",top:4,right:6}} onClick={this.props.close}>
       <img   src={crossPng} width={18} style={{margin:"4px"}}></img>
     </div>;
 

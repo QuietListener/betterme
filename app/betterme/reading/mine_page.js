@@ -111,9 +111,6 @@ import arrayRightPng from "../../resource/imgs/array_right.png"
     let logined = (user != null && user != {} && user["access_token"]);
 
     let name =  user.name;
-    if(name && name.length > 20){
-      name = name.substring(0,20)+"..."
-    }
 
     var tips = base.getTipByLan();
     let img_ = user.img || "https://freepic.store/static/reading/resources/imgs/bee02_squire.jpg"

@@ -71,7 +71,10 @@ export default class CArticleCard extends Component
 
 
         <div className={css.smallText} style={{position:"absolute",bottom:"-2px", color:color,fontSize:"14px",paddingBottom:"4px"}} >
-          <div className={[css.box]} style={{color:"#2F4F4F"}}> <img width={12} src={levelPng} />  {a.level||1} </div>
+          <div className={[css.box]} style={{color:color,background:backgroundColor}}> 
+          {/* <img width={12} src={levelPng} />  */}
+         
+          <span style={{fontSize:"12px",color:color}}> L{a.level||1} </span></div>
           {/*<div className={[css.box]} style={{marginLeft:"10px",color:"#2F4F4F"}}> <img width={12} src={readedPng}/>  {100}</div>*/}
         </div>
 

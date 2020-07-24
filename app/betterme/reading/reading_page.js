@@ -738,17 +738,17 @@ import CModalLogin from './components/c_modal_login';
 
    var reco_article_div = null; 
    //推荐
-   if(this.state.recomends && this.state.recomends.next_a){
-     let rec_a = this.state.recomends.next_a;
-    reco_article_div = 
-    <div  style={{width:"100%",textAlign:"center",marginBottom:"20px",marginTop:"20px"}}>
-    <div style={{margin:"auto",textAlign:"left",padding:"10px",width:"90%",border:"1px solid #e5e5e5",backgroundColor:'white'}}
-                            className={css.ibtn}
-                onClick={()=>this.goto(rec_a)}>
-       next: <span style={{color: base.COLOR.red,fontSize:"18px"}}>{rec_a.title}</span>
-    </div>
-    </div>
-   }
+  //  if(this.state.recomends && this.state.recomends.next_a ){
+  //    let rec_a = this.state.recomends.next_a;
+  //   reco_article_div = 
+  //   <div  style={{width:"100%",textAlign:"center",marginBottom:"20px",marginTop:"20px"}}>
+  //   <div style={{margin:"auto",textAlign:"left",padding:"10px",width:"90%",border:"1px solid #e5e5e5",backgroundColor:'white'}}
+  //                           className={css.ibtn}
+  //               onClick={()=>this.goto(rec_a)}>
+  //      next: <span style={{color: base.COLOR.red,fontSize:"18px"}}>{rec_a.title}</span>
+  //   </div>
+  //   </div>
+  //  }
 
    
 

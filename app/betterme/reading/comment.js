@@ -3,6 +3,7 @@ import css from "./css/ireading.css"
 import {axios} from "../base.js"
 import * as base from "../base.js"
 import crossPng from "../../resource/imgs/cross.png"
+import CSeperator from './components/c_sperator';
 
 const BaseHost = base.BaseHostIreading();
 
@@ -132,7 +133,7 @@ export default class Comment extends Component
 
     if(isMine == true){
       deleteDiv =  <div  className={css.box} style={{fontSize:"12px"}} onClick={()=>this.deleteComment(c.id)}>
-        <img src={crossPng} width={12}/>
+        <img src={crossPng} width={12} height={12}/>
       </div>;
     }
 
@@ -142,14 +143,14 @@ export default class Comment extends Component
     }
 
     let time = c.created_at.split("T")[0];
-    return <div className={css.box1} style={{width:"100%",padding:"8px",margin:"4px",marginBottom:"6px",fontSize:"14px"}}>
+    return <div className={css.box1} style={{width:"100%",padding:"8px",margin:"4px",marginBottom:"6px",fontSize:"12px"}}>
       <div>
         <div className={css.smallText} style={{display:"inline-block",width:"60%",fontWeight:"bold"}} >{user["name"]||"user"}</div>
 
         {like_div}
       </div>
 
-      <div style={{marginBottom:"8px",fontSize:"16px",marginTop:"4px"}}>
+      <div style={{marginBottom:"8px",fontSize:"12px",marginTop:"4px"}}>
         {c.content}
       </div>
 
@@ -160,6 +161,7 @@ export default class Comment extends Component
         <div style={{display:"inline-block",textAlign:"right",verticalAlign:"top",width:"49%"}}>{deleteDiv}</div>
       </div>
 
+      <CSeperator></CSeperator>
     </div>
   }
   render()

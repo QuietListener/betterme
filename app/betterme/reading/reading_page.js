@@ -24,6 +24,7 @@ const Playing = 1;
 const Stopped = 2;
 import { hashHistory } from 'react-router'
 import CModalLogin from './components/c_modal_login';
+import CSeperator from './components/c_sperator';
 
  class ReadingPage_ extends Component
 {
@@ -798,12 +799,14 @@ import CModalLogin from './components/c_modal_login';
             >
               {finish_view}
             </div>
+            <div style={{fontSize:"10px",color:base.COLOR.gray1,marginTop:"4px"}}>{!finished ?"点击完成阅读":null}</div>
           </div>
 
 
           {/**推荐 */}      
           {reco_article_div}
 
+        <CSeperator/>
           <div style={{marginBottom:"80px"}}>
             {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id} showLoginModal={this.showLoginModal}></Comment> :null}
           </div>

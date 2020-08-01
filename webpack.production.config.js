@@ -63,7 +63,7 @@ module.exports={
     //根据模块调用次数，给模块分配ids，常被调用的ids分配更短的id，使得ids可预测，降低文件大小，该模块推荐使用
     new webpack.optimize.OccurrenceOrderPlugin(),
     //压缩Js文件
-    new webpack.optimize.UglifyJsPlugin()
+    //new webpack.optimize.UglifyJsPlugin()
     //new ExtractTextPlugin("[name]-[hash].css")
     //new ExtractTextPlugin("style.css")
   ]

@@ -626,7 +626,7 @@ import CSeperator from './components/c_sperator';
 
 
     var toastView = <CToast hide={this.hideTooFastModal}>
-      <div style={{color:"white"}}>{tips.toofast}</div>
+      <div style={{color:"white",textAlign:"center"}}>{tips.toofast}</div>
     </CToast>
 
     var audio = this.refs.audioRef;

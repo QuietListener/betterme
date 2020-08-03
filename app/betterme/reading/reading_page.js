@@ -251,6 +251,7 @@ import CSeperator from './components/c_sperator';
       return;
     }
 
+    
     var params = {
       article_id: this.state.id,
     }

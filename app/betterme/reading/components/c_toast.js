@@ -35,7 +35,7 @@ export default class CToast extends Component
 
     return (
       <CModal style={{backgroundColor: "rgba(0,0,0,0.2)"}} showCloseBtn={false}>
-        <div style={{position: "relative", textAlign: "center", marginTop: "90%",}}>
+        <div style={{position: "relative", textAlign: "center", marginTop: "30%",}}>
           <div style={{
             position: "relative",
             display: "inline-block",

@@ -4,6 +4,7 @@ import {axios} from "../base.js"
 import * as base from "../base.js"
 import crossPng from "../../resource/imgs/cross.png"
 import CSeperator from './components/c_sperator';
+import CLoading from './components/c_loading';
 
 const BaseHost = base.BaseHostIreading();
 
@@ -70,14 +71,21 @@ export default class Comment extends Component
 
     var url = `${BaseHost}/comment/addComment.json`;
     console.log(url);
-    axios.post(url, params).then((res) => {
+    this.setState({submitting:true});
+    try{
+     axios.post(url, params).then((res) => {
       console.log("res", res);
+      this.setState({submitting:false});
       this.load();
-    }).catch(e => {
+     }).catch(e => {
       console.log(e);
-      this.setState({loading: false});
+      this.setState({submitting:false});
       this.load();
-    })
+     })
+    }catch(e){
+      this.setState({submitting:false});
+    }
+
   }
 
   deleteComment(id){
@@ -187,7 +195,7 @@ export default class Comment extends Component
            <textarea  placeholder={tips.commitTip} style={{width:"100%",height:"100px",border:"1px solid #f2f2f2",borderRadius:"4px"}} value={this.state.commentContent} ></textarea>
          </div>
          <div style={{textAlign:"right",marginRight:"2px",marginTop:"6px"}}>
-              <div className={css.ibtn} style={{fontSize:"14px",margin:"4px",fontSize:"12px",backgroundColor:"",color:"black"}} onClick={this.submitComment}> {tips.commit} </div>
+              <div className={css.ibtn} style={{fontSize:"14px",margin:"4px",fontSize:"14px",padding:"4px",backgroundColor:"",color:"black"}} onClick={this.state.submitting == true? null: this.submitComment}> {this.state.submitting == true?<CLoading />:tips.commit} </div>
          </div>
 
         </div>

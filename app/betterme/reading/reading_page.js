@@ -809,7 +809,7 @@ import CSeperator from './components/c_sperator';
           {reco_article_div}
 
         <CSeperator/>
-          <div style={{marginBottom:"80px"}}>
+          <div style={{marginBottom:"80px",marginTop:"10px"}}>
             {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id} showLoginModal={this.showLoginModal}></Comment> :null}
           </div>
 

@@ -69,6 +69,21 @@ module.exports={
     //new webpack.optimize.UglifyJsPlugin(),//压缩Js文件
     //new ExtractTextPlugin("[name]-[hash].css"),
     //new ExtractTextPlugin("style.css"),
-    new TerserPlugin() //压缩Js文件
+    new TerserPlugin( //压缩Js文件
+      {
+        parallel:true,
+        terserOptions:{
+          parse:{
+            ecma: 8
+          },
+          compress:{
+            warnings:false,
+            inline:2,
+            comparisons:false,
+            ecma: 5
+          }
+        }
+      }      
+    ) 
   ],
 }

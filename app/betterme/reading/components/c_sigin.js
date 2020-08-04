@@ -161,7 +161,7 @@ class CSignin_ extends Component
       }
 
         <div style={{marginTop:"6px",textAlign:"center"}}>
-        <button style={{width:"200px",fontSize:"18px", marginRight:"4px",color:"white",background:base.COLOR.red,padding:"4px",border:"0px"}} 
+        <button style={{width:"200px",fontSize:"18px",color:"white",background:base.COLOR.gray1,padding:"4px",border:"0px"}} 
           onClick={()=>{
             
             let name = this.refs["name"].value;
@@ -188,7 +188,7 @@ class CSignin_ extends Component
 
 
 const inner_style = {
-  input:{width:"200px",height:"26px",border:"1px solid "+base.COLOR.red,padding:"4px"},
+  input:{width:"200px",height:"26px",border:"1px solid "+base.COLOR.gray1,padding:"4px"},
   part: {display: "inline-block", verticalAlign: "top", width: "44%", fontSize: "10px"},
   box: {"padding": "2px", "margin": "4px"},
   btn: {display: "inline-block", verticalAlign: "top","padding": "2px", "margin": "4px",border:"1px solid"}

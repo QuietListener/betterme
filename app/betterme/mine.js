@@ -97,7 +97,7 @@ export default class Mine extends Component{
         <div style={{paddingLeft:"20px",borderBottom:"1px solid #fafafa",paddingBottom:"8px"}}>
           <div style={{height:"50px",textAlign:"left",verticalAlign:"middle"}}>
              <img style={{margin:"auto",width:"50px",height:"50px",borderRadius:"25px"}}
-                  src={"http://7n.bczcdn.com/pack/assets/default_avatar.png"||user.avatar}></img>
+                  src={""||user.avatar}></img>
 
             <div style={{height:"50px",display:"inline-block",verticalAlign:"middle",marginLeft:"8px",fontSize:"20px",color:base.COLOR.red}}>
               {user.nick_name||user.name}

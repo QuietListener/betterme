@@ -129,7 +129,7 @@ import arrayRightPng from "../../resource/imgs/array_right.png"
                       }}>
 
 
-           {logined?<img style={{borderRadius:"20"}} width={40} height={40} src={img_ } /> : null} 
+           {/* {logined?<img style={{borderRadius:"20"}} width={40} height={40} src={img_ } /> : null}  */}
 
             {logined ? 
             <span style={{fontSize:"12px"}}>{name}</span>

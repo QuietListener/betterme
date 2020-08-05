@@ -80,6 +80,8 @@ export default class ArticleGroup extends Component
     }
     let infoWidth = null;//base.width() - imgWidth - 20;
     let height = imgWidth*4/3;
+    
+    let is_cn = base.isZh();
     return (
       <div style={{textAlign:"left"}}>
         <div style={{padding:"10px 10px 2px 10px"}}>
@@ -87,7 +89,7 @@ export default class ArticleGroup extends Component
             <img src={img}  className={css.box} style={{borderRadius:"4px",width:`${imgWidth}px`,height:`${height}px`}}/>
 
             <div className={css.box} style={{width:`${infoWidth}px`,height:`${height}px`,paddingLeft:"4px",position:"relative"}}>
-             <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title_cn}</div>
+            {is_cn?  <div className={css.middleText} style={{fontWeight:"bold"}}>{article.title_cn}</div> : null}
              <div className={css.smallText} style={{fontWeight:"normal"}}>{article.title}</div>
               <div className={css.smallText} style={{color:"gray",marginTop:"4px"}} >{article.author}</div>
 

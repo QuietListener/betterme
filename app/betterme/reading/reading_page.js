@@ -801,7 +801,7 @@ import CSeperator from './components/c_sperator';
             >
               {finish_view}
             </div>
-            <div style={{fontSize:"10px",color:base.COLOR.gray1,marginTop:"4px"}}>{!finished ?"点击完成阅读":null}</div>
+            <div style={{fontSize:"10px",color:base.COLOR.gray1,marginTop:"4px"}}>{!finished ?tips.finishTip:null}</div>
           </div>
 
 

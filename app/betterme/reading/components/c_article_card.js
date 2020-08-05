@@ -52,6 +52,7 @@ export default class CArticleCard extends Component
     let title = a.title;
     let author = a.author;
     let title_cn = a.title_cn;
+    let is_cn =  base.isZh();
 
     //let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
     return (<div className={css.ibtn} style={{position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${totalWidth}`,marginTop:"4px",marginBottom:"14px",height:`${height}px`}}
@@ -64,7 +65,7 @@ export default class CArticleCard extends Component
       <div style={{marginLeft:"4px",textAlign:"left",display:"inline-block",width:`${infoWidth}px`,verticalAlign:"top",position:"relative",height:`${height}px`}}>
 
         <div className={css.smallText} style={{paddingTop:"4px",overflowX:"hidden", color:color,fontSize:"16px",paddingBottom:"4px"}} >
-        <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"18px"}}>{title_cn}</p>
+         {is_cn? <p className={css.smallText} style={{color:color,fontWeight:"bold",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"18px"}}>{title_cn}</p> : null}
           <p className={css.smallText} style={{color:color,fontWeight:"normal",    overflowX: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",fontSize:"15px"}}>{title}</p>
          
         </div>

@@ -333,7 +333,8 @@ var tipCn = {
   settingTip:"设置",
   settingLan:"设置语言",
   toofast:"读得太快了吧",
-  shareTo:"分享到"
+  shareTo:"分享到",
+  finishTip:"點擊完成閱讀"
 };
 
 var tipTw={
@@ -353,7 +354,8 @@ var tipTw={
   settingTip:"設置",
   settingLan:"設置語言",
   toofast:"讀得太快了吧",
-  shareTo:"分享到"
+  shareTo:"分享到",
+  finishTip:"点击完成阅读"
 }
 
 var tipEnUs={
@@ -373,7 +375,8 @@ var tipEnUs={
   settingTip:"Settings",
   settingLan:"Language",
   toofast:"slow down~ ",
-  shareTo:"Share to "
+  shareTo:"Share to ",
+  finishTip:"click to finish this article"
 }
 
 

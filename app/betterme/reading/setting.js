@@ -79,7 +79,7 @@ class SettingPage_ extends Component
          backgroundColor = "gray";
          color = "white";
       }
-      let div = <div style={{border:"1px solid gray",display:"inline-block",verticalAlign:"top",margin:"4px",padding:"4px",color:color,backgroundColor:backgroundColor}}
+      let div = <div style={{border:"1px solid gray",display:"inline-block",verticalAlign:"top",height:"30px",margin:"4px",padding:"4px",color:color,backgroundColor:backgroundColor}}
                      onClick={()=>this.setLan(name)}
       >
         {displayName}

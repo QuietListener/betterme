@@ -84,6 +84,7 @@ export default class ArticleGroup extends Component
     let is_cn = base.isZh();
     return (
       <div style={{textAlign:"left"}}>
+
         <div style={{padding:"10px 10px 2px 10px"}}>
 
             <img src={img}  className={css.box} style={{borderRadius:"4px",width:`${imgWidth}px`,height:`${height}px`}}/>

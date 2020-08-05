@@ -4,6 +4,7 @@ import * as base from "../base.js"
 import CArticle from "./components/c_article"
 import css from "./css/ireading.css"
 import CSeperator from "./components/c_sperator";
+import CBack from "./components/c_back";
 import speakerPng from "../../resource/imgs/speaker.png";
 
 const BaseHost = base.BaseHostIreading();
@@ -101,7 +102,8 @@ export default class CollectedWords extends Component
 
     return (
       <div style={{padding:"10px"}}>
-        <div className={css.bigText} style={{padding:"4px"}}>{this.props.title||""}</div>
+        <CBack style={{position:"absolute",left:"8px",top:"8px",width:"30px",height:"30px"}}></CBack>
+        <div className={css.bigText} style={{padding:"4px",marginTop:"20px"}}>{this.props.title||""}</div>
           {words_div}
       </div>
     );

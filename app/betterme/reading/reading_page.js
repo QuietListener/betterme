@@ -25,6 +25,7 @@ const Stopped = 2;
 import { hashHistory } from 'react-router'
 import CModalLogin from './components/c_modal_login';
 import CSeperator from './components/c_sperator';
+import CBack from './components/c_back';
 
  class ReadingPage_ extends Component
 {
@@ -768,11 +769,12 @@ import CSeperator from './components/c_sperator';
         {this.state.loading == true? <CLoading /> : null}
 
        
+        <CBack style={{position:"fixed",right:"8px",top:"8px",width:"30px",height:"30px"}}></CBack>
 
         <div  onClick={(event)=>{
           this.closeWordModal();
         }}
-          style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px"}}  ref={"sentenceScrollDiv"}>
+          style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px",marginTop:"6px"}}  ref={"sentenceScrollDiv"}>
           <div style={{fontSize:"18px",color:base.COLOR.gray1,fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
             {article.title}
           </div>

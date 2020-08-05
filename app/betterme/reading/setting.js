@@ -8,6 +8,7 @@ import {logout} from "../redux/actions/actions";
 
 const BaseHost = base.BaseHostIreading();
 import Moment from "moment"
+import CBack from "./components/c_back";
 import CSeperator from "./components/c_sperator";
 import stopPng from "../../resource/imgs/stop.png";
 import playPng from "../../resource/imgs/play.png";
@@ -93,6 +94,7 @@ class SettingPage_ extends Component
     
     return (
       <div style={{padding: "0px"}}>
+        <CBack style={{position:"absolute",left:"8px",top:"8px",width:"30px",height:"30px"}}></CBack>
           {loginModal}
         
           <div style={{textAlign:"left",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",color:"gray",fontWeight:"bold",marginTop:"30px"}}>

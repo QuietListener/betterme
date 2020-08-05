@@ -38,7 +38,7 @@ export default class CArticle extends Component
 
     let border = null;
     if(finished){
-      backgroundColor = "#5eca50 "
+      backgroundColor = base.COLOR.gray1;
       color="white";
     }
 

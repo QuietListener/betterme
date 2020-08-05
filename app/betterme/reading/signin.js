@@ -81,6 +81,7 @@ class Signin_ extends Component
 
         <span>登录成功</span>
 
+        <br/>
         <button style={{marginTop:"20px",width:"200px",height:"30px",background:base.COLOR.red,color:"white",border:"0px"}} onClick={()=>base.goto("/")}>去首页 开始阅读吧</button>
       </div>
     }else{

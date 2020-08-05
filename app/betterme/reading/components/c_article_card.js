@@ -35,7 +35,7 @@ export default class CArticleCard extends Component
     //let height = width + 50;
 
     if(finished){
-      backgroundColor = "#5eca50 "
+      backgroundColor = base.COLOR.gray1;
       color="white";
     }
 

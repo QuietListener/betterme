@@ -133,10 +133,10 @@ class CSignin_ extends Component
     <div style={{textAlign:"center"}}>
 
     <div style={{marginTop:"6px",textAlign:"center"}}>
-        <div style={{width:"95px",color:base.COLOR.gray1,marginRight:"4px",display:"inline-block",borderBottom:`${state == LOGIN ? "1px solid":  ""}`}}
+        <div style={{width:"95px",color:base.COLOR.gray1,marginRight:"4px",paddingBottom:"6px",display:"inline-block",borderBottom:`${state == LOGIN ? "1px solid":  ""}`}}
            onClick={()=>this.setState({state:LOGIN}) }>{tips.login}</div>
 
-           <div style={{color:base.COLOR.gray1,width:"95px",display:"inline-block",borderBottom:`${state == REGISTER ? "1px solid" :  ""}` }}
+           <div style={{color:base.COLOR.gray1,width:"95px",paddingBottom:"6px",display:"inline-block",borderBottom:`${state == REGISTER ? "1px solid" :  ""}` }}
            onClick={()=>{ 
              this.setState({state:REGISTER}) ;
              if(this.state.data == null ){
@@ -151,7 +151,7 @@ class CSignin_ extends Component
           </div>
 
         <div style={{textAlign:null,marginTop:"4px"}}>
-          <input ref={"password"} placeholder={tips.passwordTip} style={inner_style.input}  ></input>
+          <input ref={"password"} placeholder={tips.passwordTip} style={inner_style.input} type="password" ></input>
           </div>
 
       {this.state.state == REGISTER ?

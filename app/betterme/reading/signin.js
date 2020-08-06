@@ -93,12 +93,16 @@ class Signin_ extends Component
     return (
       <div style={{textAlign:"center"}}>
        
-        <div style={{position:"fixed",fontSize:"16px",top:"2px",left:"2px",padding:"6px"}} onClick={()=>{base.goto("/")}}>
+        <div style={{position:"fixed",fontSize:"14px",top:"2px",left:"2px",padding:"6px"}} onClick={()=>{base.goto("/")}}>
               <img width={14} src={arrayLeftPng}/>
         </div>
 
         <div style={{marginBottom:"30px",marginTop:"20px"}}> 
-        {tips.productName} 
+          <div>
+            <img style={{margin:"auto",width:"60px",height:"60px",marginBottom:"6px"}}  src="/logo-11.png">
+            </img>
+          </div>
+         <div>{tips.productName} </div>
         </div>
 
           {showDiv}

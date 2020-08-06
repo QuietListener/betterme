@@ -35,7 +35,10 @@ export function back(step)
   console.log("goto step ", step);
   history.go(-step)
 }
-
+export function screenWidth(){
+  let w1 =  document.body.clientWidth || window.innerWidth;
+  return w1;
+}
 export function width() {
   let w1 =  document.body.clientWidth || window.innerWidth;
   let w2 = maxWidth;

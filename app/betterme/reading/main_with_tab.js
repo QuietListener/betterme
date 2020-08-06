@@ -77,7 +77,7 @@ class MainPageWithTab_ extends Component
   render()
   {
     let showView = null;
-
+    let tips = base.getTipByLan();
     let setting_data = this.props.redux_data.setting_data || {};
     console.log("setting_data",setting_data);
 
@@ -96,9 +96,17 @@ class MainPageWithTab_ extends Component
     var hilighted = {};
     var tabsView = [];
      
+   var tabBottom =  base.screenWidth() < 378;
+
    for( let i = 0; i < this.tabFlags.length ; i++){
      let key =  this.tabFlags[i];
-     let style = Object.assign(inner_style.tabItem,{borderRight: "0px"});
+     let style = {}
+     if(tabBottom == true){
+      style = Object.assign(inner_style.tabItem,{borderRight: "0px"});;
+     }else{
+      style = Object.assign(inner_style.tabItem,{borderRight: "0px", width:"40px",background:base.COLOR.gray});
+     }
+
      let hilight = false;
      if(key == flag){
        hilight = true;
@@ -113,15 +121,32 @@ class MainPageWithTab_ extends Component
       tabsView.push(tab);
    }
 
+
+   let tabDiv = null;
+   if(tabBottom){ //在底部
+    tabDiv = <div key={"keyaaaaa"+flag} style={{position: "fixed", display:"relative",zIndex:10000,bottom: "0px", width:"100%", maxWidth:`${base.maxWidth}px`, minHeight: "50px",textAlign:"center"}}>
+           {tabsView}
+        </div>;
+   }else{
+    tabDiv = <div key={"keyaaaaa"+flag} style={{textAlign:"left",position: "relative", display:"relative",backgroundColor:base.COLOR.gray,top: "0px", width:"100%", maxWidth:`${base.maxWidth}px`, minHeight: "50px",textAlign:"center"}}>
+        
+       <div style={{width:"48%",display:"inline-block",textAlign:"Left",verticalAlign:"middle"}}>
+         <p style={{marginTop:"10px",fontSize:"20px",fontWeight:"bold",color:base.COLOR.gray1}}>{tips.productName}</p>
+        </div>
+        <div style={{width:"48%",display:"inline-block",textAlign:"right",verticalAlign:"top"}}>{tabsView}</div>
+    </div>;
+   }
+
+
     return (
 
+     
       <div className={css.tabContentDiv} style={{height:"100%",overflow: "hidden"}}>
+         {tabDiv}
         <div style={{paddingBottom:"60px"}} >
         {showView}
         </div>
-        <div key={"keyaaaaa"+flag} style={{position: "fixed", display:"relative",zIndex:10000,bottom: "0px", width:"100%", maxWidth:`${base.maxWidth}px`, minHeight: "50px",textAlign:"center"}}>
-          {tabsView}
-        </div>
+
       </div>
     );
   }

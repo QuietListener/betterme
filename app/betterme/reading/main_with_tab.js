@@ -130,8 +130,11 @@ class MainPageWithTab_ extends Component
    }else{
     tabDiv = <div key={"keyaaaaa"+flag} style={{textAlign:"left",position: "relative", display:"relative",backgroundColor:base.COLOR.gray,top: "0px", width:"100%", maxWidth:`${base.maxWidth}px`, minHeight: "50px",textAlign:"center"}}>
         
+      
        <div style={{width:"48%",display:"inline-block",textAlign:"Left",verticalAlign:"middle"}}>
-         <p style={{marginTop:"10px",fontSize:"20px",fontWeight:"bold",color:base.COLOR.gray1}}>{tips.productName}</p>
+         <p style={{marginTop:"10px",fontSize:"16px",fontWeight:"bold",color:base.COLOR.gray1}}> 
+         <img   src="/logo-11.png" width={30} height={30} />
+         {tips.productName}</p>
         </div>
         <div style={{width:"48%",display:"inline-block",textAlign:"right",verticalAlign:"top"}}>{tabsView}</div>
     </div>;

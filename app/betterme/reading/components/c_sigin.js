@@ -118,6 +118,7 @@ class CSignin_ extends Component
 
   render()
   {
+    let tips = base.getTipByLan();
     let state = this.state.state;
 
     let errorMsg = this.state.errorMsg;
@@ -133,30 +134,30 @@ class CSignin_ extends Component
 
     <div style={{marginTop:"6px",textAlign:"center"}}>
         <div style={{width:"95px",color:base.COLOR.gray1,marginRight:"4px",display:"inline-block",borderBottom:`${state == LOGIN ? "1px solid":  ""}`}}
-           onClick={()=>this.setState({state:LOGIN}) }>  登录</div>
+           onClick={()=>this.setState({state:LOGIN}) }>{tips.login}</div>
 
            <div style={{color:base.COLOR.gray1,width:"95px",display:"inline-block",borderBottom:`${state == REGISTER ? "1px solid" :  ""}` }}
            onClick={()=>{ 
              this.setState({state:REGISTER}) ;
              if(this.state.data == null ){
               this.loadImg();}
-           } }> 注册</div>
+             } }> {tips.signup}</div>
         </div>
    
 
       <div style={{textAlign:"center",marginTop:"12px",minWidth:"200px"}}>
          <div style={{textAlign:null,marginTop:"4px"}}>
-          <input ref={"name"} placeholder="邮箱或者手机号码" style={inner_style.input} ></input>
+          <input ref={"name"} placeholder={tips.userNameTip} style={inner_style.input} ></input>
           </div>
 
         <div style={{textAlign:null,marginTop:"4px"}}>
-          <input ref={"password"} placeholder="密码" style={inner_style.input}  ></input>
+          <input ref={"password"} placeholder={tips.passwordTip} style={inner_style.input}  ></input>
           </div>
 
       {this.state.state == REGISTER ?
           <div style={{textAlign:"center",marginTop:"4px",minWidth:"200px"}}>
             <img src={"data:image/jpg;base64,"+base64Img} style={{height:"20px",width:"70px",display:"inline-block",verticalAlign:"top",marginRight:"4px"}}  onClick={this.loadImg}/>
-            <input ref={"yzm"} placeholder="验证码" style={Object.assign({},inner_style.input,{width:"120px",height:"20px"})}></input>
+            <input ref={"yzm"} placeholder={tips.captchaTip} style={Object.assign({},inner_style.input,{width:"120px",height:"20px"})}></input>
         </div>:null
       }
 
@@ -173,7 +174,7 @@ class CSignin_ extends Component
               let yzm = this.refs["yzm"].value
               this.signin_(name,password,yzm,fileName);
             }
-          }}> 提交</button>
+          }}> {tips.submit}</button>
         </div>
 
       </div>

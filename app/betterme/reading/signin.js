@@ -61,8 +61,7 @@ class Signin_ extends Component
   }
 
   render(){
-
-
+   let tips = base.getTipByLan(); 
    let access_token = base.getCookie("access_token");
 
    let data = this.state.data;
@@ -79,7 +78,7 @@ class Signin_ extends Component
          <span style={{fontSize:"16px",color:base.COLOR.red,fontWeight:"bold"}}> {user.name} </span>
         }
 
-        <span>登录成功</span>
+      <span>{tips.loginSucceed}</span>
 
         <br/>
         <button style={{marginTop:"20px",width:"200px",height:"30px",background:base.COLOR.red,color:"white",border:"0px"}} onClick={()=>base.goto("/")}>去首页 开始阅读吧</button>
@@ -99,7 +98,7 @@ class Signin_ extends Component
         </div>
 
         <div style={{marginBottom:"30px",marginTop:"20px"}}> 
-        小蜜蜂英文阅读 
+        {tips.productName} 
         </div>
 
           {showDiv}

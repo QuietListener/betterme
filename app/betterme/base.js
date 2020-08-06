@@ -334,7 +334,15 @@ var tipCn = {
   settingLan:"设置语言",
   toofast:"读得太快了吧",
   shareTo:"分享到",
-  finishTip:"點擊完成閱讀"
+  finishTip:"点击完成阅读",
+  loginSucceed:"登录成功",
+  login:"登录",
+  signup:"注册",
+  userNameTip:"邮箱或者手机号码",
+  passwordTip:"密码",
+  captchaTip:"验证码",
+  submit:"提交",
+  productName:"小蜜蜂英文阅读"
 };
 
 var tipTw={
@@ -355,7 +363,16 @@ var tipTw={
   settingLan:"設置語言",
   toofast:"讀得太快了吧",
   shareTo:"分享到",
-  finishTip:"点击完成阅读"
+  finishTip:"點擊完成閱讀",
+  loginSucceed:"登錄成功",
+  login:"登錄",
+  signup:"注冊",
+  userNameTip:"郵箱或者手機號碼",
+  passwordTip:"密碼",
+  captchaTip:"驗證碼",
+  submit:"提交",
+  productName:"小蜜蜂英文閱讀"
+
 }
 
 var tipEnUs={
@@ -376,7 +393,15 @@ var tipEnUs={
   settingLan:"Language",
   toofast:"slow down~ ",
   shareTo:"Share to ",
-  finishTip:"click to finish this article"
+  finishTip:"click to finish this article",
+  loginSucceed:"login succeed",
+  login:"Login",
+  signup:"Sign Up",
+  userNameTip:"email or phone number",
+  passwordTip:"password",
+  captchaTip:"captcha",
+  submit:"submit",
+  productName:"Bee Reading"
 }
 
 

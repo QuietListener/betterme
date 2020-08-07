@@ -96,7 +96,7 @@ class MainPageWithTab_ extends Component
     var hilighted = {};
     var tabsView = [];
      
-   var tabBottom =  base.screenWidth() < 378;
+   var tabBottom =  base.screenWidth() < 600;
 
    for( let i = 0; i < this.tabFlags.length ; i++){
      let key =  this.tabFlags[i];

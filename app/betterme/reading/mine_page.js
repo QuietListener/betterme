@@ -119,7 +119,7 @@ import arrayRightPng from "../../resource/imgs/array_right.png"
     return (
       <div style={{padding: "0px"}}>
 
-        <div style={{background: 'linear-gradient(to bottom, gray, #ffffff)'}}>
+        <div /*style={{background: 'linear-gradient(to bottom, gray, #ffffff)'}}*/>
           <div className={css.bigText}
                style={{paddingTop: "20px", 
                       paddingBottom: "20px",

@@ -68,6 +68,7 @@ class SettingPage_ extends Component
 
     
     var lan = base.getLan();
+    var tips = base.getTipByLan();
     var lanItems = [];
     for(let key in  base.Languages){
 
@@ -98,7 +99,7 @@ class SettingPage_ extends Component
           {loginModal}
         
           <div style={{textAlign:"left",textAlign:"center", width:"90%",borderRadius:"4px",margin:"auto",color:"gray",fontWeight:"bold",marginTop:"30px"}}>
-            <div style={{marginBottom:"12px"}}>设置语言</div>
+    <div style={{marginBottom:"12px"}}>{tips.languageSet}</div>
             <div style={{textAlign:"left"}}>{lanItems}</div>
           </div>  
 

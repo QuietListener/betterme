@@ -43,7 +43,7 @@ export default class CArticle extends Component
     }
 
 
-    let imgWidth = 0.3*width;
+    let imgWidth = 0.31*width;
     if(imgWidth > 190){
         imgWidth = 190;
     }
@@ -57,7 +57,7 @@ export default class CArticle extends Component
     }
 
     //let title = (pa && pa.title) ? pa.title+":  "+a.title: a.title;
-    return (<div className={css.ibtn} style={{border:border,position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"12px",padding: "0px",width:`${infoWidth}px`,marginTop:"4px",marginBottom:"14px",margin:"2px", height:`${height+60}px`,textAlign:"center",marginLet:"2px"}}
+    return (<div className={css.ibtn} style={{border:border,position:"relative",backgroundColor:backgroundColor,verticalAlign:"top",fontSize:"10px",padding: "0px",width:`${infoWidth}px`,marginTop:"4px",margin:"2px", height:`${height+60}px`,textAlign:"center",marginBottom:"14px"}}
                  onClick={()=>this.goto(a)}>
 
       {img?<div  style={{textAlign:"left",display:"inline-block",width:`${imgWidth}px`,height:`${height}px`,verticalAlign:"top"}}>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import errorPng from "../../../resource/imgs/error.png"
+import * as base from "../../base.js"
 
 export default class CError extends Component
 {
@@ -18,6 +19,7 @@ export default class CError extends Component
   render()
   {
 
+    let tips = base.getTipByLan;
     return (
       <div>
 
@@ -26,7 +28,7 @@ export default class CError extends Component
           <img alt="" src={errorPng} style={{height: "24px", display: "inline-block", verticalAlign: "top"}}></img>
 
           <div
-            style={{display: "inline-block", verticalAlign: "top", marginTop: "4px"}}>Opps, click to refresh
+            style={{display: "inline-block", verticalAlign: "top", marginTop: "4px"}}>{tips.refreshTip}
           </div>
         </div>
       </div>

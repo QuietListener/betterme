@@ -115,7 +115,7 @@ import arrayRightPng from "../../resource/imgs/array_right.png"
     var tips = base.getTipByLan();
     let img_ = user.img || "https://freepic.store/static/reading/resources/imgs/bee02_squire.jpg"
 
-    let notLogin = "点击登录"
+    let notLogin = tips.loginOrSignUp;
     return (
       <div style={{padding: "0px"}}>
 

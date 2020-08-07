@@ -110,7 +110,8 @@ export const COLOR={
   gray:"#f2f2f2",
   yellow:"#FFEB3B",
   green:"green",
-  gray1:"#494949",
+  gray1:"rgb(150,150,150)",
+ // gray1:"#494949",
 
 }
 
@@ -345,7 +346,10 @@ var tipCn = {
   passwordTip:"密码",
   captchaTip:"验证码",
   submit:"提交",
-  productName:"小蜜蜂英文阅读"
+  productName:"小蜜蜂英文阅读",
+  loginOrSignUp:"登录/注冊",
+  languageSet:"设置语言",
+  refreshTip:"网络有问题~ 点击刷新"
 };
 
 var tipTw={
@@ -374,8 +378,10 @@ var tipTw={
   passwordTip:"密碼",
   captchaTip:"驗證碼",
   submit:"提交",
-  productName:"小蜜蜂英文閱讀"
-
+  productName:"小蜜蜂英文閱讀",
+  loginOrSignUp:"登錄/注冊",
+  languageSet:"設置語言",
+  refreshTip:"網絡有問題~ 點擊刷新"
 }
 
 var tipEnUs={
@@ -404,7 +410,10 @@ var tipEnUs={
   passwordTip:"password",
   captchaTip:"captcha",
   submit:"submit",
-  productName:"Bee Reading"
+  productName:"Bee Reading",
+  loginOrSignUp:"Login or Sign up",
+  languageSet:"Set Language",
+  refreshTip:"Opps~ click here to refresh"
 }
 
 

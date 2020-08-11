@@ -87,6 +87,10 @@ import CBack from './components/c_back';
   {
     this.load();
     document.addEventListener("keydown", this.onKeyDown)
+    if(this.interval != null){
+      clearInterval(this.interval);
+    }
+
     this.interval = setInterval(() => {
       this.scrollSentence();
     }, 500);
@@ -440,7 +444,13 @@ import CBack from './components/c_back';
 
   goto(a){
     if(a.parent_id ){
-      base.goto(`/reading_page/${a.id}`)
+      console.log("goto",a);
+      this.setState({id: a.id,data:{}})
+      window.scrollTo(0, 0);
+      setTimeout(()=>{
+        this.componentDidMount();
+      },200);
+      
     }else{
       base.goto(`/article_group/${a.id}`)
     }
@@ -670,7 +680,7 @@ import CBack from './components/c_back';
         maxWidth:`${base.maxWidth}px`
       }}>
 
-        <audio ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
+        <audio key={"audio_"+article.id} ref={"audioRef"} controls src={article.audio_normal} style={{width: "100%", display: "none"}}>
           Your browser does not support this audio format.
         </audio>
 
@@ -742,17 +752,55 @@ import CBack from './components/c_back';
 
    var reco_article_div = null; 
    //推荐
-  //  if(this.state.recomends && this.state.recomends.next_a ){
-  //    let rec_a = this.state.recomends.next_a;
-  //   reco_article_div = 
-  //   <div  style={{width:"100%",textAlign:"center",marginBottom:"20px",marginTop:"20px"}}>
-  //   <div style={{margin:"auto",textAlign:"left",padding:"10px",width:"90%",border:"1px solid #e5e5e5",backgroundColor:'white'}}
-  //                           className={css.ibtn}
-  //               onClick={()=>this.goto(rec_a)}>
-  //      next: <span style={{color: base.COLOR.red,fontSize:"18px"}}>{rec_a.title}</span>
-  //   </div>
-  //   </div>
-  //  }
+   if(this.state.recomends && this.state.recomends.brothers ){
+     let brothers = this.state.recomends.brothers;
+     let next_a_ = brothers.filter(t=>{
+       return t.id>   parseInt(this.state.id+"");
+     });
+
+     let pre_a_ = brothers.filter(t=>{
+      return t.id < parseInt(this.state.id+"");
+    });
+
+    let next_a = next_a_.length > 0 ? next_a_[0] : null;
+    let pre_a = pre_a_.length > 0 ? pre_a_[pre_a_.length - 1] : null;
+
+    let next_a_div= null;
+    if(next_a){
+      let title_n = '';
+      if(base.isZh()){
+        title_n = next_a.title_cn || next_a.title;
+      }
+
+      next_a_div = <div style={{margin:"auto",textAlign:"center",padding:"4px",marginLeft:"2px",width:"45%",border:"1px solid #e5e5e5",backgroundColor:'white'}}
+                       className={css.ibtn}
+                        onClick={()=>this.goto(next_a)}>
+                       <span style={{color: base.COLOR.red,fontSize:"10px"}}>{tips.nextArticle}</span>
+                      </div>
+    }
+
+    let pre_a_div= null;
+    if(pre_a){
+      let title_p = '';
+      if(base.isZh()){
+        title_p = pre_a.title_cn || pre_a.title;
+      }
+
+      pre_a_div = <div style={{margin:"auto",textAlign:"center",padding:"4px",width:"45%",border:"1px solid #e5e5e5",backgroundColor:'white'}}
+                       className={css.ibtn}
+                        onClick={()=>this.goto(pre_a)}>
+                         <span style={{color: base.COLOR.red,fontSize:"10px"}}>{tips.preArticle}</span>
+                      </div>
+    }
+
+    
+
+    reco_article_div = 
+        <div  style={{width:"100%",textAlign:"center",marginBottom:"20px",marginTop:"20px"}}>
+          {pre_a_div}
+          {next_a_div}
+        </div>
+   }
 
    
 
@@ -812,7 +860,7 @@ import CBack from './components/c_back';
 
         <CSeperator/>
           <div style={{marginBottom:"80px",marginTop:"10px"}}>
-            {this.state.id ? <Comment id={this.state.id} user_id={this.state.user_id} showLoginModal={this.showLoginModal}></Comment> :null}
+            {this.state.id ? <Comment key={this.state.id} id={this.state.id} user_id={this.state.user_id} showLoginModal={this.showLoginModal}></Comment> :null}
           </div>
 
         </div>

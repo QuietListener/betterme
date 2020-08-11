@@ -349,7 +349,9 @@ var tipCn = {
   productName:"小蜜蜂英文阅读",
   loginOrSignUp:"登录/注冊",
   languageSet:"设置语言",
-  refreshTip:"网络有问题~ 点击刷新"
+  refreshTip:"网络有问题~ 点击刷新",
+  nextArticle:"下一篇",
+  preArticle:"上一篇"
 };
 
 var tipTw={
@@ -381,7 +383,9 @@ var tipTw={
   productName:"小蜜蜂英文閱讀",
   loginOrSignUp:"登錄/注冊",
   languageSet:"設置語言",
-  refreshTip:"網絡有問題~ 點擊刷新"
+  refreshTip:"網絡有問題~ 點擊刷新",
+  nextArticle:"下一篇",
+  preArticle:"上一篇"
 }
 
 var tipEnUs={
@@ -413,7 +417,9 @@ var tipEnUs={
   productName:"Bee Reading",
   loginOrSignUp:"Login or Sign up",
   languageSet:"Set Language",
-  refreshTip:"Opps~ click here to refresh"
+  refreshTip:"Opps~ click here to reload",
+  nextArticle:"next article",
+  preArticle:"previous article"
 }
 
 
@@ -422,3 +428,5 @@ TipByLan_[Languages.ZhTw.name] = tipTw;
 TipByLan_[Languages.ZhCN.name] = tipCn;
 TipByLan_[Languages.EnUs.name] = tipEnUs;
 export const TipByLan = TipByLan_;
+
+

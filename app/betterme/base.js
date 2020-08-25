@@ -7,9 +7,11 @@ export const slogon = "做更好的自己"
 export const BaseHost = "4englishreader.com"
 
 export function BaseHostIreading() {
-  //return "http://localhost:3100"
-  return "https://4englishreader.com"
+  return "http://localhost:3100"
+  //return "https://4englishreader.com"
+  return "";
 }
+
 
 export function getParameterByName(name, url) {
   if (!url) url = window.location.href;
@@ -428,5 +430,3 @@ TipByLan_[Languages.ZhTw.name] = tipTw;
 TipByLan_[Languages.ZhCN.name] = tipCn;
 TipByLan_[Languages.EnUs.name] = tipEnUs;
 export const TipByLan = TipByLan_;
-
-

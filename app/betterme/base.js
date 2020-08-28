@@ -4,11 +4,11 @@ export const maxWidth = 800;
 export const DayMinSeconds = 24*60*60*1000;
 export const slogon = "做更好的自己"
 //export const BaseHost = "http://localhost:3000"
-export const BaseHost = "4englishreader.com"
+export const BaseHost = "read.4englishreader.com"
 
 export function BaseHostIreading() {
-  return "http://localhost:3100"
-  //return "https://4englishreader.com"
+  //return "http://localhost:3100"
+  return "https://read.4englishreader.com"
   return "";
 }
 
@@ -353,7 +353,9 @@ var tipCn = {
   languageSet:"设置语言",
   refreshTip:"网络有问题~ 点击刷新",
   nextArticle:"下一篇",
-  preArticle:"上一篇"
+  preArticle:"上一篇",
+  wordMeanTip:"点击单词显示释义",
+  transTip:"翻译"
 };
 
 var tipTw={
@@ -387,7 +389,9 @@ var tipTw={
   languageSet:"設置語言",
   refreshTip:"網絡有問題~ 點擊刷新",
   nextArticle:"下一篇",
-  preArticle:"上一篇"
+  preArticle:"上一篇",
+  wordMeanTip:"點擊單詞顯示釋義",
+  transTip:"翻译"
 }
 
 var tipEnUs={
@@ -421,7 +425,9 @@ var tipEnUs={
   languageSet:"Set Language",
   refreshTip:"Opps~ click here to reload",
   nextArticle:"next article",
-  preArticle:"previous article"
+  preArticle:"previous article",
+  wordMeanTip:"click word to show means",
+  transTip:"T"
 }
 
 

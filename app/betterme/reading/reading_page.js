@@ -313,6 +313,7 @@ import CBack from './components/c_back';
       return;
     }
 
+    base.putValue("showed_mean_tip","1")
     that.setState({loadingMean: true, to_check_word_mean: null});
 
     axios.get(`${BaseHost}/reading/dict?word=${word.text}&lan=${this.lan}`).then((res) => {
@@ -492,6 +493,9 @@ import CBack from './components/c_back';
     }
 
     var maxOrder = -1;
+    var flag = false;
+    var count = 0;
+    var showed_mean_tip = base.getValue("showed_mean_tip") !=null
     var sentence_divs = sentences.map((s, index) => {
 
       let start = s.start_word_order;
@@ -501,12 +505,12 @@ import CBack from './components/c_back';
 
       let s_word_divs = words.filter((w) => {
         return w.order >= start && w.order <= end;
-      }).map(w => {
+      }).map((w,widx) => {
 
         let collected = (collect_words[w.text] != null)
         let backgroundColor = "";
         let color = "";
-        let fontWeight = "";
+        let fontWeight = "500";
         if(collected){
           //backgroundColor = base.COLOR.gray1;
           color = "black";
@@ -521,8 +525,9 @@ import CBack from './components/c_back';
         }
 
 
+        
       
-        return <div ref={`word_${w.id}`} style={{display: "inline-block", padding: `${padding}px`,margin:`${margin}px`,fontSize:"14px",backgroundColor:backgroundColor,color:color,fontWeight:fontWeight,borderRadius:"2px"}}
+        let ret =  <div ref={`word_${w.id}`} style={{position:"relative",display: "inline-block", padding: `${padding}px`,margin:`${margin}px`,fontSize:"14px",marginBottom:"6px",backgroundColor:backgroundColor,color:color,fontWeight:fontWeight,borderRadius:"2px"}}
 
                     onClick={(event)=>{
                       try
@@ -535,7 +540,22 @@ import CBack from './components/c_back';
                       this.showMean(w);
 
                     }}
-        >{w.text}</div>
+        >{w.text}
+        
+        { index==0 && widx == 6 && showed_mean_tip==false ?
+        <div style={{position:"absolute",top:"-30px",right:"-10px",background:"black",color:"white", padding:"2px",borderRadius:"4px",display:"inline-block",width:"140px"}}>
+            {tips.wordMeanTip}
+        </div> : null}
+
+        </div>
+
+       if(flag == false) {
+          flag = true;
+       }
+
+       count+=1;
+          
+       return ret; 
       })
 
 
@@ -543,7 +563,7 @@ import CBack from './components/c_back';
      
       let istw = lan == "zh_tw" ;
 
-      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color}}> {istw == true ? s.trans_tw : s.trans_zh} </div>
+      let trans_div = <div   style={{ padding: "4px", border: "0px solid", fontSize:"14px", color: color,fontWeight:"500"}}> {istw == true ? s.trans_tw : s.trans_zh} </div>
 
       let show_trans_ids = this.state.show_trans_ids || [];
       let showTrans  = show_trans_ids.indexOf(s.id) >= 0;
@@ -556,7 +576,7 @@ import CBack from './components/c_back';
                   style={{margin: "4px", padding: "4px", border: "0px solid", color: color}}>
         {s_word_divs}
         { showTransTip ?
-          <span style={{fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px 5px 2px 5px ",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>T</span>
+          <div style={{display:"inline-block",fontSize:"12px",fontWeight:"bold",color:"white",backgroundColor:"#494949",padding:"1px 5px 2px 5px ",marginLeft:"8px"}} onClick={()=>this.troogleTrans(s.id)}>{tips.transTip}</div>
           : null
         }
         {showTrans?trans_div:null}
@@ -823,7 +843,7 @@ import CBack from './components/c_back';
           this.closeWordModal();
         }}
           style={{display: "block", height: "100%", overflow: "scroll",minHeight:"400px",marginTop:"6px"}}  ref={"sentenceScrollDiv"}>
-          <div style={{fontSize:"18px",color:base.COLOR.gray1,fontWeight:"bold",marginTop:"6px",marginLeft:"10px"}}>
+          <div style={{fontSize:"18px",fontWeight:"bold",marginTop:"6px",marginLeft:"10px",fontWeight:"bold"}}>
             {article.title}
           </div>
 

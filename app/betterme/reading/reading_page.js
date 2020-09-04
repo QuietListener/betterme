@@ -75,6 +75,7 @@ import CBack from './components/c_back';
     this.share_result = this.share_result.bind(this);
     this.get_next_article = this.get_next_article.bind(this);
     this.audioRef = new Object();
+    this.wordAudioRef = new Object();
     this.timeoutPlay = null;
     this.showLoginModal = this.showLoginModal.bind(this);
     this.goto = this.goto.bind(this);
@@ -204,6 +205,17 @@ import CBack from './components/c_back';
     audio.play();
     this.setState({playState:Playing})
   }
+
+  playWordAudio(word){
+    console.log("playWordAudio",word);
+    console.log(word.audio_en);
+    var audio = this.refs.wordAudio;
+    
+    audio.src= word.audio_en;
+    audio.play();
+
+  }
+
   playAudio(from, to)
   {
     if (this.timeoutPlay != null)
@@ -627,8 +639,7 @@ import CBack from './components/c_back';
           <div className={css.middleText}>
             <div className={[css.box]}>{word.accent}</div>
             <div  className={[css.box]} style={{marginLeft:"20px"}}>
-              <audio ref={"audio_en"} src={word.audio_en} />
-              <div onClick={()=>{this.refs["audio_en"].play();}}>
+              <div onClick={()=>{this.playWordAudio(word)}}>
                 <img src={speakerPng} width={18}></img>
               </div>
             </div>
@@ -831,6 +842,8 @@ import CBack from './components/c_back';
     return (
 
       <div>
+        <audio ref={"wordAudio"} src={"http://dict.youdao.com/dictvoice?audio=good&type=2"}  style={{width:"100px",height:"30x"}} />
+       
         {loginModal}
         {finished_model}
         {wordModal}
